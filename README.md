@@ -16,7 +16,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
 
 * There are __two types of branches__: the master branch and development/feature branches. Any commit on the master branch is deployable and has a unique version number. Deployable for us means that commits are tested. Such commits are usually the result of merging/rebasing with a development branch. The previous de facto master branches 'Rsoilwat_v31' and 'wrapper_sw31' have been merged with the true master branches.
 
-* __Testing__ involves at least that each line of code was executed and did not throw an error or stopped execution unexpectedly. However, writing re-usable unit test cases (for R code based on the package ‘testthat’, see, e.g., XXX) is the preferred way to test our code.
+* __Testing__ involves at least that each line of code was executed and did not throw an error or stopped execution unexpectedly. However, writing re-usable unit test cases (for R code based on the package [testthat](https://cran.r-project.org/web/packages/testthat/index.html)) is the preferred way to test our code.
 
 * __Documentation__: Comment the code well and write object documentation with [roxygen](http://r-pkgs.had.co.nz/man.html), if using R, or with [doxygen](http://www.doxygen.org), if using another programming language.
 
@@ -29,6 +29,10 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * Local branches: `git branch`
     * Remote branches: `git branch -r`
     * List of remote connections: `git remote -v`
+
+* __Error reporting__: If you come across a bug in our code, please do something about it.
+    * You can report it as a new issue, e.g.,  [here](https://github.com/Burke-Lauenroth-Lab/Rsoilwat/issues) for Rsoilwat, and communicate with the person who committed the buggy code.
+    * If you can fix the problem yourself, then can create a new branch, improve the code, test the code and check that the changes did not break anything, and create a pull request (the commit message can automatically close the issue number(s); see workflow below).
 
 
 ## Workflow
