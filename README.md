@@ -87,16 +87,18 @@ Text tools, e.g., Winmerge/Textwrangler, compare two files (versions of the same
 
 8. After a team member has reviewed the development branch, you should deploy the development branch and merge/rebase to the master. Our standard method with two options for deploying a development/feature branch to the master branch on github.com repository (option (i) with rebasing is ideal for small development branches; option (ii) with merging is preferred for large development branches):
     0. Make sure you are on the development branch: `git checkout <branch>`
-    1. Create an annotated version tag using semantic versioning with a format like v1.0.4: `git tag -a v1.0.4 -m "<message>"`
+    1. Make sure the staging area is clean: `git status`
     2. If the repository is a R package, then adjust the lines 'Version' and 'Date' of the file DESCRIPTION to reflect the new version and potentially adjust package startup message in function '.onAttach' of the file R/zzz.R
     3. Option (i): Rebase development branch onto the tip of the master branch (given that there are no branches on <branch>): `git rebase master`
     4. Options (i) and (ii): Integrate with the main code base:
         1. `git checkout master`
         2. `git merge <branch>`
     5. Inspect outcome of merge (e.g., resolution of potential merge conflicts), commit and push the merge to remote/upstream with a detailed <message> particularly when using option (ii)
-        1. `git commit -a`
-        2. `git push origin --tags`
-    6. Add a [new release](https://help.github.com/articles/creating-releases/) against master based on the version tag
+        1. `git commit -am "<message>"`
+        2. `git push origin`
+    6. Create an annotated version tag using semantic versioning with a format like v1.0.4
+    	1. You can either use `git tag -a v1.0.4 -m "<message>"` and push the tag with `git push origin --tags`
+    	2. Alternatively, use the webinterface to add a [new release](https://help.github.com/articles/creating-releases/) against master
     
     7. Delete the development branch: `git branch -d <branch>`
 
