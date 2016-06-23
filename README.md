@@ -88,6 +88,7 @@ Text tools, e.g., Winmerge/Textwrangler, compare two files (versions of the same
 8. After a team member has reviewed the development branch, you should deploy the development branch and merge/rebase to the master. Our standard method with two options for deploying a development/feature branch to the master branch on github.com repository (option (i) with rebasing is ideal for small development branches; option (ii) with merging is preferred for large development branches):
     0. Make sure you are on the development branch: `git checkout <branch>`
     1. Make sure the staging area is clean: `git status`
+    	* Note: The Rsoilwat repository will always show 'src' as 'untracked content' because SOILWAT is loaded as a submodule. Don't stage and commit 'src'. If you want to edit the code of SOILWAT, do that in the SOILWAT repository and then update the submodule in Rsoilwat as explained in the README of Rsoilwat.
     2. If the repository is a R package, then adjust the lines 'Version' and 'Date' of the file DESCRIPTION to reflect the new version and potentially adjust package startup message in function '.onAttach' of the file R/zzz.R
     3. Option (i): Rebase development branch onto the tip of the master branch (given that there are no branches on <branch>): `git rebase master`
     4. Options (i) and (ii): Integrate with the main code base:
