@@ -100,18 +100,17 @@ Text tools, e.g., Winmerge/Textwrangler, compare two files (versions of the same
         1. `git commit -am "<message>"`
         2. `git push origin`
     6. Create an annotated version tag using semantic versioning with a format like v1.0.4
-    	1. You can either use `git tag -a v1.0.4 -m "<message>"` and push the tag with `git push origin --tags`
-    	2. Alternatively, use the webinterface to add a [new release](https://help.github.com/articles/creating-releases/) against master
-    	3. If you need to retroactively tag an old commit, then you can do that so that the tag's date/time corresponds to the commit's date/time with temporarily settings the tag's clock:
-    	```
-    	git checkout <branch>
-    	git reset --hard <commit SHA1>
-    	GIT_COMMITTER_DATE="$(git show --format=%aD  | head -1)" git tag -a v1.0.4 -m "<message>"
-    	git push --tags
-    	git pull
-    	```
-    	
-    
+    	* Tag the current commit
+    	    * Use `git tag -a v1.0.4 -m "<message>"` and push the tag with `git push origin --tags`
+    	    * Alternatively, use the webinterface to add a [new release](https://help.github.com/articles/creating-releases/) against master
+    	* Tag an old commit retroactively: you should do that so that the tag's date/time corresponds to the commit's date/time by temporarily setting the tag's clock:
+    	    ```
+    	    git checkout <branch>
+    	    git reset --hard <commit SHA1>
+    	    GIT_COMMITTER_DATE="$(git show --format=%aD  | head -1)" git tag -a v1.0.4 -m "<message>"
+    	    git push --tags
+    	    git pull
+    	    ```
     7. Delete the development branch: `git branch -d <branch>`
 
 
