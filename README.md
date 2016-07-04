@@ -104,13 +104,13 @@ Text tools, e.g., Winmerge/Textwrangler, compare two files (versions of the same
     	    * Use `git tag -a v1.0.4 -m "<message>"` and push the tag with `git push origin --tags`
     	    * Alternatively, use the webinterface to add a [new release](https://help.github.com/articles/creating-releases/) against master
     	* Tag an old commit retroactively: you should do that so that the tag's date/time corresponds to the commit's date/time by temporarily setting the tag's clock:
-    	    ```
-    	    git checkout <branch>
-    	    git reset --hard <commit SHA1>
-    	    GIT_COMMITTER_DATE="$(git show --format=%aD  | head -1)" git tag -a v1.0.4 -m "<message>"
-    	    git push --tags
-    	    git pull
-    	    ```
+		```
+		git checkout <branch>
+		git reset --hard <commit SHA1>
+		GIT_COMMITTER_DATE="$(git show --format=%aD  | head -1)" git tag -a v1.0.4 -m "<message>"
+		git push --tags
+		git pull
+		```
     7. Delete the development branch: `git branch -d <branch>`
 
 
