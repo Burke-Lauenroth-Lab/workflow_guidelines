@@ -20,7 +20,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
 
 * __Documentation__: Comment the code well and write object documentation with [roxygen](http://r-pkgs.had.co.nz/man.html), if using R, or with [doxygen](http://www.doxygen.org), if using another programming language.
 
-* __Style guide__: In development. For R coding style, DRS suggests to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html) with the deviation to use tabs (equivalent to 4 spaces) for indentation (instead of 2 spaces) [to increase readability]. There are many other R style guides including: [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml), [Bioconductor's Coding Style](https://www.bioconductor.org/developers/how-to/coding-style/), [rDatSci/rOpenSci's R Style Guide](https://github.com/rdatsci/PackagesInfo/wiki/R-Style-Guide), [R Coding Conventions by H. Bengtsson](https://docs.google.com/document/d/1esDVxyWvH8AsX-VJa-8oqWaHLs4stGlIbk8kLc5VlII/edit), [4D R code style guide](https://4dpiecharts.com/r-code-style-guide/)
+* __Style guide__: In development. For R coding style, DRS suggests to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html). There are many other R style guides including: [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml), [Bioconductor's Coding Style](https://www.bioconductor.org/developers/how-to/coding-style/), [rDatSci/rOpenSci's R Style Guide](https://github.com/rdatsci/PackagesInfo/wiki/R-Style-Guide), [R Coding Conventions by H. Bengtsson](https://docs.google.com/document/d/1esDVxyWvH8AsX-VJa-8oqWaHLs4stGlIbk8kLc5VlII/edit), [4D R code style guide](https://4dpiecharts.com/r-code-style-guide/)
 
 * We use __[semantic versioning](http://semver.org/)__ using the format MAJOR.MINOR.PATCH. Every commit to the master branch updates the version number. A backwards-incompatible commit increases MAJOR and resets MINOR and PATCH to 0. A backwards-compatible commit adding new functionality increases MINOR and resets PATCH to 0. A backward-compatible commit fixing bugs (etc) increases PATCH.
 
@@ -42,6 +42,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * `git config --global user.name <name>`
     * `git config --global user.email <email>`
     * `git config --global core.editor <editor>` # e.g., vi, emacs, nano, TextWrangler (Microsoft Windows user refer to [First-Time-Git-Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup))
+    * `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
 
 2. Create a __new (development) branch__ each time you start to develop new functionality or work on improving code. Use descriptive branch names (e.g., new-snowmelt)
     1. Get a copy of a remote repository to your local computer:
@@ -87,31 +88,36 @@ Text tools, e.g., Winmerge/Textwrangler, compare two files (versions of the same
 
 7. If necessary, repeat steps 3-5 to complete review of the pull request, e.g. to deal with issues and fix bugs.
 
-8. After a team member has reviewed the development branch, you should deploy the development branch and merge/rebase to the master. Our standard method with two options for deploying a development/feature branch to the master branch on github.com repository (option (i) with rebasing is ideal for small development branches; option (ii) with merging is preferred for large development branches):
+8. After a team member has reviewed the development branch, you should deploy the development branch and merge/rebase to the master. Our standard method with two options for deploying a development/feature branch to the master branch on github.com repository (option (i) with rebasing is ideal for small development branches or for simultaneous work on same code section; option (ii) with merging is preferred for large development branches; see following stackoverflow discussions [1](http://stackoverflow.com/questions/1241720/git-cherry-pick-vs-merge-workflow), [2](http://stackoverflow.com/questions/457927/git-workflow-and-rebase-vs-merge-questions)):
     0. Make sure you are on the development branch: `git checkout <branch>`
     1. Make sure the staging area is clean: `git status`
-    	* Note: The Rsoilwat repository will always show 'src' as 'untracked content' because SOILWAT is loaded as a submodule. Don't stage and commit 'src'. If you want to edit the code of SOILWAT, do that in the SOILWAT repository and then update the submodule in Rsoilwat as explained in the README of Rsoilwat.
+        * Note: The Rsoilwat repository will always show 'src' as 'untracked content' because SOILWAT is loaded as a submodule. Don't stage and commit 'src'. If you want to edit the code of SOILWAT, do that in the SOILWAT repository and then update the submodule in Rsoilwat as explained in the README of Rsoilwat.
     2. If the repository is a R package, then adjust the lines 'Version' and 'Date' of the file DESCRIPTION to reflect the new version and potentially adjust package startup message in function '.onAttach' of the file R/zzz.R
     3. Option (i): Rebase development branch onto the tip of the master branch (given that there are no branches on <branch>): `git rebase master`
     4. Options (i) and (ii): Integrate with the main code base:
         1. `git checkout master`
-        2. `git merge <branch>`
-    5. Inspect outcome of merge (e.g., resolution of potential merge conflicts), commit and push the merge to remote/upstream with a detailed <message> particularly when using option (ii)
+        2. `git pull origin`
+        3. `git merge <branch>`
+    5. Resolve potential merge conflicts (see, e.g., the section 'How To Resolve Conflicts' of [git-merge](https://git-scm.com/docs/git-merge) and the relevant entry at [GitHowTo](https://githowto.com/resolving_conflicts))
+    6. Commit and push the merge to remote/upstream with a detailed <message> particularly when using option (ii)
         1. `git commit -am "<message>"`
         2. `git push origin`
-    6. Create an annotated version tag using semantic versioning with a format like v1.0.4
-    	* Tag the current commit
-    	    * Use `git tag -a v1.0.4 -m "<message>"` and push the tag with `git push origin --tags`
-    	    * Alternatively, use the webinterface to add a [new release](https://help.github.com/articles/creating-releases/) against master
-    	* Tag an old commit retroactively: you should do that so that the tag's date/time corresponds to the commit's date/time by temporarily setting the tag's clock:
-		```
-		git checkout <branch>
-		git reset --hard <commit SHA1>
-		GIT_COMMITTER_DATE="$(git show --format=%aD  | head -1)" git tag -a v1.0.4 -m "<message>"
-		git push --tags
-		git pull
-		```
-    7. Delete the development branch: `git branch -d <branch>`
+    7. Create an annotated version tag using semantic versioning with a format like v1.0.4
+        * Tag the current commit
+            * Use `git tag -a v1.0.4 -m "<message>"` and push the tag with `git push origin --tags`
+            * Alternatively, use the webinterface to add a [new release](https://help.github.com/articles/creating-releases/) against master
+        * Tag an old commit retroactively: you should do that so that the tag's date/time corresponds to the commit's date/time by temporarily setting the tag's clock:
+            ```
+            git checkout <branch>
+            git reset --hard <commit SHA1>
+            GIT_COMMITTER_DATE="$(git show --format=%aD  | head -1)" git tag -a v1.0.4 -m "<message>"
+            git push --tags
+            git pull
+            ```
+    8. Delete the development branch
+        * Delete the local branch: `git branch -d <branch>`
+        * Delete the remote branch: `git push origin --delete <branch>`
+        * Remove 'obsolete tracking branches', i.e., branches on local machine that no longer exist on remote/github: `git fetch --all --prune`
 
 
 ## Links
