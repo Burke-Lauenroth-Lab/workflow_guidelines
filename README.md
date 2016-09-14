@@ -27,7 +27,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
 * __Inspecting__ a repository
     * State of working directory and staging area: git status
     * History of commits: `git log --graph --full-history --oneline --decorate`
-    * List of branches (* indicates the active branch): 
+    * List of branches (* indicates the active branch):
     * Local branches: `git branch`
     * Remote branches: `git branch -r`
     * List of remote connections: `git remote -v`
@@ -69,6 +69,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * Interruptions to coding
         * Pulling into a dirty tree (i.e., git pull cannot merge): `git stash` then `git pull` and `git stash pop`
         * Interrupted workflow: `git stash`; work on interruption and commit; `git stash pop`
+    * Text tools compare two files (versions of the same file) and offer the possibility to take over changes from either version to the other version. For instance Winmerge or Textwrangler. Such functionality can be also very helpful to resolve conflicts during merging/rebasing.
 
 4. Commit to your development branch regularly and use explanatory commit messages in order to create a transparent work history (e.g., to help with debugging; to find specific changes at a later time). Each commit is a separate logical unit of change and is therefore composed of related changes.
     * Check state of staging area: `git status`
@@ -79,10 +80,15 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
 
 5. Share and backup your development commits on the remote repository. Our standard method for publishing local contributions to the github.com repository:
     0. Make sure you are on the development branch: `git checkout <branch>`
-    1. Make local commit(s) to the development branch (see previous step)
-    2. Import/merge new commits from remote/upstream to local repository branch: `git pull origin <branch>`
-    3. Push/export local project history to remote/upstream: `git push origin <branch>`
-Text tools, e.g., Winmerge/Textwrangler, compare two files (versions of the same file) and offer the possibility to take over changes from either version to the other version. Such functionality can be very helpful to resolve conflicts during merging.
+    1. Make sure the staging area is clean: `git status`
+    2. Make local commit(s) to the development branch (see previous step)
+    3. In case someone else is working on the same development branch, then import/merge new commits from remote/upstream to local branch: `git pull origin <branch>`
+    4. In case the master branch has changed considerably or contains important updates, then rebase/merge with master
+        - `git rebase master` or `git merge master`
+        - remove potential rebase conflicts, mark the resolved files with `git add` or `git rm`, and continue with `git rebase --continue` or `git merge --continue`
+        - and conclude `git commit -am "<message>"`
+    5. Push/export local project history to remote/upstream: `git push origin <branch>`
+
 
 6. Repeat steps 3-5 until the development branch is ready for deployment. Open a [pull request](https://help.github.com/articles/creating-a-pull-request/) and ask for feedback from the team members. It usually does not hurt if someone else than the developer does a test on a feature, since another person may test differently.
 
