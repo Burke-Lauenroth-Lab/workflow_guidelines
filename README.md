@@ -72,6 +72,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
         * Apply a stored stash: `git stash apply` will apply <stash@{0}>; apply stash with number X: `git stash apply stash@{X}`. Git gives merge conflict messages if a stash does not apply cleanly. Apply a stash and stage files as before: `git stash apply --index`
         * Remove a stash from the stack: `git stash drop stash@{X}`
         * Apply and remove a stash: `git stash pop`
+        * Show what applying a stash would add/remove to <branch>: `git diff <branch> stash@{X}`
     * Text tools compare two files (versions of the same file) and offer the possibility to take over changes from either version to the other version. For instance Winmerge or Textwrangler. Such functionality can be also very helpful to resolve conflicts during merging/rebasing.
 
 4. Commit to your development branch regularly and use explanatory commit messages in order to create a transparent work history (e.g., to help with debugging; to find specific changes at a later time). Each commit is a separate logical unit of change and is therefore composed of related changes.
