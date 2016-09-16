@@ -1,6 +1,6 @@
 # Github workflow for SOILWAT, Rsoilwat, and SoilWat_R_Wrapper
 ------
-Version: June 8, 2016
+Version: Sep 16, 2016
 Authors: Alexander Reeder, Daniel Schlaepfer
 
 
@@ -66,9 +66,12 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
         * From staged snapshot and commit history: `git reset --mixed HEAD`
         * From commit history: `git reset --soft HEAD`
     * Remove commits from current published branch (by creating a new commit, i.e., it does not re-write history): `git revert HEAD`
-    * Interruptions to coding
-        * Pulling into a dirty tree (i.e., git pull cannot merge): `git stash` then `git pull` and `git stash pop`
-        * Interrupted workflow: `git stash`; work on interruption and commit; `git stash pop`
+    * Interruptions to coding: 'stashing' saves uncommitted changes and resets/cleans the working directory, e.g., to switch branches, to pull into a dirty tree, to interrupt the workflow in general. Stashes are handled in the same way as commits by git commands, but they are not linked to a specific branch. Stashes are named <stash@{X}> where X is the number on the stack. For more details see [here](https://git-scm.com/docs/git-stash) and [here](https://git-scm.com/book/tr/v2/Git-Tools-Stashing-and-Cleaning)
+        * Push a new stash onto stack: `git stash` (this will only stash files that are already tracked); to stash also untracked (i.e., new files): `git stash --include-untracked`
+        * List stored stashes on stack: `git stash list`
+        * Apply a stored stash: `git stash apply` will apply <stash@{0}>; apply stash with number X: `git stash apply stash@{X}`. Git gives merge conflict messages if a stash does not apply cleanly. Apply a stash and stage files as before: `git stash apply --index`
+        * Remove a stash from the stack: `git stash drop stash@{X}`
+        * Apply and remove a stash: `git stash pop`
     * Text tools compare two files (versions of the same file) and offer the possibility to take over changes from either version to the other version. For instance Winmerge or Textwrangler. Such functionality can be also very helpful to resolve conflicts during merging/rebasing.
 
 4. Commit to your development branch regularly and use explanatory commit messages in order to create a transparent work history (e.g., to help with debugging; to find specific changes at a later time). Each commit is a separate logical unit of change and is therefore composed of related changes.
@@ -94,7 +97,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
 
 7. If necessary, repeat steps 3-5 to complete review of the pull request, e.g. to deal with issues and fix bugs.
 
-8. After a team member has reviewed the development branch, you should deploy the development branch and merge/rebase to the master. Our standard method with two options for deploying a development/feature branch to the master branch on github.com repository (option (i) with rebasing is ideal for small development branches or for simultaneous work on same code section; option (ii) with merging is preferred for large development branches; see following stackoverflow discussions [1](http://stackoverflow.com/questions/1241720/git-cherry-pick-vs-merge-workflow), [2](http://stackoverflow.com/questions/457927/git-workflow-and-rebase-vs-merge-questions)):
+8. After a team member has reviewed the development branch, you should deploy the development branch and merge/rebase to the master. Our standard method with two options for deploying a development/feature branch to the master branch on github.com repository (option (i) with rebasing is ideal for small development branches or for simultaneous work on same code section; option (ii) with merging is preferred for large development branches; see following stackoverflow discussions [here](http://stackoverflow.com/questions/1241720/git-cherry-pick-vs-merge-workflow) and [here](http://stackoverflow.com/questions/457927/git-workflow-and-rebase-vs-merge-questions)):
     0. Make sure you are on the development branch: `git checkout <branch>`
     1. Make sure the staging area is clean: `git status`
         * Note: The Rsoilwat repository will always show 'src' as 'untracked content' because SOILWAT is loaded as a submodule. Don't stage and commit 'src'. If you want to edit the code of SOILWAT, do that in the SOILWAT repository and then update the submodule in Rsoilwat as explained in the README of Rsoilwat.
