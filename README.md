@@ -57,25 +57,25 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     4. Push/export local <branch> to remote/upstream: `git push origin <branch>`
 
 3. Work on code
-    * Stage your changes in a snapshot: `git add <file>` or `git add <directory>` or `git add -p`
+    * __Stage__ your changes in a snapshot: `git add <file>` or `git add <directory>` or `git add -p`
     * Navigation
         * Between branches: `git checkout <branch>`
         * Between commits: `git checkout <commit>` # HEAD points to <commit> in a 'detached HEAD' state (i.e., view but do not edit!)
-    * Remove commits from current (private, i.e., not published on remote repository) state of a branch (i.e., re-writing history)
+    * __Remove commits__ from current (private, i.e., not published on remote repository) state of a branch (i.e., re-writing history)
         * From working directory, staged snapshot, and commit history: `git reset --hard HEAD`
         * From staged snapshot and commit history: `git reset --mixed HEAD`
         * From commit history: `git reset --soft HEAD`
-    * Remove commits from current published branch (by creating a new commit, i.e., it does not re-write history): `git revert HEAD`
-    * Interruptions to coding: 'stashing' saves uncommitted changes and resets/cleans the working directory, e.g., to switch branches, to pull into a dirty tree, to interrupt the workflow in general. Stashes are handled in the same way as commits by git commands, but they are not linked to a specific branch. Stashes are named <stash@{X}> where X is the number on the stack. For more details see [here](https://git-scm.com/docs/git-stash) and [here](https://git-scm.com/book/tr/v2/Git-Tools-Stashing-and-Cleaning)
+    * __Remove commits__ from current published branch (by creating a new commit, i.e., it does not re-write history): `git revert HEAD`
+    * __Interruptions__ to coding: 'stashing' saves uncommitted changes and resets/cleans the working directory, e.g., to switch branches, to pull into a dirty tree, to interrupt the workflow in general. Stashes are handled in the same way as commits by git commands, but they are not linked to a specific branch. Stashes are named <stash@{X}> where X is the number on the stack. For more details see [here](https://git-scm.com/docs/git-stash) and [here](https://git-scm.com/book/tr/v2/Git-Tools-Stashing-and-Cleaning)
         * Push a new stash onto stack: `git stash` (this will only stash files that are already tracked); to stash also untracked (i.e., new files): `git stash --include-untracked`
         * List stored stashes on stack: `git stash list`
         * Apply a stored stash: `git stash apply` will apply <stash@{0}>; apply stash with number X: `git stash apply stash@{X}`. Git gives merge conflict messages if a stash does not apply cleanly. Apply a stash and stage files as before: `git stash apply --index`
         * Remove a stash from the stack: `git stash drop stash@{X}`
         * Apply and remove a stash: `git stash pop`
         * Show what applying a stash would add/remove to <branch>: `git diff <branch> stash@{X}`
-    * Text tools compare two files (versions of the same file) and offer the possibility to take over changes from either version to the other version. For instance Winmerge or Textwrangler. Such functionality can be also very helpful to resolve conflicts during merging/rebasing.
+    * __Resolve merge/rebase conflicts__ (see, e.g., the section 'How To Resolve Conflicts' of [git-merge](https://git-scm.com/docs/git-merge),  [here](https://githowto.com/resolving_conflicts), or [here](https://developer.atlassian.com/blog/2015/12/tips-tools-to-solve-git-conflicts/)): DRS uses a GUI merge tool (TextWrangler or kdiff3) by issuing `git mergetool -t kdiff3`. Several other tools are available, see [here](https://www.slant.co/topics/1324/~diff-tools-for-git), [here](https://www.quora.com/What-is-the-best-git-merge-tool-for-The-Mac), and [here](https://developer.atlassian.com/blog/2015/12/tips-tools-to-solve-git-conflicts/) for a comparison and discussion of pros and cons).
 
-4. Commit to your development branch regularly and use explanatory commit messages in order to create a transparent work history (e.g., to help with debugging; to find specific changes at a later time). Each commit is a separate logical unit of change and is therefore composed of related changes.
+4. __Commit__ to your development branch regularly and use explanatory commit messages in order to create a transparent work history (e.g., to help with debugging; to find specific changes at a later time). Each commit is a separate logical unit of change and is therefore composed of related changes.
     * Check state of staging area: `git status`
     * Commit/save to project history:
         * Commit staged snapshot: `git commit -m "<message>"` # where <message> contains the commit description on the first line (< 50 characters), a blank line, and a detailed description (include keywords to close/fix/resolve issues, e.g., closes #45 will close issue #45 in the repository)
@@ -89,7 +89,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     3. In case someone else is working on the same development branch, then import/merge new commits from remote/upstream to local branch: `git pull origin <branch>`
     4. In case the master branch has changed considerably or contains important updates, then rebase/merge with master
         - `git rebase master` or `git merge master`
-        - remove potential rebase conflicts, mark the resolved files with `git add` or `git rm`, and continue with `git rebase --continue` or `git merge --continue`
+        - remove/resolve conflicts, mark the resolved files with `git add` or `git rm`, and continue with `git rebase --continue` or `git merge --continue`
         - and conclude `git commit -am "<message>"`
     5. Push/export local project history to remote/upstream: `git push origin <branch>`
 
@@ -108,7 +108,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
         1. `git checkout master`
         2. `git pull origin`
         3. `git merge <branch>`
-    5. Resolve potential merge conflicts (see, e.g., the section 'How To Resolve Conflicts' of [git-merge](https://git-scm.com/docs/git-merge) and the relevant entry at [GitHowTo](https://githowto.com/resolving_conflicts))
+    5. Resolve potential conflicts
     6. Commit and push the merge to remote/upstream with a detailed <message> particularly when using option (ii)
         1. `git commit -am "<message>"`
         2. `git push origin`
