@@ -37,11 +37,11 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * If you can fix the problem yourself, then can create a new branch, improve the code, test the code and check that the changes did not break anything, and create a pull request (the commit message can automatically close the issue number(s); see workflow below).
 
 ## Managing collaborations
-Issues describe suggested new features, a symptom of a bug, a proposed change etc. These maybe assigned to collaborators. If you decide to work on a specific issue (or your boss tells you to do so), then:
-    * Write a short comment in reply to the issue that you started working on it, e.g., "drs started working on issue #30 on Oct 4, 2016"
-    * Create a new branch with a self-explanatory name; e.g., 'newfeature' is bad and 'use_nco_to_extract_netCDF' is better
-    * tag the issue with "#30" (or whatever the issue number is) in your first commit message of the new branch
-    * close the issue with "close #30" with the merge message of the pull-request when the issue is completely addressed
+Issues describe suggested new features, a symptom of a bug, a proposed change etc. These maybe assigned to collaborators. If you decide to work on a specific issue (or your boss tells you to do so), then
+* Write a short comment in reply to the issue that you started working on it, e.g., "drs started working on issue #30 on Oct 4, 2016"
+* Create a new branch with a self-explanatory name; e.g., 'newfeature' is bad and 'use_nco_to_extract_netCDF' is better
+* tag the issue with "#30" (or whatever the issue number is) in your first commit message of the new branch
+* close the issue with "close #30" with the merge message of the pull-request when the issue is completely addressed
 
 
 ## Workflow
@@ -50,6 +50,10 @@ Issues describe suggested new features, a symptom of a bug, a proposed change et
     * `git config --global user.email <email>`
     * `git config --global core.editor <editor>` # e.g., vi, emacs, nano, TextWrangler (Microsoft Windows user refer to [First-Time-Git-Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup))
     * `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
+    * Activate two-factor authentication for your account on [github.com](https://help.github.com/articles/providing-your-2fa-authentication-code/)
+        - DRS prefers using a TOTP application over text messaging, e.g., [Duo Mobile](https://duo.com/solutions/features/two-factor-authentication-methods).
+        - Command line tools will require a [personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) instead of your regular password.
+        - Instead of repeatedly entering the token, you could enable 'git credential caching' with `git config --global credential.helper cache` (on Linux) or `git config --global credential.helper osxkeychain` (on macOS).
 
 2. Create a __new (development) branch__ each time you start to develop new functionality or work on improving code. Use descriptive branch names (e.g., new-snowmelt)
     1. Get a copy of a remote repository to your local computer:
