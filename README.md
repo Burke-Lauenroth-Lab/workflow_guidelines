@@ -36,6 +36,13 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * You can report it as a new issue, e.g.,  [here](https://github.com/Burke-Lauenroth-Lab/Rsoilwat/issues) for Rsoilwat, and communicate with the person who committed the buggy code.
     * If you can fix the problem yourself, then can create a new branch, improve the code, test the code and check that the changes did not break anything, and create a pull request (the commit message can automatically close the issue number(s); see workflow below).
 
+## Managing collaborations
+Issues describe suggested new features, a symptom of a bug, a proposed change etc. These maybe assigned to collaborators. If you decide to work on a specific issue (or your boss tells you to do so), then:
+    * Write a short comment in reply to the issue that you started working on it, e.g., "drs started working on issue #30 on Oct 4, 2016"
+    * Create a new branch with a self-explanatory name; e.g., 'newfeature' is bad and 'use_nco_to_extract_netCDF' is better
+    * tag the issue with "#30" (or whatever the issue number is) in your first commit message of the new branch
+    * close the issue with "close #30" with the merge message of the pull-request when the issue is completely addressed
+
 
 ## Workflow
 1.	Set __global user options__ to identify your commits
