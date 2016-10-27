@@ -73,10 +73,10 @@ Issues describe suggested new features, a symptom of a bug, a proposed change et
         * Between branches: `git checkout <branch>`
         * Between commits: `git checkout <commit>` # HEAD points to <commit> in a 'detached HEAD' state (i.e., view but do not edit!)
     * __Remove commits__ from current (private, i.e., not published on remote repository) state of a branch (i.e., re-writing history)
-        * From working directory, staged snapshot, and commit history: `git reset --hard HEAD`
-        * From staged snapshot and commit history: `git reset --mixed HEAD`
-        * From commit history: `git reset --soft HEAD`
-    * __Remove commits__ from current published branch (by creating a new commit, i.e., it does not re-write history): `git revert HEAD`
+        * From working directory, staged snapshot, and commit history: `git reset --hard HEAD~1`
+        * From staged snapshot and commit history: `git reset --mixed HEAD~1`
+        * From commit history: `git reset --soft HEAD~1`
+    * __Remove commits__ from current published branch (by creating a new commit, i.e., it does not re-write history): `git revert HEAD~1`
     * __Interruptions__ to coding: 'stashing' saves uncommitted changes and resets/cleans the working directory, e.g., to switch branches, to pull into a dirty tree, to interrupt the workflow in general. Stashes are handled in the same way as commits by git commands, but they are not linked to a specific branch. Stashes are named <stash@{X}> where X is the number on the stack. For more details see [here](https://git-scm.com/docs/git-stash) and [here](https://git-scm.com/book/tr/v2/Git-Tools-Stashing-and-Cleaning)
         * Push a new stash onto stack: `git stash` (this will only stash files that are already tracked); to stash also untracked (i.e., new files): `git stash --include-untracked`
         * List stored stashes on stack: `git stash list`
