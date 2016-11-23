@@ -1,7 +1,8 @@
-# Github workflow for SOILWAT, Rsoilwat, and SoilWat_R_Wrapper
+# Github workflow for SOILWAT, Rsoilwat, and SoilWat_R_Wrapper (SWSF)
 ------
-Version: Sep 16, 2016
-Authors: Alexander Reeder, Daniel Schlaepfer
+
+* Version: Sep 16, 2016, modified Nov 23, 2016
+* Authors: Alexander Reeder, Daniel Schlaepfer
 
 
 We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects. Suggestions and improvements are welcome. The workflow description is based on terminal/console 'git' commands; the GUI program ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules).
@@ -14,11 +15,13 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * __Local repository__: commit to project history
     * __Remote repository__ on github.com: share code with collaborators and backup local branches
 
-* There are __two types of branches__: the master branch and development/feature branches. Any commit on the master branch is deployable and has a unique version number. Deployable for us means that commits are tested. Such commits are usually the result of merging/rebasing with a development branch. The previous de facto master branches 'Rsoilwat_v31' and 'wrapper_sw31' have been merged with the true master branches.
+* We have __two types of branches__:
+    * __Master branch__: Any commit on the master branch aims to be deployable. Such commits are usually the result of merging/rebasing with a development branch. Once deployable a unique version number is released. Deployable for us means that commits are tested.
+    * __Development/feature branches__
 
 * __Testing__ involves at least that each line of code was executed and did not throw an error or stopped execution unexpectedly. However, writing re-usable unit test cases (for R code based on the package [testthat](https://cran.r-project.org/web/packages/testthat/index.html)) is the preferred way to test our code.
 
-* __Documentation__: Comment the code well and write object documentation with [roxygen](http://r-pkgs.had.co.nz/man.html), if using R, or with [doxygen](http://www.doxygen.org), if using another programming language.
+* __Documentation__: Comment the code well and write object documentation with [roxygen2](http://r-pkgs.had.co.nz/man.html), if using R, or with [doxygen](http://www.doxygen.org), if using another programming language.
 
 * __Style guide__: In development. For R coding style, DRS suggests to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html). There are many other R style guides including: [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml), [Bioconductor's Coding Style](https://www.bioconductor.org/developers/how-to/coding-style/), [rDatSci/rOpenSci's R Style Guide](https://github.com/rdatsci/PackagesInfo/wiki/R-Style-Guide), [R Coding Conventions by H. Bengtsson](https://docs.google.com/document/d/1esDVxyWvH8AsX-VJa-8oqWaHLs4stGlIbk8kLc5VlII/edit), [4D R code style guide](https://4dpiecharts.com/r-code-style-guide/)
 
@@ -33,15 +36,20 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * List of remote connections: `git remote -v`
 
 * __Error reporting__: If you come across a bug in our code, please do something about it.
-    * You can report it as a new issue, e.g.,  [here](https://github.com/Burke-Lauenroth-Lab/Rsoilwat/issues) for Rsoilwat, and communicate with the person who committed the buggy code.
-    * If you can fix the problem yourself, then can create a new branch, improve the code, test the code and check that the changes did not break anything, and create a pull request (the commit message can automatically close the issue number(s); see workflow below).
+    * If you can fix the problem yourself, then create a new branch, improve the code, test the code and check that the changes did not break anything, and create a pull request (the commit message can automatically close the issue number(s); see workflow below).
+    * You can report it as a new issue, e.g.,  [here](https://github.com/Burke-Lauenroth-Lab/Rsoilwat/issues) for Rsoilwat. Please, think carefully whether the issue is due to code by SOILWAT, Rsoilwat, or rather by SWSF. Ideally, you provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example. Some resources that may help:
+        * [How to create a Minimal, Complete, and Verifiable example](http://stackoverflow.com/help/mcve)
+        * [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html)
+        * [How to make a great R reproducible example?](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example#5963610)
+        * [How to write a reproducible example](https://gist.github.com/hadley/270442)
+
 
 ## Managing collaborations
 Issues describe suggested new features, a symptom of a bug, a proposed change etc. These maybe assigned to collaborators. If you decide to work on a specific issue (or your boss tells you to do so), then
 * Write a short comment in reply to the issue that you started working on it, e.g., "drs started working on issue #30 on Oct 4, 2016"
 * Create a new branch with a self-explanatory name; e.g., 'newfeature' is bad and 'use_nco_to_extract_netCDF' is better
 * tag the issue with "#30" (or whatever the issue number is) in your first commit message of the new branch
-* close the issue with "close #30" with the merge message of the pull-request when the issue is completely addressed
+* Close the issue with "close #30" with the merge message of the pull-request when the issue is completely addressed
 
 
 ## Workflow
