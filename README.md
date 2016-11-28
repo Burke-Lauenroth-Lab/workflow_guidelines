@@ -1,7 +1,7 @@
 # Github workflow for SOILWAT, Rsoilwat, and SoilWat_R_Wrapper (SWSF)
 ------
 
-* Version: Sep 16, 2016, modified Nov 23, 2016
+* Version: Sep 16, 2016, modified Nov 28, 2016
 * Authors: Alexander Reeder, Daniel Schlaepfer
 
 
@@ -85,6 +85,9 @@ Issues describe suggested new features, a symptom of a bug, a proposed change et
         * From staged snapshot and commit history: `git reset --mixed HEAD~1`
         * From commit history: `git reset --soft HEAD~1`
     * __Remove commits__ from current published branch (by creating a new commit, i.e., it does not re-write history): `git revert HEAD~1`
+    * __Amending the most recent commit message__ (see [SO](http://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits) for alternative scenarios)
+        * Completely rewrite message from scratch: `git commit --amend`
+        * Amend by starting from old message: `git commit --amend -c HEAD`
     * __Interruptions__ to coding: 'stashing' saves uncommitted changes and resets/cleans the working directory, e.g., to switch branches, to pull into a dirty tree, to interrupt the workflow in general. Stashes are handled in the same way as commits by git commands, but they are not linked to a specific branch. Stashes are named <stash@{X}> where X is the number on the stack. For more details see [here](https://git-scm.com/docs/git-stash) and [here](https://git-scm.com/book/tr/v2/Git-Tools-Stashing-and-Cleaning)
         * Push a new stash onto stack: `git stash` (this will only stash files that are already tracked); to stash also untracked (i.e., new files): `git stash --include-untracked`
         * List stored stashes on stack: `git stash list`
