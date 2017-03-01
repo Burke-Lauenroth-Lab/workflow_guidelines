@@ -1,7 +1,7 @@
-# Github workflow for SOILWAT, Rsoilwat, and SoilWat_R_Wrapper (SWSF)
+# Github workflow for our repositories
 ------
 
-* Version: Sep 16, 2016, modified Nov 28, 2016
+* Version: Sep 16, 2016, modified Mar 1, 2017
 * Authors: Alexander Reeder, Daniel Schlaepfer
 
 
@@ -35,6 +35,12 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * Remote branches: `git branch -r`
     * List of remote connections: `git remote -v`
 
+* __Finding stuff__ in a repository
+    * Find all commits which have affected a file: `git log -- *<part_of_file_name>*`
+    * Find the SHA of the last commit that affected a file `git rev-list -n 1 HEAD -- <file_path>`
+    * Find all commits which have deleted files and list the deleted files:
+      `git log --diff-filter=D --summary`
+
 * __Error reporting__: If you come across a bug in our code, please do something about it.
     * If you can fix the problem yourself, then create a new branch, improve the code, test the code and check that the changes did not break anything, and create a pull request (the commit message can automatically close the issue number(s); see workflow below).
     * You can report it as a new issue, e.g.,  [here](https://github.com/Burke-Lauenroth-Lab/Rsoilwat/issues) for Rsoilwat. Please, think carefully whether the issue is due to code by SOILWAT, Rsoilwat, or rather by SWSF. Ideally, you provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example. Some resources that may help:
@@ -65,12 +71,12 @@ Issues describe suggested new features, a symptom of a bug, a proposed change et
 
 2. Create a __new (development) branch__ each time you start to develop new functionality or work on improving code. Use descriptive branch names (e.g., new-snowmelt)
     1. Get a copy of a remote repository to your local computer:
-        * `git clone https://github.com/Burke-Lauenroth-Lab/SOILWAT.git`
-        * `git clone https://github.com/Burke-Lauenroth-Lab/SoilWat_R_Wrapper.git`
+        * `git clone https://github.com/Burke-Lauenroth-Lab/SOILWAT2.git`
+        * `git clone https://github.com/Burke-Lauenroth-Lab/rSFSW2.git`
         * Get a copy of a specific branch:
-            * `git clone -b segfault1 https://github.com/Burke-Lauenroth-Lab/SOILWAT.git`
+            * `git clone -b segfault1 https://github.com/Burke-Lauenroth-Lab/SOILWAT2.git`
         * If the repository contains sub-modules:
-            * `git clone --single-branch --recursive https://github.com/Burke-Lauenroth-Lab/Rsoilwat.git Rsoilwat_v31`
+            * `git clone --single-branch --recursive https://github.com/Burke-Lauenroth-Lab/rSOILWAT2.git rSOILWAT2`
     2. Make a new branch: `git branch <branch>`
     3. Change into a branch: `git checkout <branch>`
     4. Push/export local <branch> to remote/upstream: `git push origin <branch>`
@@ -85,6 +91,7 @@ Issues describe suggested new features, a symptom of a bug, a proposed change et
         * From staged snapshot and commit history: `git reset --mixed HEAD~1`
         * From commit history: `git reset --soft HEAD~1`
     * __Remove commits__ from current published branch (by creating a new commit, i.e., it does not re-write history): `git revert HEAD~1`
+    * __Restore file__ from a previous commit: `git checkout <deleting_commit>~1 -- <file_path>`
     * __Amending the most recent commit message__ (see [SO](http://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits) for alternative scenarios)
         * Completely rewrite message from scratch: `git commit --amend`
         * Amend by starting from old message: `git commit --amend -c HEAD`
