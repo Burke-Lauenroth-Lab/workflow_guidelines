@@ -45,15 +45,14 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
       `git log --diff-filter=D --summary`
 
 * __Error reporting__: 
-    * All _master branch_ bugs require you to create an __issue__ in GitHub. Please think carefully whether the issue is due to code by SOILWAT2, rSOILWAT2, or rather by rSWSF2. Ideally, you provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example. Some resources that may help:
+    * All _master branch_ bugs require you to create an __issue__ in GitHub. Please think carefully whether the issue is due to code by SOILWAT2, rSOILWAT2, or rather by rSFSW2. Ideally, you provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example. Some resources that may help:
         * [How to create a Minimal, Complete, and Verifiable example](http://stackoverflow.com/help/mcve)
         * [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html)
         * [How to make a great R reproducible example?](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example#5963610)
         * [How to write a reproducible example](https://gist.github.com/hadley/270442)
     * Assign the issue to the __master__ milestone
     * Create a __bugfix branch__
-    * When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it
-        * Note: You can only close an issue via commit message on the master branch (e.g. in the pull request title). For other branches, the reference will still appear (which is beneficial documentation), and you need to manually close the issue. 
+    * [Close the issue with a reference](#closing-issues)
     * Create a pull request to the master branch, with appropriate reviewers
 
 
@@ -66,7 +65,11 @@ Issues describe suggested new features, a symptom of a bug, a proposed change, a
 * Assign it to a milestone
     * Master branch bug: the _master_ milestone
     * Feature branch bug/enhancement: the respective milestone
-
+	
+## Closing issues
+* When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body)
+	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards. 
+ 
 ## Creating milestones
 Milestones map to branches, and hold issues relating to that branch. Whenever you create a feature branch, you should also create a respective milestone.
 * Name it the exact same as the branch name, minus the "feature_" prefix
@@ -100,7 +103,7 @@ Milestones map to branches, and hold issues relating to that branch. Whenever yo
 
 4. Work on code
     * Whenever a significant enhancement or issue arises, or when you think one will arise in the future, document it via an issue, and assign that issue to the milestone. 
-        * A good rule of thumb is that other group members should know what you are working on at any given point in time. After initial functionality has been developed, you should aim to document every significant change that will need to be done before the branch can be merged to master. Close the issue when it has been resolved.
+        * A good rule of thumb is that other group members should know what you are working on at any given point in time. After initial functionality has been developed, you should aim to document every significant change that will need to be done before the branch can be merged to master. [Close the issue](#closing-issues) when it has been resolved.
     * __Stage__ your changes in a snapshot: `git add <file>` or `git add <directory>` or `git add -p`
     * Navigation
         * Between branches: `git checkout <branch>`
