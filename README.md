@@ -1,7 +1,7 @@
 # Github workflow for our repositories
 ------
 
-* Version: Sep 16, 2016, modified August 10, 2017
+* Version: Sep 16, 2016, modified September 23, 2017
 * Authors: Alexander Reeder, Daniel Schlaepfer, Zachary Kramer
 
 
@@ -20,7 +20,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
 * We have __three types of branches__:
     * __Master branch__: Any commit on the master branch aims to be deployable. Such commits are usually the result of merging/rebasing with a feature or bugfix branch. Once deployable a unique version number is released. Deployable for us means that commits are tested.
     * __Bugfix branches__: When a bug is discovered on the master branch, a bugfix branch and an issue should be created. The issue should be assigned to the _master_ milestone. A bugfix branch should be named after the respective issue. An example of a bugfix branch would be bugfix_16, which represents issue #16.
-    * __Feature branches__: Everything else should be a feature branch, which is where code development is done before it is merged back to master. Each feature branch needs its own __milestone__. Any bugfixes needed on a feature branch should be directly committed to the feature branch. Feature branches should have descriptive but concise names in upper camel case, such as feature_BetterErrorMessages. 
+    * __Feature branches__: Everything else should be a feature branch, which is where code development is done before it is merged back to master. Each feature branch needs its own __milestone__. Any bugfixes needed on a feature branch should be directly committed to the feature branch. Feature branches should have descriptive but concise names in upper camel case, such as feature_BetterErrorMessages.
 
 * __Testing__ involves at least that each line of code was executed and did not throw an error or stopped execution unexpectedly. However, writing re-usable unit test cases (for R code based on the package [testthat](https://cran.r-project.org/web/packages/testthat/index.html), and for C code based on [GoogleTest](https://github.com/google/googletest)) is the preferred way to test our code.
 
@@ -44,7 +44,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * Find all commits which have deleted files and list the deleted files:
       `git log --diff-filter=D --summary`
 
-* __Error reporting__: 
+* __Error reporting__:
     * All _master branch_ bugs require you to create an __issue__ in GitHub. Please think carefully whether the issue is due to code by SOILWAT2, rSOILWAT2, or rather by rSFSW2. Ideally, you provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example. Some resources that may help:
         * [How to create a Minimal, Complete, and Verifiable example](http://stackoverflow.com/help/mcve)
         * [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html)
@@ -65,17 +65,34 @@ Issues describe suggested new features, a symptom of a bug, a proposed change, a
 * Assign it to a milestone
     * Master branch bug: the _master_ milestone
     * Feature branch bug/enhancement: the respective milestone
-	
+
 ## Closing issues
 * When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body)
-	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards. 
- 
+	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
+
 ## Creating milestones
 Milestones map to branches, and hold issues relating to that branch. Whenever you create a feature branch, you should also create a respective milestone.
 * Name it the exact same as the branch name, minus the "feature_" prefix
     * For instance, _feature_CO2Effects_ should be named _CO2Effects_
 * Provide an apt description of the branch
 * Optionally, provide a deadline
+
+## Communication (commit messages, comments on issues, etc.)
+Follow our code of conduct in all communications, e.g., [Contributor Code of Conduct of the rSFSW2 repository](https://github.com/Burke-Lauenroth-Lab/rSFSW2/blob/master/CONDUCT.md).
+
+Why good messages are important:
+[Erlang: Writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages): "Good commit messages serve at least three important purposes:
+- To speed up the reviewing process.
+- To help us write a good release note.
+- To help the future maintainers of Erlang/OTP (it could be you!), say five years into the future, to find out why a particular change was made to the code or why a specific feature was added."
+
+How to write good messages:
+[Who-T: On commit messages](http://who-t.blogspot.com/2009/12/on-commit-messages.html): "A good commit message should answer three questions about a patch:
+- Why is it necessary? It may fix a bug, it may add a feature, it may improve performance, reliabilty, stability, or just be a change for the sake of correctness.
+- How does it address the issue? For short obvious patches this part can be omitted, but it should be a high level description of what the approach was.
+- What effects does the patch have? (In addition to the obvious ones, this may include benchmarks, side effects, etc.)"
+
+
 
 ## Workflow
 1.	Set __global user options__ to identify your commits
@@ -102,7 +119,7 @@ Milestones map to branches, and hold issues relating to that branch. Whenever yo
 3. Create a __milestone__ that describes the purpose of the branch
 
 4. Work on code
-    * Whenever a significant enhancement or issue arises, or when you think one will arise in the future, document it via an issue, and assign that issue to the milestone. 
+    * Whenever a significant enhancement or issue arises, or when you think one will arise in the future, document it via an issue, and assign that issue to the milestone.
         * A good rule of thumb is that other group members should know what you are working on at any given point in time. After initial functionality has been developed, you should aim to document every significant change that will need to be done before the branch can be merged to master. [Close the issue](#closing-issues) when it has been resolved.
     * __Stage__ your changes in a snapshot: `git add <file>` or `git add <directory>` or `git add -p`
     * Navigation
