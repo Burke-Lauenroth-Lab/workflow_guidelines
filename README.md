@@ -1,36 +1,55 @@
-# Structure, Workflow, and Standards for The Ecohydrology GitHub Organization
+# Structure, Workflow, and Standards for the Ecohydrology Laboratory GitHub Organization
 ------
 
 * Version: Sep 16, 2016, modified December 11, 2017
 * Authors: Alexander Reeder, Daniel Schlaepfer, Zachary Kramer, Caitlin Andrews
 
-This is a general guide to the structure, workflow, and standards of the Ecohydrology GitHub Organization. The Ecohydrology GitHub Organization consists of many different repositories, each with a different code base and modeling utility aimed at our understanding of water balance. We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects.
+This is a general guide to the structure, workflow, and standards of the Ecohydrology Laboratory GitHub Organization. The Ecohydrology Laboratory GitHub Organization consists of many different repositories, each with a different code base and utility aimed at promoting out ability to model ecohydrology. We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects.
 
 ## Table of Contents
 
 [Basics](#basics)
 
 [Suggested Tools and Software](#suggests)
+  * [Text Editors](#text)
+  * [Git GUIs](#gitgui)
+  * [Merge](#merge)
 
 [Communication](#communication)
 
 [Repositories of the Ecohydrology GitHub Organization](#theRepos)
+  * [SOILWAT2](#soilwat)
+  * [rSOILWAT2](#rsoilwat)
+  * [rSFSW2](#rsfsw)
+  * [STEPWAT2](#stepwat)
+  * [rSFSTEP2](#rsfstep)
+  * [rSFSW2_tools](#sfsw_tools)
+  * [STEPWAT_R_Wrapper](#stepr)
 
 [Relationships between Repositories](#repoRelations)
 
 [How We Use Git Features](#useGitFeatures)
+  * [Creating Issues](#issuecreate)
+  * [Closing Issues](#issueclose)
+  * [Creating Milestones](#milestone)
+  * [Projects](#projects)
 
 [Workflow Guidelines](#workflow)
 
 [Documentation Guidelines](#documentation)
+  * [Documentation in C](#cdocumentation)
+  * [Documentation in R](#rdocumentation)
 
 [Testing Guidelines](#testing)
-
+  * [Heirarchy of Testing](#testheir)
+  * [Testing in C](#ctest)
+  * [Testing in R](#rtest)
+  
 [Useful Links](#links)
 
-<a name="basics"/>
 
-## Basics
+## Basics <a name="basics"/>
+
 * The 4 levels of the git organization
     * __Working directory__ (on local computer): work in text editor and/or an IDE (RStudio, Visual Studio, etc.)
     * __Staging area__: include/save changes to the next commit
@@ -77,14 +96,18 @@ This is a general guide to the structure, workflow, and standards of the Ecohydr
     * [Close the issue with a reference](#closing-issues)
     * Create a pull request to the master branch, with appropriate reviewers
 
-<a name="suggests"/>
+## Suggested Tools and Software <a name="suggests"/>
 
-## Suggested Tools and Software
+### Text Editors  <a name="text"/>
+
+### Git GUIs  <a name="gitgui"/>
+
+### Merge <a name="merge"/>
 
 The GUI program ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). Another option is ['Sourcetree'](https://www.sourcetreeapp.com/), which provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
-<a name="communications"/>
 
-## Communication (commit messages, comments on issues, etc.)
+## Communication (commit messages, comments on issues, etc.) <a name="communication"/>
+
 Follow our code of conduct in all communications, e.g., [Contributor Code of Conduct of the rSFSW2 repository](https://github.com/Burke-Lauenroth-Lab/rSFSW2/blob/master/CONDUCT.md).
 
 Why good messages are important:
@@ -99,19 +122,29 @@ How to write good messages:
 - How does it address the issue? For short obvious patches this part can be omitted, but it should be a high level description of what the approach was.
 - What effects does the patch have? (In addition to the obvious ones, this may include benchmarks, side effects, etc.)"
 
-<a name="theRepos"/>
 
-## Repositories of the Ecohydrology GitHub Organization
+## Repositories of the Ecohydrology GitHub Organization <a name="theRepos"/>
 
-<a name="repoRelations"/>
+### SOILWAT2 <a name="soilwat">
+	
+### rSOILWAT2 <a name="rsoilwat">
 
-## Relationships between XXXX Lab's Repositories
+### rSFSW2 <a name="rsfsw">
 
-<a name="useGitFeatures"/>
+### STEPWAT2 <a name="stepwat">
 
-## How We Use Git Features
+### rSFSWTEP2 <a name="rsfstep">
 
-### Creating issues
+### rSFSW2_tools <a name="sfsw_tools">
+
+### STEPWAT_R_Wrapper <a name="stepr">
+
+
+## Relationships between XXXX Lab's Repositories <a name="repoRelations"/>
+
+## How We Use Git Features <a name="useGitFeatures"/>
+
+### Creating issues <a name="issuecreate"/>
 Issues describe suggested new features, a symptom of a bug, a proposed change, and so on. If you create an issue, decide to work on one, or you are assigned to one, then:
 * Assign it to a team member and/or yourself, if applicable
 * Add an __in progress__ label, if you are currently working on it
@@ -121,23 +154,21 @@ Issues describe suggested new features, a symptom of a bug, a proposed change, a
     * Master branch bug: the _master_ milestone
     * Feature branch bug/enhancement: the respective milestone
 
-### Closing issues
+### Closing issues <a name="issueclose"/>
 * When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body)
 	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
 
-### Creating milestones
+### Creating milestones <a name="milestone"/>
 Milestones map to branches, and hold issues relating to that branch. Whenever you create a feature branch, you should also create a respective milestone.
 * Name it the exact same as the branch name, minus the "feature_" prefix
     * For instance, _feature_CO2Effects_ should be named _CO2Effects_
 * Provide an apt description of the branch
 * Optionally, provide a deadline
 
-### Projects
+### Projects <a name="projects"/>
 
+## Workflow Guidelines <a name="workflow"/>
 
-<a name="workflow"/>
-
-## Workflow Guidelines
 1.	Set __global user options__ to identify your commits
     * `git config --global user.name <name>`
     * `git config --global user.email <email>`
@@ -241,17 +272,24 @@ Milestones map to branches, and hold issues relating to that branch. Whenever yo
         * Delete the remote branch: `git push origin --delete <branch>`
         * Remove 'obsolete tracking branches', i.e., branches on local machine that no longer exist on remote/github: `git fetch --all --prune`
 
-<a name="testing"/>
+## Documentation Guidelines <a name="documentation"/>
 
-## Testing Guidelines
+### Documentation in C <a name="cdocumentation"/>
 
-<a name="documentation"/>
+### Documentation in R <a name="rdocumentation"/>
 
-## Documentation Guidelines
+  
+## Testing Guidelines <a name="testing"/>
 
-<a name="links"/>
+### Heirarchy of Testing <a name="testheir"/>
 
-## Links
+### Unit Testing in C <a name="ctest"/>
+
+### Unit Testing in R <a name="rtest"/>
+
+
+## Links <a name="links"/>
+
 * https://guides.github.com/introduction/flow/
 * https://help.github.com/articles/closing-issues-via-commit-messages/
 * http://clubmate.fi/git-dealing-with-branches-merging-and-rebasing/
