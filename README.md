@@ -11,15 +11,17 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
 
 [Basics](#basics)
 
-[Creating Issues](#creatingissues)
-
-[Closing Issues](#closingissues)
-
-[Creating Milestones](#creatingmilestones)
-
 [Communication](#communication)
 
+[Relationships between XXXX Lab's Repositories](#reporelations)
+
+[How We Use Git Features](#useGitFeatures)
+
 [Workflow](#workflow)
+
+[Documentation Guidelines](#documentation)
+
+[Testing Guidelines](#testing)
 
 [Useful Links](#links)
 
@@ -71,34 +73,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * Create a __bugfix branch__
     * [Close the issue with a reference](#closing-issues)
     * Create a pull request to the master branch, with appropriate reviewers
-
-<a name="creatingissues"/>
-
-## Creating issues
-Issues describe suggested new features, a symptom of a bug, a proposed change, and so on. If you create an issue, decide to work on one, or you are assigned to one, then:
-* Assign it to a team member and/or yourself, if applicable
-* Add an __in progress__ label, if you are currently working on it
-* Add a __priority__ label, if it has a low priority or a high priority
-* Add a __category__ label, such as 'bug' or 'enhancement'
-* Assign it to a milestone
-    * Master branch bug: the _master_ milestone
-    * Feature branch bug/enhancement: the respective milestone
-
-<a name="closingissues"/>
-
-## Closing issues
-* When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body)
-	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
-
-<a name="creatingmilestones"/>
-
-## Creating milestones
-Milestones map to branches, and hold issues relating to that branch. Whenever you create a feature branch, you should also create a respective milestone.
-* Name it the exact same as the branch name, minus the "feature_" prefix
-    * For instance, _feature_CO2Effects_ should be named _CO2Effects_
-* Provide an apt description of the branch
-* Optionally, provide a deadline
-
+    
 <a name="communications"/>
 
 ## Communication (commit messages, comments on issues, etc.)
@@ -115,6 +90,37 @@ How to write good messages:
 - Why is it necessary? It may fix a bug, it may add a feature, it may improve performance, reliabilty, stability, or just be a change for the sake of correctness.
 - How does it address the issue? For short obvious patches this part can be omitted, but it should be a high level description of what the approach was.
 - What effects does the patch have? (In addition to the obvious ones, this may include benchmarks, side effects, etc.)"
+
+<a name="reporelations"/>
+
+## Relationships between XXXX Lab's Repositories
+
+<a name="useGitFeatures"/>
+
+## How We Use Git Features
+
+### Creating issues
+Issues describe suggested new features, a symptom of a bug, a proposed change, and so on. If you create an issue, decide to work on one, or you are assigned to one, then:
+* Assign it to a team member and/or yourself, if applicable
+* Add an __in progress__ label, if you are currently working on it
+* Add a __priority__ label, if it has a low priority or a high priority
+* Add a __category__ label, such as 'bug' or 'enhancement'
+* Assign it to a milestone
+    * Master branch bug: the _master_ milestone
+    * Feature branch bug/enhancement: the respective milestone
+
+### Closing issues
+* When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body)
+	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
+
+### Creating milestones
+Milestones map to branches, and hold issues relating to that branch. Whenever you create a feature branch, you should also create a respective milestone.
+* Name it the exact same as the branch name, minus the "feature_" prefix
+    * For instance, _feature_CO2Effects_ should be named _CO2Effects_
+* Provide an apt description of the branch
+* Optionally, provide a deadline
+
+### Projects
 
 
 <a name="workflow"/>
@@ -222,6 +228,14 @@ How to write good messages:
         * Delete the local branch: `git branch -d <branch>`
         * Delete the remote branch: `git push origin --delete <branch>`
         * Remove 'obsolete tracking branches', i.e., branches on local machine that no longer exist on remote/github: `git fetch --all --prune`
+
+<a name="testing"/>
+
+## Testing Guidelines
+
+<a name="documentation"/>
+
+## Documentation Guidelines
 
 <a name="links"/>
 
