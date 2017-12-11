@@ -1,12 +1,29 @@
 # Github workflow for our repositories
 ------
 
-* Version: Sep 16, 2016, modified September 23, 2017
-* Authors: Alexander Reeder, Daniel Schlaepfer, Zachary Kramer
+* Version: Sep 16, 2016, modified December 11, 2017
+* Authors: Alexander Reeder, Daniel Schlaepfer, Zachary Kramer, Caitlin Andrews
 
 
 We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects. Suggestions and improvements are welcome. The workflow description is based on terminal/console 'git' commands. The GUI program ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). Another option is ['Sourcetree'](https://www.sourcetreeapp.com/), which provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
 
+## Table of Contents
+
+[Basics](#basics)
+
+[Creating Issues](#creatingissues)
+
+[Closing Issues](#closingissues)
+
+[Creating Milestones](#creatingmilestones)
+
+[Communication](#communication)
+
+[Workflow](#workflow)
+
+[Useful Links](#links)
+
+<a name="basics"/>
 
 ## Basics
 * The 4 levels of the git organization
@@ -55,6 +72,7 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * [Close the issue with a reference](#closing-issues)
     * Create a pull request to the master branch, with appropriate reviewers
 
+<a name="creatingissues"/>
 
 ## Creating issues
 Issues describe suggested new features, a symptom of a bug, a proposed change, and so on. If you create an issue, decide to work on one, or you are assigned to one, then:
@@ -66,9 +84,13 @@ Issues describe suggested new features, a symptom of a bug, a proposed change, a
     * Master branch bug: the _master_ milestone
     * Feature branch bug/enhancement: the respective milestone
 
+<a name="closingissues"/>
+
 ## Closing issues
 * When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body)
 	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
+
+<a name="creatingmilestones"/>
 
 ## Creating milestones
 Milestones map to branches, and hold issues relating to that branch. Whenever you create a feature branch, you should also create a respective milestone.
@@ -76,6 +98,8 @@ Milestones map to branches, and hold issues relating to that branch. Whenever yo
     * For instance, _feature_CO2Effects_ should be named _CO2Effects_
 * Provide an apt description of the branch
 * Optionally, provide a deadline
+
+<a name="communications"/>
 
 ## Communication (commit messages, comments on issues, etc.)
 Follow our code of conduct in all communications, e.g., [Contributor Code of Conduct of the rSFSW2 repository](https://github.com/Burke-Lauenroth-Lab/rSFSW2/blob/master/CONDUCT.md).
@@ -93,6 +117,7 @@ How to write good messages:
 - What effects does the patch have? (In addition to the obvious ones, this may include benchmarks, side effects, etc.)"
 
 
+<a name="workflow"/>
 
 ## Workflow
 1.	Set __global user options__ to identify your commits
@@ -198,6 +223,7 @@ How to write good messages:
         * Delete the remote branch: `git push origin --delete <branch>`
         * Remove 'obsolete tracking branches', i.e., branches on local machine that no longer exist on remote/github: `git fetch --all --prune`
 
+<a name="links"/>
 
 ## Links
 * https://guides.github.com/introduction/flow/
