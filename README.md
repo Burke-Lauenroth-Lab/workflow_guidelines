@@ -28,11 +28,11 @@ This is a general guide to the structure, workflow, and standards of the Ecohydr
 
 [Relationships between Repositories](#repoRelations)
 
-[How We Use Git Features](#useGitFeatures)
-  * [Creating Issues](#issuecreate)
-  * [Closing Issues](#issueclose)
-  * [Creating Milestones](#milestone)
-  * [Projects](#projects)
+[GitHub Features and Functionality](#useGitFeatures)
+  * [Issues](#issues)
+  * [Milestones](#milestone)
+  * [Projects - Repository Level](#repoprojects)
+  * [Projects - Organization Level](#organizationprojects)
 
 [Workflow Guidelines](#workflow)
 
@@ -102,9 +102,13 @@ This is a general guide to the structure, workflow, and standards of the Ecohydr
 
 ### Git GUIs  <a name="gitgui"/>
 
+Git GUIs provide an accessible interface to the Git framework. Users are able to quickly track and pull the latest commits by other users, add and push their own commits.
+	* ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). 
+	*['Sourcetree'](https://www.sourcetreeapp.com/), provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
+
 ### Merge <a name="merge"/>
 
-The GUI program ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). Another option is ['Sourcetree'](https://www.sourcetreeapp.com/), which provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
+
 
 ## Communication (commit messages, comments on issues, etc.) <a name="communication"/>
 
@@ -142,30 +146,39 @@ How to write good messages:
 
 ## Relationships between XXXX Lab's Repositories <a name="repoRelations"/>
 
-## How We Use Git Features <a name="useGitFeatures"/>
+## GitHub Features and Functionality <a name="useGitFeatures"/>
 
-### Creating issues <a name="issuecreate"/>
-Issues describe suggested new features, a symptom of a bug, a proposed change, and so on. If you create an issue, decide to work on one, or you are assigned to one, then:
+### Issues <a name="issues"/>
+
+Issues are the smallest unit of reporting and are repository specific. Issues can pertain to tasks, questions, proposed enhancements, and bugs. For bug fixes, the issue should revolve around a containable unit of code. Additionally, for each bug, a __bugfix__Issue#BugDescription__ branch should be created. 
+
+#### Creating issues 
+If you create an issue, decide to work on one, or you are assigned to one, then:
 * Assign it to a team member and/or yourself, if applicable
 * Add an __in progress__ label, if you are currently working on it
 * Add a __priority__ label, if it has a low priority or a high priority
-* Add a __category__ label, such as 'bug' or 'enhancement'
+* Add a __category__ label, such as 'bug' or 'enhancement' or 'question'
 * Assign it to a milestone
     * Master branch bug: the _master_ milestone
     * Feature branch bug/enhancement: the respective milestone
 
-### Closing issues <a name="issueclose"/>
-* When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body)
+#### Closing issues 
+* When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body). 
+	* For example, including 'Fixes #45' or 'Closes #45' in the commit message will close issue #45 in the repository you are working in.
 	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
 
-### Creating milestones <a name="milestone"/>
-Milestones map to branches, and hold issues relating to that branch. Whenever you create a feature branch, you should also create a respective milestone.
+### Milestones <a name="milestone"/>
+Milestones map to branches within a repository, and hold issues relating to that branch. Whenever you create a _feature_ branch, you should also create a respective milestone.
 * Name it the exact same as the branch name, minus the "feature_" prefix
     * For instance, _feature_CO2Effects_ should be named _CO2Effects_
 * Provide an apt description of the branch
 * Optionally, provide a deadline
 
-### Projects <a name="projects"/>
+### Projects - Repository Level <a name="repoprojects"/>
+Projects on GitHub are meant to assist in the organization and prioritization of the implementation of broad and/or future ideas. Each project consists of  three different columns: To Do, In Progress, and Done. In each of these columns, the user can broach different tasks and ideas that are free-from or that directly reference existing issues.
+
+### Projects - Organization Level <a name="organizationprojects"/>
+Projects at the organizational level are similar to those at the repository level, except that they can span multiple repositories. This is useful for the implementation of features that have, for example, both a C (e.g. SOILWAT2) and R (e.g. rSOILWAT2) component.
 
 ## Workflow Guidelines <a name="workflow"/>
 
