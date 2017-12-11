@@ -1,23 +1,26 @@
-# Github workflow for our repositories
+# Structure, Workflow, and Standards for The Ecohydrology GitHub Organization
 ------
 
 * Version: Sep 16, 2016, modified December 11, 2017
 * Authors: Alexander Reeder, Daniel Schlaepfer, Zachary Kramer, Caitlin Andrews
 
-
-We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects. Suggestions and improvements are welcome. The workflow description is based on terminal/console 'git' commands. The GUI program ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). Another option is ['Sourcetree'](https://www.sourcetreeapp.com/), which provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
+This is a general guide to the structure, workflow, and standards of the Ecohydrology GitHub Organization. The Ecohydrology GitHub Organization consists of many different repositories, each with a different code base and modeling utility aimed at our understanding of water balance. We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects.
 
 ## Table of Contents
 
 [Basics](#basics)
 
+[Suggested Tools and Software](#suggests)
+
 [Communication](#communication)
 
-[Relationships between XXXX Lab's Repositories](#reporelations)
+[Repositories of the Ecohydrology GitHub Organization](#theRepos)
+
+[Relationships between Repositories](#repoRelations)
 
 [How We Use Git Features](#useGitFeatures)
 
-[Workflow](#workflow)
+[Workflow Guidelines](#workflow)
 
 [Documentation Guidelines](#documentation)
 
@@ -73,7 +76,12 @@ We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'fea
     * Create a __bugfix branch__
     * [Close the issue with a reference](#closing-issues)
     * Create a pull request to the master branch, with appropriate reviewers
-    
+
+<a name="suggests"/>
+
+## Suggested Tools and Software
+
+The GUI program ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). Another option is ['Sourcetree'](https://www.sourcetreeapp.com/), which provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
 <a name="communications"/>
 
 ## Communication (commit messages, comments on issues, etc.)
@@ -91,7 +99,11 @@ How to write good messages:
 - How does it address the issue? For short obvious patches this part can be omitted, but it should be a high level description of what the approach was.
 - What effects does the patch have? (In addition to the obvious ones, this may include benchmarks, side effects, etc.)"
 
-<a name="reporelations"/>
+<a name="theRepos"/>
+
+## Repositories of the Ecohydrology GitHub Organization
+
+<a name="repoRelations"/>
 
 ## Relationships between XXXX Lab's Repositories
 
@@ -125,7 +137,7 @@ Milestones map to branches, and hold issues relating to that branch. Whenever yo
 
 <a name="workflow"/>
 
-## Workflow
+## Workflow Guidelines
 1.	Set __global user options__ to identify your commits
     * `git config --global user.name <name>`
     * `git config --global user.email <email>`
