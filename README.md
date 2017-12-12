@@ -294,7 +294,7 @@ Projects at the organizational level are similar to those at the repository leve
   
 ## Testing Guidelines <a name="testing"/>
 
-Software testing is the process of executing a series of tests at different levels to detect bugs. It it the process of validating and veryifying that our programs are acting as expected as designed.
+We execute a series of tests at different levels to detect bugs and to validate and verify that our code is acting as expected.
 
 ### Heirarchy of Testing <a name="testheir"/>
 
@@ -313,6 +313,16 @@ We test at a series of different _levels_. From lowest to highest, these are:
 ### Unit Testing in C <a name="ctest"/>
 
 ### Unit Testing in R <a name="rtest"/>
+
+We use the 'testthat' framework for unit testing in R. Within each of our R package repositories there is a _tests/testthat_ directory. Within the _tests_ folder there is testthat.R, which guides R to to test all files in the _testthat_ folder during the R CMD check. Each file within the _/testthat_ folder should begin with __test__ and each of these files contains multiple related tests. We typically have _at least_ a test file for each corresponding file in the /R folder, but it is possible that there might need to be many test files for each /R file.
+
+Each test should be designed to test the expectation or multiple expectations of a function. Is the output the right value or the right class? Are the values equal to a reference value? Is there an error message, warning, or message when we want there to be?  There is more information on the variety of available test functions and how to use theme [here.](http://r-pkgs.had.co.nz/tests.html#test-tests)
+
+Each and every function should have a test. Our goal is 100% code coverage. As you write tests, check that they are working by with Ctrl/Cmd-Shift-T or devtools::tests().
+
+#### An Example
+
+
 
 
 ## Links <a name="links"/>
