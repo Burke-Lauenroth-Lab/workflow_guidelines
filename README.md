@@ -1,10 +1,10 @@
-# Structure, Workflow, and Standards for the Ecohydrology Laboratory GitHub Organization
+# Structure, Workflow, and Standards for the Dryland Ecology Laboratory GitHub Organization
 ------
 
 * Version: Sep 16, 2016, modified December 11, 2017
 * Authors: Alexander Reeder, Daniel Schlaepfer, Zachary Kramer, Caitlin Andrews
 
-This is a general guide to the structure, workflow, and standards of the Ecohydrology Laboratory GitHub Organization. The Ecohydrology Laboratory GitHub Organization consists of many different repositories, each with a different code base and utility aimed at promoting out ability to model ecohydrology. We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects.
+This is a general guide to the structure, workflow, and standards of the Dryland Ecology Laboratory GitHub Organization. The Dryland Ecology Laboratory GitHub Organization consists of many different repositories, each with a different code base and utility aimed at promoting out ability to model ecohydrology. We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects.
 
 ## Table of Contents
 
@@ -17,7 +17,7 @@ This is a general guide to the structure, workflow, and standards of the Ecohydr
 
 [Communication](#communication)
 
-[Repositories of the Ecohydrology GitHub Organization](#theRepos)
+[Repositories of the Dryland Ecology GitHub Organization](#theRepos)
   * [SOILWAT2](#soilwat)
   * [rSOILWAT2](#rsoilwat)
   * [rSFSW2](#rsfsw)
@@ -127,21 +127,42 @@ How to write good messages:
 - What effects does the patch have? (In addition to the obvious ones, this may include benchmarks, side effects, etc.)"
 
 
-## Repositories of the Ecohydrology GitHub Organization <a name="theRepos"/>
+## Repositories of the Dryland Ecology GitHub Organization <a name="theRepos"/>
 
 ### SOILWAT2 <a name="soilwat">
-	
+
+The SOILWAT2 repository contains the __C__ code, as well as the testing and documentation, pertaining to the SOILWAT2 model.  SOILWAT2 is a site-specific, daily ecohydrology model that tracks water as it moves through the environment. Within the C code you will find the series of equations that translates our knowledge of ecohydrology to a simulation framework. This model is the foundation of our research activities and most other repositories within this organization connect or interact with this model in some way.
+
+SOILWAT2 runs on a site by site basis. While the simulations of water balance are fast, running SOILWAT2 stand-alone is inefficient, as it needs to read and write information from disk about each site individually. Furthermore, running simulations for many sites is cumbersome from the user perspective, as a series of site-specific input files (.in) need to be formatted for each site. Because of these issues, the R Soilwat Wrapper (rSFSW2) and the R Soilwat Package (rSOILWAT2) were developed. These repositories allow users to set-up information for multiple sites simultaneously and for the efficient handling of these sites' information in R. 
+
+SOILWAT2 code is reserved to handle the ecological assumptions of how water moves through environment, based on a series of inputs. Inputs, from a SOILWAT2 perspective, are static. The one excpetion to this is vegetation _if_ the carbon dioxide effects options are set to on. The SOILWAT2 model is designed to function 'stand-alone', using files.in as inputs, to work with information passed via rSOILWAT2, or to work with information passed from STEPWAT2.
+
 ### rSOILWAT2 <a name="rsoilwat">
+
+The rSOILWAT2 repository contains the __R__ code, as well as the testing and documentation, pertaining to the rSOILWAT2 package. The primary functions of rSOILWAT2 are to: (1) Pass site-specific information from the wrapper (rSFSW2) to the SOILWAT2 model; And (2) to create a SQLite weather database for simulation runs. In the the future item (2) will be separated into its own R package. Currently, the STEPWAT2 model is accessing the rSOILWAT2 package for its weather database functionality.
+
+rSOILWAT2 avoids disk operations and most things happen in memory. Information, read-in, or calculated, and formatted by the wrapper, is passed via rSOILWAT2 to SOILWAT2, through a series of functions beginning with 'OnGet' and 'OnSet. Most importantly, it allows for the execution of SOILWAT2 to happen completely in memory.
+
 
 ### rSFSW2 <a name="rsfsw">
 
+The rSFSW2 repository contains the __R__ code, as well as the testing and documentation, pertaining to the rSFSW2 package. The primary functions of the rSFSW2 packages are to: (1) Handle input data from multiple sites efficiently; (2) Grab additional inputs from stored or online resources; (3) Calculate additional inputs based on user treatment and experimental design options; (4) Pass other treatment and experimental options to the SOILWAT2 model to use in executions; and (5) Receive and aggregate output from SOILWAT2. 
+
+rSFSW2 is designed to gather user's options and information about sites. All sites in a "project" are read in at once via a series of _.csvs_. The information within these .csvs is then divvied up on a site by site basis, processed, and sent to SOILWAT2 via the functions in rSOILWAT2.
+
 ### STEPWAT2 <a name="stepwat">
 
-### rSFSWTEP2 <a name="rsfstep">
+The STEPWAT2 repository contains the __C++__ code, as well as the testing and documentation, pertaining to the STEPWAT2 model. 
+
+### rSFSTEP2 <a name="rsfstep">
+
+The rSFSTEP2 repository contains the __R__ code, as well as the testing and documentation, pertaining to the rSFSTEP2 model. 
+It interfaces with the STEPWAT2 C code and runs in parallel for multiple sites, climate scenarios, disturbance regimes, and time periods.
 
 ### rSFSW2_tools <a name="sfsw_tools">
 
-### STEPWAT_R_Wrapper <a name="stepr">
+The rSFSW2 tools repostory contains functionality that assist in developing and testing the rSFSW2 package.
+
 
 
 ## Relationships between XXXX Lab's Repositories <a name="repoRelations"/>
@@ -304,7 +325,7 @@ We test at a series of different _levels_. From lowest to highest, these are:
 
 * __R Package Tests:__ As the name suggests, these tests are for R packages only (i.e. rSFSW2 and rSOILWAT2). R package tests execute all unit tests for that package, as well as a series of other checks aimed at detecting common problems. [More information here.](http://r-pkgs.had.co.nz/check.html)
 
-* __Continuous Integration & GitHub Checks:__ GitHub checks are automated so that feature or bugfix branches cannot be merged/ a pull request cannot be approved until these checks are passed. Continous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict are more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted. Our CI GitHub checks currently consist of coverage checks and platform build checks. 
+* __Continuous Integration & GitHub Checks:__ GitHub checks are automated so that feature or bugfix branches cannot be merged / a pull request cannot be approved until these checks are passed. Continous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict are more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted. Our CI GitHub checks currently consist of coverage checks and platform build checks. 
 	* Coverage checks look to see that the percentage of line of code covered by unit tests has _increased_. If it hasn't the test will not pass.
 	* Platform build checks are tested on a Unix and Windows Servers using Travis and Appveyor, respectively. Travis and Appveyor are servers with these OSs where the program is built and checked. This is useful because if, for example, SOILWAT2 is not building on an individual's Linux computer, but is building on Travis, we know the user's computer is not configured correctly, as opposed to a software design issue.
 		
