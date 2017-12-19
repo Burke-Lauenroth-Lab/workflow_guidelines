@@ -98,7 +98,17 @@ This is a general guide to the structure, workflow, and standards of the Dryland
 
 ## Suggested Tools and Software <a name="suggests"/>
 
+A wide array of tools and software is available to help with the ease of managing code and workflow across multiple repositories with many collaborators. The options below remain merely as suggestions.
+
 ### Text Editors  <a name="text"/>
+
+There are two types of text editors: (1) Those accessed via the command line and (2) editors with GUIs.
+
+__Command line editors__ are typically used for quick edits in the terminal. Options include nano, vim, and vi. I find nano easiest to use. Most all shortcuts are listed at the bottom of the window, there is autotomatic indentation, and many search functions. Easy to use and master.
+
+ * `git config --global core.editor <editor>` 
+ 
+__GUI text editors__ are typically more user-friendly, particuarly when approaching coding projects with multiple interacting files. Multiple projects can be opened and stored. Atom and Sublime text are two of the most popular. Atom is completely 'hackable' meaning anyone can write code to improve the source code. 
 
 ### Git GUIs  <a name="gitgui"/>
 
@@ -108,6 +118,9 @@ Git GUIs provide an accessible interface to the Git framework. Users are able to
 
 ### Merge <a name="merge"/>
 
+Merge tools allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differenves.
+
+ * `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
 
 
 ## Communication (commit messages, comments on issues, etc.) <a name="communication"/>
@@ -133,22 +146,15 @@ How to write good messages:
 
 The SOILWAT2 repository contains the __C__ code, as well as the testing and documentation, pertaining to the SOILWAT2 model.  SOILWAT2 is a site-specific, daily ecohydrology model that tracks water as it moves through the environment. Within the C code you will find the series of equations that translates our knowledge of ecohydrology to a simulation framework. This model is the foundation of our research activities and most other repositories within this organization connect or interact with this model in some way.
 
-SOILWAT2 runs on a site by site basis. While the simulations of water balance are fast, running SOILWAT2 stand-alone is inefficient, as it needs to read and write information from disk about each site individually. Furthermore, running simulations for many sites is cumbersome from the user perspective, as a series of site-specific input files (.in) need to be formatted for each site. Because of these issues, the R Soilwat Wrapper (rSFSW2) and the R Soilwat Package (rSOILWAT2) were developed. These repositories allow users to set-up information for multiple sites simultaneously and for the efficient handling of these sites' information in R. 
-
 SOILWAT2 code is reserved to handle the ecological assumptions of how water moves through environment, based on a series of inputs. Inputs, from a SOILWAT2 perspective, are static. The one excpetion to this is vegetation _if_ the carbon dioxide effects options are set to on. The SOILWAT2 model is designed to function 'stand-alone', using files.in as inputs, to work with information passed via rSOILWAT2, or to work with information passed from STEPWAT2.
 
 ### rSOILWAT2 <a name="rsoilwat">
 
 The rSOILWAT2 repository contains the __R__ code, as well as the testing and documentation, pertaining to the rSOILWAT2 package. The primary functions of rSOILWAT2 are to: (1) Pass site-specific information from the wrapper (rSFSW2) to the SOILWAT2 model; And (2) to create a SQLite weather database for simulation runs. In the the future item (2) will be separated into its own R package. Currently, the STEPWAT2 model is accessing the rSOILWAT2 package for its weather database functionality.
 
-rSOILWAT2 avoids disk operations and most things happen in memory. Information, read-in, or calculated, and formatted by the wrapper, is passed via rSOILWAT2 to SOILWAT2, through a series of functions beginning with 'OnGet' and 'OnSet. Most importantly, it allows for the execution of SOILWAT2 to happen completely in memory.
-
-
 ### rSFSW2 <a name="rsfsw">
 
 The rSFSW2 repository contains the __R__ code, as well as the testing and documentation, pertaining to the rSFSW2 package. The primary functions of the rSFSW2 packages are to: (1) Handle input data from multiple sites efficiently; (2) Grab additional inputs from stored or online resources; (3) Calculate additional inputs based on user treatment and experimental design options; (4) Pass other treatment and experimental options to the SOILWAT2 model to use in executions; and (5) Receive and aggregate output from SOILWAT2. 
-
-rSFSW2 is designed to gather user's options and information about sites. All sites in a "project" are read in at once via a series of _.csvs_. The information within these .csvs is then divvied up on a site by site basis, processed, and sent to SOILWAT2 via the functions in rSOILWAT2.
 
 ### STEPWAT2 <a name="stepwat">
 
@@ -163,9 +169,13 @@ It interfaces with the STEPWAT2 C code and runs in parallel for multiple sites, 
 
 The rSFSW2 tools repostory contains functionality that assist in developing and testing the rSFSW2 package.
 
+## Relationships between Repositories <a name="repoRelations"/>
 
+SOILWAT2 runs on a site by site basis. While the simulations of water balance are fast, running SOILWAT2 stand-alone is inefficient, as it needs to read and write information from disk about each site individually. Furthermore, running simulations for many sites is cumbersome from the user perspective, as a series of site-specific input files (.in) need to be formatted for each site. Because of these issues, the R Soilwat Wrapper (rSFSW2) and the R Soilwat Package (rSOILWAT2) were developed. These repositories allow users to set-up information for multiple sites simultaneously and for the efficient handling of these sites' information in R. 
 
-## Relationships between XXXX Lab's Repositories <a name="repoRelations"/>
+rSOILWAT2 is an R package with a series of functions that passes information as a S4 class object between R and C. rSOILWAT2 knows nothing about your site or water-balance; It is simply a package with functions designed to interface between the two programs. rSOILWAT2 avoids disk operations and most things happen in memory. Information, read-in, or calculated, and formatted by rSFSW2, is passed via rSOILWAT2 to SOILWAT2. Most importantly, it allows for the execution of SOILWAT2 to happen completely in memory.
+
+rSFSW2 is designed to gather user's options and information about sites. All site-specific inputs and treatments in a project are read in at once via a series of _.csvs_. The information within these .csvs is then parsed up on a site by site basis, processed, and then sent to SOILWAT2 via the functions in rSOILWAT2. Outputs from the SOILWAT2 model are then sent back to rSFSW2 via rSOILWAT2 and either saved on a site by site basis, or aggregating and stored in a SQLite outputs databased.
 
 ## GitHub Features and Functionality <a name="useGitFeatures"/>
 
