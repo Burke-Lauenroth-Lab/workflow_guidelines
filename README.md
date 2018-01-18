@@ -8,15 +8,6 @@ This is a general guide to the structure, workflow, and standards of the Dryland
 
 ## Table of Contents
 
-[Basics](#basics)
-
-[Suggested Tools and Software](#suggests)
-  * [Text Editors](#text)
-  * [Git GUIs](#gitgui)
-  * [Merge](#merge)
-
-[Communication](#communication)
-
 [Repositories of the Dryland Ecology GitHub Organization](#theRepos)
   * [SOILWAT2](#soilwat)
   * [rSOILWAT2](#rsoilwat)
@@ -27,6 +18,21 @@ This is a general guide to the structure, workflow, and standards of the Dryland
   * [STEPWAT_R_Wrapper](#stepr)
 
 [Relationships between Repositories](#repoRelations)
+
+[Suggested Tools and Software](#suggests)
+  * [Text Editors](#text)
+  * [IDEs](#ides)
+  * [Git GUIs](#gitgui)
+  * [Merge](#merge)
+  
+[GitHub Basics](#basics)
+ 
+[Coding Style and Practices](#coding)
+  * [R Code Style](#rcode)
+  * [C Code Style](#ccode)
+  * [Best Coding Practices](#codepractice)
+
+[Communication](#communication)
 
 [GitHub Features and Functionality](#useGitFeatures)
   * [Issues](#issues)
@@ -46,99 +52,6 @@ This is a general guide to the structure, workflow, and standards of the Dryland
   * [Testing in R](#rtest)
   
 [Useful Links](#links)
-
-
-## Basics <a name="basics"/>
-
-* The 4 levels of the git organization
-    * __Working directory__ (on local computer): work in text editor and/or an IDE (RStudio, Visual Studio, etc.)
-    * __Staging area__: include/save changes to the next commit
-    * __Local repository__: commit to project history
-    * __Remote repository__ on github.com: share code with collaborators and backup local branches
-
-* We use __issues__ and __milestones__ to communicate code enhancements, bugs, priorities, and current progress.
-
-* We have __three types of branches__:
-    * __Master branch__: Any commit on the master branch aims to be deployable. Such commits are usually the result of merging/rebasing with a feature or bugfix branch. Once deployable a unique version number is released. Deployable for us means that commits are tested.
-    * __Bugfix branches__: When a bug is discovered on the master branch, a bugfix branch and an issue should be created. The issue should be assigned to the _master_ milestone. A bugfix branch should be named after the respective issue. An example of a bugfix branch would be bugfix_16, which represents issue #16.
-    * __Feature branches__: Everything else should be a feature branch, which is where code development is done before it is merged back to master. Each feature branch needs its own __milestone__. Any bugfixes needed on a feature branch should be directly committed to the feature branch. Feature branches should have descriptive but concise names in upper camel case, such as feature_BetterErrorMessages.
-
-* __Testing__ involves at least that each line of code was executed and did not throw an error or stopped execution unexpectedly. However, writing re-usable unit test cases (for R code based on the package [testthat](https://cran.r-project.org/web/packages/testthat/index.html), and for C code based on [GoogleTest](https://github.com/google/googletest)) is the preferred way to test our code.
-
-* __Documentation__: Comment the code well and write object documentation with [roxygen2](http://r-pkgs.had.co.nz/man.html), if using R, or with [doxygen](http://www.doxygen.org), if using another programming language.
-
-* __Style guide__: In development. For R coding style, DRS suggests to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html). There are many other R style guides including: [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml), [Bioconductor's Coding Style](https://www.bioconductor.org/developers/how-to/coding-style/), [rDatSci/rOpenSci's R Style Guide](https://github.com/rdatsci/PackagesInfo/wiki/R-Style-Guide), [R Coding Conventions by H. Bengtsson](https://docs.google.com/document/d/1esDVxyWvH8AsX-VJa-8oqWaHLs4stGlIbk8kLc5VlII/edit), [4D R code style guide](https://4dpiecharts.com/r-code-style-guide/)
-
-* We use __[semantic versioning](http://semver.org/)__ using the format MAJOR.MINOR.PATCH. Every commit to the master branch updates the version number. A backwards-incompatible commit increases MAJOR and resets MINOR and PATCH to 0. A backwards-compatible commit adding new functionality increases MINOR and resets PATCH to 0. A backward-compatible commit fixing bugs (etc) increases PATCH.
-
-* __Inspecting__ a repository
-    * State of working directory and staging area: git status
-    * History of commits: `git log --graph --full-history --oneline --decorate`
-    * List of branches (* indicates the active branch):
-    * Local branches: `git branch`
-    * Remote branches: `git branch -r`
-    * List of remote connections: `git remote -v`
-
-* __Finding stuff__ in a repository
-    * Find all commits which have affected a file: `git log -- *<part_of_file_name>*`
-    * Find the SHA of the last commit that affected a file `git rev-list -n 1 HEAD -- <file_path>`
-    * Find all commits which have deleted files and list the deleted files:
-      `git log --diff-filter=D --summary`
-
-* __Error reporting__:
-    * All _master branch_ bugs require you to create an __issue__ in GitHub. Please think carefully whether the issue is due to code by SOILWAT2, rSOILWAT2, or rather by rSFSW2. Ideally, you provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example. Some resources that may help:
-        * [How to create a Minimal, Complete, and Verifiable example](http://stackoverflow.com/help/mcve)
-        * [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html)
-        * [How to make a great R reproducible example?](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example#5963610)
-        * [How to write a reproducible example](https://gist.github.com/hadley/270442)
-    * Assign the issue to the __master__ milestone
-    * Create a __bugfix branch__
-    * [Close the issue with a reference](#closing-issues)
-    * Create a pull request to the master branch, with appropriate reviewers
-
-## Suggested Tools and Software <a name="suggests"/>
-
-A wide array of tools and software is available to help with the ease of managing code and workflow across multiple repositories with many collaborators. The options below remain merely as suggestions.
-
-### Text Editors  <a name="text"/>
-
-There are two types of text editors: (1) Those accessed via the command line and (2) editors with GUIs.
-
-__Command line editors__ are typically used for quick edits in the terminal. Options include nano, vim, and vi. I find nano easiest to use. Most all shortcuts are listed at the bottom of the window, there is autotomatic indentation, and many search functions. Easy to use and master.
-
- * `git config --global core.editor <editor>` 
- 
-__GUI text editors__ are typically more user-friendly, particuarly when approaching coding projects with multiple interacting files. Multiple projects can be opened and stored. Atom and Sublime text are two of the most popular. Atom is completely 'hackable' meaning anyone can write code to improve the source code. 
-
-### Git GUIs  <a name="gitgui"/>
-
-Git GUIs provide an accessible interface to the Git framework. Users are able to quickly track and pull the latest commits by other users, add and push their own commits.
-	* ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). 
-	*['Sourcetree'](https://www.sourcetreeapp.com/), provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
-
-### Merge <a name="merge"/>
-
-Merge tools allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differenves.
-
- * `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
-
-
-## Communication (commit messages, comments on issues, etc.) <a name="communication"/>
-
-Follow our code of conduct in all communications, e.g., [Contributor Code of Conduct of the rSFSW2 repository](https://github.com/Burke-Lauenroth-Lab/rSFSW2/blob/master/CONDUCT.md).
-
-Why good messages are important:
-[Erlang: Writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages): "Good commit messages serve at least three important purposes:
-- To speed up the reviewing process.
-- To help us write a good release note.
-- To help the future maintainers of Erlang/OTP (it could be you!), say five years into the future, to find out why a particular change was made to the code or why a specific feature was added."
-
-How to write good messages:
-[Who-T: On commit messages](http://who-t.blogspot.com/2009/12/on-commit-messages.html): "A good commit message should answer three questions about a patch:
-- Why is it necessary? It may fix a bug, it may add a feature, it may improve performance, reliabilty, stability, or just be a change for the sake of correctness.
-- How does it address the issue? For short obvious patches this part can be omitted, but it should be a high level description of what the approach was.
-- What effects does the patch have? (In addition to the obvious ones, this may include benchmarks, side effects, etc.)"
-
 
 ## Repositories of the Dryland Ecology GitHub Organization <a name="theRepos"/>
 
@@ -176,6 +89,103 @@ SOILWAT2 runs on a site by site basis. While the simulations of water balance ar
 rSOILWAT2 is an R package with a series of functions that passes information as a S4 class object between R and C. rSOILWAT2 knows nothing about your site or water-balance; It is simply a package with functions designed to interface between the two programs. rSOILWAT2 avoids disk operations and most things happen in memory. Information, read-in, or calculated, and formatted by rSFSW2, is passed via rSOILWAT2 to SOILWAT2. Most importantly, it allows for the execution of SOILWAT2 to happen completely in memory.
 
 rSFSW2 is designed to gather user's options and information about sites. All site-specific inputs and treatments in a project are read in at once via a series of _.csvs_. The information within these .csvs is then parsed up on a site by site basis, processed, and then sent to SOILWAT2 via the functions in rSOILWAT2. Outputs from the SOILWAT2 model are then sent back to rSFSW2 via rSOILWAT2 and either saved on a site by site basis, or aggregating and stored in a SQLite outputs databased.
+
+
+## Suggested Tools and Software <a name="suggests"/>
+
+A wide array of tools and software is available to help with the ease of managing code and workflow across multiple repositories with many collaborators. The options below remain merely as suggestions.
+
+### Text Editors  <a name="text"/>
+
+There are two types of text editors: (1) Those accessed via the command line and (2) editors with GUIs.
+
+__Command line editors__ are typically used for quick edits in the terminal. Options include nano, vim, and vi. I find nano easiest to use. Most all shortcuts are listed at the bottom of the window, there is autotomatic indentation, and many search functions. Easy to use and master.
+
+ * `git config --global core.editor <editor>` 
+ 
+__GUI text editors__ are typically more user-friendly, particuarly when approaching coding projects with multiple interacting files. Multiple projects can be opened and stored. Atom and Sublime text are two of the most popular. Atom is completely 'hackable' meaning anyone can write code to improve the source code. 
+
+### Git GUIs  <a name="gitgui"/>
+
+Git GUIs provide an accessible interface to the Git framework. Users are able to quickly track and pull the latest commits by other users, add and push their own commits.
+	* ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). 
+	*['Sourcetree'](https://www.sourcetreeapp.com/), provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
+
+### Merge <a name="merge"/>
+
+Merge tools allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differenves.
+
+ * `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
+
+## GitHub Basics <a name="basics"/>
+
+* The 4 levels of the git organization
+    * __Working directory__ (on local computer): work in text editor and/or an IDE (RStudio, Visual Studio, etc.)
+    * __Staging area__: include/save changes to the next commit
+    * __Local repository__: commit to project history
+    * __Remote repository__ on github.com: share code with collaborators and backup local branches
+
+* We use __issues__ and __milestones__ to communicate code enhancements, bugs, priorities, and current progress.
+
+* We have __three types of branches__:
+    * __Master branch__: Any commit on the master branch aims to be deployable. Such commits are usually the result of merging/rebasing with a feature or bugfix branch. Once deployable a unique version number is released. Deployable for us means that commits are tested.
+    * __Bugfix branches__: When a bug is discovered on the master branch, a bugfix branch and an issue should be created. The issue should be assigned to the _master_ milestone. A bugfix branch should be named after the respective issue. An example of a bugfix branch would be bugfix_16, which represents issue #16.
+    * __Feature branches__: Everything else should be a feature branch, which is where code development is done before it is merged back to master. Each feature branch needs its own __milestone__. Any bugfixes needed on a feature branch should be directly committed to the feature branch. Feature branches should have descriptive but concise names in upper camel case, such as feature_BetterErrorMessages.
+
+* __Testing__ involves at least that each line of code was executed and did not throw an error or stopped execution unexpectedly. However, writing re-usable unit test cases (for R code based on the package [testthat](https://cran.r-project.org/web/packages/testthat/index.html), and for C code based on [GoogleTest](https://github.com/google/googletest)) is the preferred way to test our code.
+
+* __Documentation__: Comment the code well and write object documentation with [roxygen2](http://r-pkgs.had.co.nz/man.html), if using R, or with [doxygen](http://www.doxygen.org), if using another programming language.
+
+* We use __[semantic versioning](http://semver.org/)__ using the format MAJOR.MINOR.PATCH. Every commit to the master branch updates the version number. A backwards-incompatible commit increases MAJOR and resets MINOR and PATCH to 0. A backwards-compatible commit adding new functionality increases MINOR and resets PATCH to 0. A backward-compatible commit fixing bugs (etc) increases PATCH.
+
+* __Inspecting__ a repository
+    * State of working directory and staging area: git status
+    * History of commits: `git log --graph --full-history --oneline --decorate`
+    * List of branches (* indicates the active branch):
+    * Local branches: `git branch`
+    * Remote branches: `git branch -r`
+    * List of remote connections: `git remote -v`
+
+* __Finding stuff__ in a repository
+    * Find all commits which have affected a file: `git log -- *<part_of_file_name>*`
+    * Find the SHA of the last commit that affected a file `git rev-list -n 1 HEAD -- <file_path>`
+    * Find all commits which have deleted files and list the deleted files:
+      `git log --diff-filter=D --summary`
+
+* __Error reporting__:
+    * All _master branch_ bugs require you to create an __issue__ in GitHub. Please think carefully whether the issue is due to code by SOILWAT2, rSOILWAT2, or rather by rSFSW2. Ideally, you provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example. Some resources that may help:
+        * [How to create a Minimal, Complete, and Verifiable example](http://stackoverflow.com/help/mcve)
+        * [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html)
+        * [How to make a great R reproducible example?](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example#5963610)
+        * [How to write a reproducible example](https://gist.github.com/hadley/270442)
+    * Assign the issue to the __master__ milestone
+    * Create a __bugfix branch__
+    * [Close the issue with a reference](#closing-issues)
+    * Create a pull request to the master branch, with appropriate reviewers
+    
+## Coding Style and Practices <a name=#coding"/>
+
+  ### [R Code Style] <a name="rcode"/>
+  * __Style guide__: In development. For R coding style, DRS suggests to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html). There are many other R style guides including: [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml), [Bioconductor's Coding Style](https://www.bioconductor.org/developers/how-to/coding-style/), [rDatSci/rOpenSci's R Style Guide](https://github.com/rdatsci/PackagesInfo/wiki/R-Style-Guide), [R Coding Conventions by H. Bengtsson](https://docs.google.com/document/d/1esDVxyWvH8AsX-VJa-8oqWaHLs4stGlIbk8kLc5VlII/edit), [4D R code style guide](https://4dpiecharts.com/r-code-style-guide/)
+
+  ### [C Code Style] <a name="ccode"/>
+  ### [Best Coding Practices]<a name="codepractice"/>
+    
+## Communication (commit messages, comments on issues, etc.) <a name="communication"/>
+
+Follow our code of conduct in all communications, e.g., [Contributor Code of Conduct of the rSFSW2 repository](https://github.com/Burke-Lauenroth-Lab/rSFSW2/blob/master/CONDUCT.md).
+
+Why good messages are important:
+[Erlang: Writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages): "Good commit messages serve at least three important purposes:
+- To speed up the reviewing process.
+- To help us write a good release note.
+- To help the future maintainers of Erlang/OTP (it could be you!), say five years into the future, to find out why a particular change was made to the code or why a specific feature was added."
+
+How to write good messages:
+[Who-T: On commit messages](http://who-t.blogspot.com/2009/12/on-commit-messages.html): "A good commit message should answer three questions about a patch:
+- Why is it necessary? It may fix a bug, it may add a feature, it may improve performance, reliabilty, stability, or just be a change for the sake of correctness.
+- How does it address the issue? For short obvious patches this part can be omitted, but it should be a high level description of what the approach was.
+- What effects does the patch have? (In addition to the obvious ones, this may include benchmarks, side effects, etc.)"
 
 ## GitHub Features and Functionality <a name="useGitFeatures"/>
 
