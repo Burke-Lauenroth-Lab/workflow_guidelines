@@ -21,9 +21,10 @@ This is a general guide to the structure, workflow, and standards of the Dryland
 
 [Suggested Tools and Software](#suggests)
   * [Text Editors](#text)
-  * [IDEs](#ides)
+  * [Integrated Development Editors](#ides)
   * [Git GUIs](#gitgui)
   * [Merge](#merge)
+  * [Terminal](#terminal)
   
 [GitHub Basics](#basics)
  
@@ -105,6 +106,8 @@ __Command line editors__ are typically used for quick edits in the terminal. Opt
  
 __GUI text editors__ are typically more user-friendly, particuarly when approaching coding projects with multiple interacting files. Multiple projects can be opened and stored. Atom and Sublime text are two of the most popular. Atom is completely 'hackable' meaning anyone can write code to improve the source code. 
 
+### Integrated Development Editor  <a name="ides"/>
+
 ### Git GUIs  <a name="gitgui"/>
 
 Git GUIs provide an accessible interface to the Git framework. Users are able to quickly track and pull the latest commits by other users, add and push their own commits.
@@ -116,6 +119,8 @@ Git GUIs provide an accessible interface to the Git framework. Users are able to
 Merge tools allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differenves.
 
  * `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
+
+### Terminal <a name="terminal"/>
 
 ## GitHub Basics <a name="basics"/>
 
@@ -165,11 +170,12 @@ Merge tools allow ease of access when integrating pull requests and merges into 
     
 ## Coding Style and Practices <a name=#coding"/>
 
-  ### [R Code Style] <a name="rcode"/>
+  ### R Code Style <a name="rcode"/>
   * __Style guide__: In development. For R coding style, DRS suggests to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html). There are many other R style guides including: [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml), [Bioconductor's Coding Style](https://www.bioconductor.org/developers/how-to/coding-style/), [rDatSci/rOpenSci's R Style Guide](https://github.com/rdatsci/PackagesInfo/wiki/R-Style-Guide), [R Coding Conventions by H. Bengtsson](https://docs.google.com/document/d/1esDVxyWvH8AsX-VJa-8oqWaHLs4stGlIbk8kLc5VlII/edit), [4D R code style guide](https://4dpiecharts.com/r-code-style-guide/)
 
-  ### [C Code Style] <a name="ccode"/>
-  ### [Best Coding Practices]<a name="codepractice"/>
+  ### C Code Style <a name="ccode"/>
+  
+  ### Best Coding Practices <a name="codepractice"/>
     
 ## Communication (commit messages, comments on issues, etc.) <a name="communication"/>
 
