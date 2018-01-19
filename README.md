@@ -16,15 +16,14 @@ This is a general guide to the structure, workflow, and standards of the Dryland
   * [rSFSTEP2](#rsfstep)
   * [rSFSW2_tools](#sfsw_tools)
   * [STEPWAT_R_Wrapper](#stepr)
+  * [Additional Repositories](#addrepos)
 
 [Relationships between Repositories](#repoRelations)
 
 [Suggested Tools and Software](#suggests)
-  * [Text Editors](#text)
-  * [Integrated Development Editors](#ides)
-  * [Git GUIs](#gitgui)
-  * [Merge](#merge)
-  * [Terminal](#terminal)
+  * [Git and GitHub](#gits)
+  * [Interacting with Git](#interacting)
+  * [Writing and Managing Code](#codes)
   
 [GitHub Basics](#basics)
  
@@ -83,6 +82,10 @@ It interfaces with the STEPWAT2 C code and runs in parallel for multiple sites, 
 
 The rSFSW2 tools repostory contains functionality that assist in developing and testing the rSFSW2 package.
 
+### Additional Repositories <a name="addrepos">
+	
+There are additional "legacy" repositories with old code and information, that are not currently active. These include *STEPWAT2.testingfolders*, *SoilWatExplorer*, *JsoilWat*, *JStepWat*, and *stepwat_spinup_test*.
+
 ## Relationships between Repositories <a name="repoRelations"/>
 
 SOILWAT2 runs on a site by site basis. While the simulations of water balance are fast, running SOILWAT2 stand-alone is inefficient, as it needs to read and write information from disk about each site individually. Furthermore, running simulations for many sites is cumbersome from the user perspective, as a series of site-specific input files (.in) need to be formatted for each site. Because of these issues, the R Soilwat Wrapper (rSFSW2) and the R Soilwat Package (rSOILWAT2) were developed. These repositories allow users to set-up information for multiple sites simultaneously and for the efficient handling of these sites' information in R. 
@@ -94,9 +97,28 @@ rSFSW2 is designed to gather user's options and information about sites. All sit
 
 ## Suggested Tools and Software <a name="suggests"/>
 
-A wide array of tools and software is available to help with the ease of managing code and workflow across multiple repositories with many collaborators. The options below remain merely as suggestions.
+A wide array of tools and software is available to help with the ease of managing code and workflow across multiple repositories with many collaborators.
 
-### Text Editors  <a name="text"/>
+### Git and GitHub  <a name="gits"/>
+
+As you may have guessed by being here, Git and GitHub are at the heart of our workflow. GitHub, and alternatives such as BitBucket, are web-based hosting services for the use of Git. Git is a free and open source version control system (VCS) that is responsible for all version control programming that happens locally on your computer. Git needs to be installed on your computer. Downloads available here: https://git-scm.com/downloads
+
+#### Interacting with Git <a name="interacting"/>
+
+The __terminal__ is the defacto interface with Git and all Git commands start with 'git'. Typing 'git' into terminal will yield a list of common commands. Much of the functionality for Git command line is replicated in __Git GUIs__ or is available online at GitHub.com. Git GUIs are best for pushing local commits and tracking changes and the history that other users have made. Common Git Guis include:
+
+	* ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). 
+	*['Sourcetree'](https://www.sourcetreeapp.com/), provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
+	
+__Merge Tools__	
+
+Merge tools allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differenves.
+
+ * `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
+
+### Writing and Managing Code  <a name="codes"/>
+
+### Text Editors  
 
 There are two types of text editors: (1) Those accessed via the command line and (2) editors with GUIs.
 
@@ -106,21 +128,8 @@ __Command line editors__ are typically used for quick edits in the terminal. Opt
  
 __GUI text editors__ are typically more user-friendly, particuarly when approaching coding projects with multiple interacting files. Multiple projects can be opened and stored. Atom and Sublime text are two of the most popular. Atom is completely 'hackable' meaning anyone can write code to improve the source code. 
 
-### Integrated Development Editor  <a name="ides"/>
+### Integrated Development Editor
 
-### Git GUIs  <a name="gitgui"/>
-
-Git GUIs provide an accessible interface to the Git framework. Users are able to quickly track and pull the latest commits by other users, add and push their own commits.
-	* ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lacks some advanced features (e.g., management of sub-modules). 
-	*['Sourcetree'](https://www.sourcetreeapp.com/), provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
-
-### Merge <a name="merge"/>
-
-Merge tools allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differenves.
-
- * `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
-
-### Terminal <a name="terminal"/>
 
 ## GitHub Basics <a name="basics"/>
 
