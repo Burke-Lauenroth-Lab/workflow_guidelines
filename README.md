@@ -23,8 +23,9 @@ This is a general guide to the structure, workflow, and standards of the Dryland
 [Suggested Tools and Software](#suggests)
   * [Git and GitHub](#gits)
   * [Interacting with Git](#interacting)
+  * [Using Mergetool](#mergetool)
   * [Writing and Managing Code](#codes)
-  
+
 [GitHub Basics](#basics)
 
 [GitHub Features and Functionality](#useGitFeatures)
@@ -32,7 +33,7 @@ This is a general guide to the structure, workflow, and standards of the Dryland
   * [Milestones](#milestone)
   * [Projects - Repository Level](#repoprojects)
   * [Projects - Organization Level](#organizationprojects)
- 
+
 [Coding Style and Practices](#coding)
   * [R Code Style](#rcode)
   * [C Code Style](#ccode)
@@ -50,7 +51,7 @@ This is a general guide to the structure, workflow, and standards of the Dryland
   * [Heirarchy of Testing](#testheir)
   * [Testing in C](#ctest)
   * [Testing in R](#rtest)
-  
+
 [Useful Links](#links)
 
 ## Repositories of the Dryland Ecology GitHub Organization <a name="theRepos"/>
@@ -67,15 +68,15 @@ The rSOILWAT2 repository contains the __R__ code, as well as the testing and doc
 
 ### rSFSW2 <a name="rsfsw">
 
-The rSFSW2 repository contains the __R__ code, as well as the testing and documentation, pertaining to the rSFSW2 package. The primary functions of the rSFSW2 packages are to: (1) Handle input data from multiple sites efficiently; (2) Grab additional inputs from stored or online resources; (3) Calculate additional inputs based on user treatment and experimental design options; (4) Pass other treatment and experimental options to the SOILWAT2 model to use in executions; and (5) Receive and aggregate output from SOILWAT2. 
+The rSFSW2 repository contains the __R__ code, as well as the testing and documentation, pertaining to the rSFSW2 package. The primary functions of the rSFSW2 packages are to: (1) Handle input data from multiple sites efficiently; (2) Grab additional inputs from stored or online resources; (3) Calculate additional inputs based on user treatment and experimental design options; (4) Pass other treatment and experimental options to the SOILWAT2 model to use in executions; and (5) Receive and aggregate output from SOILWAT2.
 
 ### STEPWAT2 <a name="stepwat">
 
-The STEPWAT2 repository contains the __C++__ code, as well as the testing and documentation, pertaining to the STEPWAT2 model. 
+The STEPWAT2 repository contains the __C++__ code, as well as the testing and documentation, pertaining to the STEPWAT2 model.
 
 ### rSFSTEP2 <a name="rsfstep">
 
-The rSFSTEP2 repository contains the __R__ code, as well as the testing and documentation, pertaining to the rSFSTEP2 model. 
+The rSFSTEP2 repository contains the __R__ code, as well as the testing and documentation, pertaining to the rSFSTEP2 model.
 It interfaces with the STEPWAT2 C code and runs in parallel for multiple sites, climate scenarios, disturbance regimes, and time periods.
 
 ### rSFSW2_tools <a name="sfsw_tools">
@@ -83,12 +84,12 @@ It interfaces with the STEPWAT2 C code and runs in parallel for multiple sites, 
 The rSFSW2 tools repostory contains functionality that assist in developing and testing the rSFSW2 package.
 
 ### Additional Repositories <a name="addrepos">
-	
+
 There are additional "legacy" repositories with old code and information, that are not currently active. These include *STEPWAT2.testingfolders*, *SoilWatExplorer*, *JsoilWat*, *JStepWat*, and *stepwat_spinup_test*.
 
 ## Relationships between Repositories <a name="repoRelations"/>
 
-SOILWAT2 runs on a site by site basis. While the simulations of water balance are fast, running SOILWAT2 stand-alone is inefficient, as it needs to read and write information from disk about each site individually. Furthermore, running simulations for many sites is cumbersome from the user perspective, as a series of site-specific input files (.in) need to be formatted for each site. Because of these issues, the R Soilwat Wrapper (rSFSW2) and the R Soilwat Package (rSOILWAT2) were developed. These repositories allow users to set-up information for multiple sites simultaneously and for the efficient handling of these sites' information in R. 
+SOILWAT2 runs on a site by site basis. While the simulations of water balance are fast, running SOILWAT2 stand-alone is inefficient, as it needs to read and write information from disk about each site individually. Furthermore, running simulations for many sites is cumbersome from the user perspective, as a series of site-specific input files (.in) need to be formatted for each site. Because of these issues, the R Soilwat Wrapper (rSFSW2) and the R Soilwat Package (rSOILWAT2) were developed. These repositories allow users to set-up information for multiple sites simultaneously and for the efficient handling of these sites' information in R.
 
 rSOILWAT2 is an R package with a series of functions that passes information as a S4 class object between R and C. rSOILWAT2 knows nothing about your site or water-balance; It is simply a package with functions designed to interface between the two programs. rSOILWAT2 avoids disk operations and most things happen in memory. Information, read-in, or calculated, and formatted by rSFSW2, is passed via rSOILWAT2 to SOILWAT2. Most importantly, it allows for the execution of SOILWAT2 to happen completely in memory.
 
@@ -107,12 +108,38 @@ As you may have guessed by being here, Git and GitHub are at the heart of our wo
 
 The __terminal__ is the defacto interface with Git and all Git commands start with 'git'. Typing 'git' into terminal will yield a list of common commands. Much of the functionality for Git command line is replicated in __Git GUIs__ or is available online at GitHub.com. Git GUIs are best for pushing local commits and tracking changes and the history that other users have made. Common Git GUIs include:
 
-	* ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lack some advanced features (e.g., management of sub-modules). 
+	* ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lack some advanced features (e.g., management of sub-modules).
 	*['Sourcetree'](https://www.sourcetreeapp.com/), provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
-	
-GitHub.com is best for submitting pull requests and easy merging when there is _not_ conflicts. When there are merge conflicts between branches numerous __merge tools__ exist which allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differenves.
 
- * `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
+GitHub.com is best for submitting pull requests and easy merging when there is _not_ conflicts. When there are merge conflicts between branches numerous __merge tools__ exist which allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differences.
+
+* `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
+
+#### Using Mergetool <a name="mergetool"/>
+
+The git mergetool is useful when trying to merg changes into a branch and some files fail to merge due to conflicts. When this occurs a mergetool can be used to resolve the merge conflicts.
+a basic example of when this is needed follows:
+* `git merge master`
+* `Automatic merge failed; fix conflicts and then commit the results`
+* `git mergetool`
+
+The first step with using a mergetool with git is to set the default tool desired. To accomplish this simply open the terminal and type
+`git config --global merge.tool $` where $ is replaced with desired tool.
+* `git config --global merge.tool meld`
+
+If the tool is not one of the defaults with git, a path needs to be added so git can find and run the desired program. Follow the previous command with
+`git config --global mergetool.$.path 'path/to/executable/'` where $ is replaced with desired tool.
+* `git config --global mergetool.meld.path c:\program Files (x86)\Meld\meld\meld.exe'`
+
+To use the desired mergetool on merge conflicts just type `git mergetool` after an unsuccseful merge. The git mergetool will show all files that need to have conflicts resolved and will allow the user to 
+go through each conflict one by one using the desired tool.
+
+
+Meld:
+
+
+Meld is a great mergetool for linux and windows. Meld is not built in with git so it needs to be downloaded seperately and set up as show above. When using Meld there are three windows shown. The leftmost window is the users local files, the middle window is what the resolved and used file will be, and the right window is the remote file that is being merged into the local files. When going through the conflicts the user chooses the changes they desire.
+
 
 ### Writing and Managing Code  <a name="codes"/>
 
@@ -122,8 +149,8 @@ There are two types of text editors: (1) Those accessed via the command line and
 
 __Command line editors__ are typically used for quick edits in the terminal. Options include nano, vim, and vi. Nano has the mist user-friendly interfect. Most all shortcuts are listed at the bottom of the window, there is autotomatic indentation, and many search functions.
 
- * `git config --global core.editor <editor>` 
- 
+ * `git config --global core.editor <editor>`
+
 __GUI text editors__ are typically more user-friendly, particuarly when approaching projects with multiple interacting repositories. Multiple "projects" (i.e. repositories) can be opened and stored. Atom and Sublime text are two of the most popular. Atom is developed by GitHub and tracks the git status of files (i.e. highlights files in the file tree if they have been changed, shows which lines have been added, deleted, or editted on the left pane of the file folders, basic merge conflict resolution).
 
 __Integrated Development Environments__ or __IDEs__ are software suites that contain multiple tools needed to test and write software. Typically they not only include a GUI text editors, but also a compiler and debugger to test and clean code. IDEs are language dependent (i.e. you need an IDE that can compile C code for SOILWAT2 and one for R code to compile rSFSW2). RStudio can act an an IDE for R code, while NetBeans is a popular choice for C development.
@@ -135,7 +162,7 @@ __Integrated Development Environments__ or __IDEs__ are software suites that con
     * __Staging area__: include/save changes to the next commit
     * __Local repository__: commit to project history
     * __Remote repository__ on github.com: share code with collaborators and backup local branches
-    
+
 * __Inspecting__ a repository
     * State of working directory and staging area: git status
     * History of commits: `git log --graph --full-history --oneline --decorate`
@@ -149,7 +176,7 @@ __Integrated Development Environments__ or __IDEs__ are software suites that con
     * Find the SHA of the last commit that affected a file `git rev-list -n 1 HEAD -- <file_path>`
     * Find all commits which have deleted files and list the deleted files:
       `git log --diff-filter=D --summary`
-    
+
 ## GitHub Features and Functionality <a name="useGitFeatures"/>
 
 * We use __issues__ and __milestones__ to communicate code enhancements, bugs, priorities, and current progress.
@@ -158,12 +185,12 @@ __Integrated Development Environments__ or __IDEs__ are software suites that con
     * __Master branch__: Any commit on the master branch aims to be deployable. Such commits are usually the result of merging/rebasing with a feature or bugfix branch. Once deployable a unique version number is released. Deployable for us means that commits are tested.
     * __Bugfix branches__: When a bug is discovered on the master branch, a bugfix branch and an issue should be created. The issue should be assigned to the _master_ milestone. A bugfix branch should be named after the respective issue. An example of a bugfix branch would be bugfix_16, which represents issue #16.
     * __Feature branches__: Everything else should be a feature branch, which is where code development is done before it is merged back to master. Each feature branch needs its own __milestone__. Any bugfixes needed on a feature branch should be directly committed to the feature branch. Feature branches should have descriptive but concise names in upper camel case, such as feature_BetterErrorMessages.
-    
+
 ### Issues <a name="issues"/>
 
-Issues are the smallest unit of reporting and are repository specific. Issues can pertain to tasks, questions, proposed enhancements, and bugs. For bug fixes, the issue should revolve around a containable unit of code. Additionally, for each bug, a __bugfix__Issue#BugDescription__ branch should be created. 
+Issues are the smallest unit of reporting and are repository specific. Issues can pertain to tasks, questions, proposed enhancements, and bugs. For bug fixes, the issue should revolve around a containable unit of code. Additionally, for each bug, a __bugfix__Issue#BugDescription__ branch should be created.
 
-#### Creating issues 
+#### Creating issues
 If you create an issue, decide to work on one, or you are assigned to one, then:
 * Assign it to a team member and/or yourself, if applicable
 * Add an __in progress__ label, if you are currently working on it
@@ -173,8 +200,8 @@ If you create an issue, decide to work on one, or you are assigned to one, then:
     * Master branch bug: the _master_ milestone
     * Feature branch bug/enhancement: the respective milestone
 
-#### Closing issues 
-* When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body). 
+#### Closing issues
+* When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body).
 	* For example, including 'Fixes #45' or 'Closes #45' in the commit message will close issue #45 in the repository you are working in.
 	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
 
@@ -191,17 +218,17 @@ Projects on GitHub are meant to assist in the organization and prioritization of
 ### Projects - Organization Level <a name="organizationprojects"/>
 Projects at the organizational level are similar to those at the repository level, except that they can span multiple repositories. This is useful for the implementation of features that have, for example, both a C (e.g. SOILWAT2) and R (e.g. rSOILWAT2) component.
 
-    
+
 ## Coding Style and Practices <a name="coding"/>
 
   ### R Code Style <a name="rcode"/>
   * __Style guide__: In development. For R coding style, DRS suggests to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html). There are many other R style guides including: [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml), [Bioconductor's Coding Style](https://www.bioconductor.org/developers/how-to/coding-style/), [rDatSci/rOpenSci's R Style Guide](https://github.com/rdatsci/PackagesInfo/wiki/R-Style-Guide), [R Coding Conventions by H. Bengtsson](https://docs.google.com/document/d/1esDVxyWvH8AsX-VJa-8oqWaHLs4stGlIbk8kLc5VlII/edit), [4D R code style guide](https://4dpiecharts.com/r-code-style-guide/)
 
   ### C Code Style <a name="ccode"/>
-  
+
   ### Best Coding Practices <a name="codepractice"/>
-  
-    
+
+
 ## Communication (commit messages, comments on issues, etc.) <a name="communication"/>
 
 Follow our code of conduct in all communications, e.g., [Contributor Code of Conduct of the rSFSW2 repository](https://github.com/Burke-Lauenroth-Lab/rSFSW2/blob/master/CONDUCT.md).
@@ -228,7 +255,7 @@ How to write good messages:
     * Create a __bugfix branch__
     * [Close the issue with a reference](#closing-issues)
     * Create a pull request to the master branch, with appropriate reviewers
-    
+
 
 ## Workflow Guidelines <a name="workflow"/>
 
@@ -334,7 +361,7 @@ How to write good messages:
         * Delete the local branch: `git branch -d <branch>`
         * Delete the remote branch: `git push origin --delete <branch>`
         * Remove 'obsolete tracking branches', i.e., branches on local machine that no longer exist on remote/github: `git fetch --all --prune`
-	
+
 * We use __[semantic versioning](http://semver.org/)__ using the format MAJOR.MINOR.PATCH. Every commit to the master branch updates the version number. A backwards-incompatible commit increases MAJOR and resets MINOR and PATCH to 0. A backwards-compatible commit adding new functionality increases MINOR and resets PATCH to 0. A backward-compatible commit fixing bugs (etc) increases PATCH.
 
 ## Documentation Guidelines <a name="documentation"/>
@@ -343,7 +370,7 @@ How to write good messages:
 
 ### Documentation in R <a name="rdocumentation"/>
 
-  
+
 ## Testing Guidelines <a name="testing"/>
 
 We execute a series of tests at different levels to detect bugs and to validate and verify that our code is acting as expected.
@@ -356,10 +383,10 @@ We test at a series of different _levels_. From lowest to highest, these are:
 
 * __R Package Tests:__ As the name suggests, these tests are for R packages only (i.e. rSFSW2 and rSOILWAT2). R package tests execute all unit tests for that package, as well as a series of other checks aimed at detecting common problems. [More information here.](http://r-pkgs.had.co.nz/check.html)
 
-* __Continuous Integration & GitHub Checks:__ GitHub checks are automated so that feature or bugfix branches cannot be merged / a pull request cannot be approved until these checks are passed. Continous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict are more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted. Our CI GitHub checks currently consist of coverage checks and platform build checks. 
+* __Continuous Integration & GitHub Checks:__ GitHub checks are automated so that feature or bugfix branches cannot be merged / a pull request cannot be approved until these checks are passed. Continous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict are more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted. Our CI GitHub checks currently consist of coverage checks and platform build checks.
 	* Coverage checks look to see that the percentage of line of code covered by unit tests has _increased_. If it hasn't the test will not pass.
 	* Platform build checks are tested on a Unix and Windows Servers using Travis and Appveyor, respectively. Travis and Appveyor are servers with these OSs where the program is built and checked. This is useful because if, for example, SOILWAT2 is not building on an individual's Linux computer, but is building on Travis, we know the user's computer is not configured correctly, as opposed to a software design issue.
-		
+
 * __Test Projects:__ Testing at the comprehensive level to test that new code or feature is still producing the same or sensible output. Additionally, test projects provide an example of how the user should set up a project for it to function properly. Checks are made on speed and against reference databases.
 
 ### Unit Testing in C <a name="ctest"/>
@@ -390,4 +417,3 @@ Each and every function should have a test. Our goal is 100% code coverage. As y
 * https://www.atlassian.com/git/tutorials
     * https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
     * https://www.atlassian.com/git/tutorials/merging-vs-rebasing/workflow-walkthrough
-
