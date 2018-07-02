@@ -375,16 +375,14 @@ To create a document from your Doxygen code, navigate to the desired directory (
 
 ### C Documentation Checklist <a name="cdoccheck"/>
 
-* Are the arguments / @params in order (As they are called in the function)?
+* Are the arguments / @params in order (as they are called in the function)?
 * Is there one @param for each argument call in the function?
-* Do they all have units ?
+* Does each @param/return/sideeffect have units ?
 * Are @return and @sideeffects called correctly?
-    * A variable should be both input (@param) and a sideeffect (@sideeffect) if it is in the function arguments and then updated within the function.
-    * A return is something is created solely by the function.
+	- A variable should be both input (@param) and a sideeffect (@sideeffect) if it is in the function arguments and then updated within the function.
+	- A return is something is created solely by the function.
 * Are citations properly documented in the SOILWAT2.bib file and referenced with @cite?
-* Did you check that documentation formatting appears correct in the final copy?
-    * Run DOxygen from terminal (cd Git/SOILWAT2, then Doxygen)
-    * Review the created document .
+* Did you check that documentation formatting appears correct in the .html copy?
 
 ### Documentation in R <a name="rdocumentation"/>
 
@@ -408,6 +406,36 @@ We test at a series of different _levels_. From lowest to highest, these are:
 * __Test Projects:__ Testing at the comprehensive level to test that new code or feature is still producing the same or sensible output. Additionally, test projects provide an example of how the user should set up a project for it to function properly. Checks are made on speed and against reference databases.
 
 ### Unit Testing in C <a name="ctest"/>
+
+#### Formatting
+
+* Be consistent with indentation!! Typically you indent in once every time a curly bracket is opened and out when the bracket is closed. Program like atom will do this automatically for you.
+* Notation, notation, notation!
+* On the line preceding each main test (TEST{}), please write a not describing what function this test is testing.
+* Within the TEST({}) brackets the format for naming the  test is (NameofDoc, NameOfFunction). For example, (SWFlowTest, potSoilEvapBS)..
+* Inputs should be declared first in the TEST. You should try and minimize the number of lines input declaration consumes. For example, you can declare all double that are a length of 1 on one line.
+* There should be only one definition of a variable before each unit test. Avoid declaring it in the inputs and then defining it again before a unit test, without the variable ever being called.
+* Break your TEST code into blocks based on assertions (EXPECT_). Write text (i.e. “Testing when biolive is greater than shade”) and then put everything (defining or re-declaring inputs, running the function, assertions) below this text. For example:
+```
+     // Inputs
+     double biolive, shade;
+     
+     // Test when biolive is greater than shade
+     biolive = 400;
+     shade = 300;
+     
+     bioliveFunc(biolive, shade); 
+     EXPECT_GT(0, biolive);//We expect the results to be X when biolive is X
+ ``` 
+* Use a sensible and consistent amount of line spaces: i.e. one space between inputs and functions, etc.
+
+#### Conditions and assertions
+
+* For functions that calculate related vales across layers (nlyrs) or simulation (nRgr) you should always test when these each each one (i.e. nlyr = 1) and under the maximum conditions (n_lyr = MAX_N_LYR) if possible. All unit tests should be run twice under each of these conditions.
+* An if or if else statement should typically be tested, if possible.
+* Never calculate an expected answer within the TEST and test an output against it.
+
+
 
 ### Unit Testing in R <a name="rtest"/>
 
