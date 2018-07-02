@@ -45,7 +45,7 @@ This is a general guide to the structure, workflow, and standards of the Dryland
 
 [Documentation Guidelines](#documentation)
   * [Documentation in C](#cdocumentation)
-  * [C Documentation Checklist](#cdocheck)
+  * [C Documentation Checklist](#cdoccheck)
   * [Documentation in R](#rdocumentation)
 
 [Testing Guidelines](#testing)
