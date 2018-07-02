@@ -45,6 +45,7 @@ This is a general guide to the structure, workflow, and standards of the Dryland
 
 [Documentation Guidelines](#documentation)
   * [Documentation in C](#cdocumentation)
+  * [C Documentation Checklist](#cdocheck)
   * [Documentation in R](#rdocumentation)
 
 [Testing Guidelines](#testing)
@@ -367,6 +368,23 @@ How to write good messages:
 ## Documentation Guidelines <a name="documentation"/>
 
 ### Documentation in C <a name="cdocumentation"/>
+
+We use Doxygen to write documentation in C. The style guide and rules for Doxygen can be found [here](http://www.stack.nl/~dimitri/doxygen/)
+
+To create a document from your Doxygen code, navigate to the desired directory (i.e. 'Git/SOILWAT2'), and then simply execture the 'Doxygen' command in the terminal. This should create a .html file in /doc folder that you can open in any web browser.
+
+### C Documentation Checklist <a name="cdoccheck"/>
+
+* Are the arguments / @params in order (As they are called in the function)?
+* Is there one @param for each argument call in the function?
+* Do they all have units ?
+* Are @return and @sideeffects called correctly?
+    * A variable should be both input (@param) and a sideeffect (@sideeffect) if it is in the function arguments and then updated within the function.
+    * A return is something is created solely by the function.
+* Are citations properly documented in the SOILWAT2.bib file and referenced with @cite?
+* Did you check that documentation formatting appears correct in the final copy?
+    * Run DOxygen from terminal (cd Git/SOILWAT2, then Doxygen)
+    * Review the created document .
 
 ### Documentation in R <a name="rdocumentation"/>
 
