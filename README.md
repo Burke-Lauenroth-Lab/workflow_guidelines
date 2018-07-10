@@ -1,10 +1,15 @@
 # Structure, Workflow, and Standards for the Dryland Ecology Laboratory GitHub Organization
 ------
 
-* Version: Sep 16, 2016, modified December 11, 2017
-* Authors: Alexander Reeder, Daniel Schlaepfer, Zachary Kramer, Caitlin Andrews
+* Version: July 2018
+* Authors:  Caitlin Andrews, Alexander Reeder, Daniel Schlaepfer & Zachary Kramer
 
 This is a general guide to the structure, workflow, and standards of the Dryland Ecology Laboratory GitHub Organization. The Dryland Ecology Laboratory GitHub Organization consists of many different repositories, each with a different code base and utility aimed at promoting out ability to model ecohydrology. We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects.
+
+This document is provided to orient developlers to the purpose and relationships between our repositories/code bases as well as clearly explain our expectation in communicating via GitHub and developing code, including unit testing and documentation. These are our broad standards that apply to all of our repositories and the languages we develop in (C, C++, R, make). We rely on many other styles guides, software, etc. to assist in our workflow. This document provides expectation on what tools to use, but not specifics, as that is covered thoroughly by the developers of these tools.
+
+More information on repository specific code development, testing (both informal and formal), and installation can be found in the README.md document found in _each_ repository. Per GitHub's functionaltiy, the README document can be viewed by scrolling towards the bottom of each repository's homepage.
+
 
 ## Table of Contents
 
@@ -20,13 +25,11 @@ This is a general guide to the structure, workflow, and standards of the Dryland
 
 [Relationships between Repositories](#repoRelations)
 
-[Suggested Tools and Software](#suggests)
+[Tools and Software](#tools)
   * [Git and GitHub](#gits)
   * [Interacting with Git](#interacting)
   * [Using Mergetool](#mergetool)
   * [Writing and Managing Code](#codes)
-
-[GitHub Basics](#basics)
 
 [GitHub Features and Functionality](#useGitFeatures)
   * [Issues](#issues)
@@ -53,6 +56,7 @@ This is a general guide to the structure, workflow, and standards of the Dryland
   * [Testing in C](#ctest)
   * [Testing in R](#rtest)
 
+[GitHub Basics](#basics)
 [Useful Links](#links)
 
 ## Repositories of the Dryland Ecology GitHub Organization <a name="theRepos"/>
@@ -97,26 +101,27 @@ rSOILWAT2 is an R package with a series of functions that passes information as 
 rSFSW2 is designed to gather user's options and information about sites. All site-specific inputs and treatments in a project are read in at once via a series of _.csvs_. The information within these .csvs is then parsed up on a site by site basis, processed, and then sent to SOILWAT2 via the functions in rSOILWAT2. Outputs from the SOILWAT2 model are then sent back to rSFSW2 via rSOILWAT2 and either saved on a site by site basis, or aggregating and stored in a SQLite outputs databased.
 
 
-## Suggested Tools and Software <a name="suggests"/>
+## Tools and Software <a name="tools"/>
 
-A wide array of tools and software is available to help with the ease of managing code and workflow across multiple repositories with many collaborators.
+A wide array of tools and software is available to help with the ease of managing code and workflow across multiple repositories with many collaborators. 
 
 ### Git and GitHub  <a name="gits"/>
 
-As you may have guessed by being here, Git and GitHub are at the heart of our workflow. GitHub, and alternatives such as BitBucket, are web-based hosting services for the use of Git. Git is a free and open source version control system (VCS) that is responsible for all version control programming that happens locally on your computer. Git needs to be installed on your computer. Downloads available here: https://git-scm.com/downloads
+As you may have guessed by being here, Git and GitHub are at the heart of our workflow. GitHub, and alternatives such as BitBucket, are web-based hosting services for the use of Git. Git is a free and open source version control system (VCS) that is responsible for all version control programming that happens locally on your computer. Git may need to be installed on your computer. Downloads available here: https://git-scm.com/downloads
 
 #### Interacting with Git <a name="interacting"/>
 
-The __terminal__ is the defacto interface with Git and all Git commands start with 'git'. Typing 'git' into terminal will yield a list of common commands. Much of the functionality for Git command line is replicated in __Git GUIs__ or is available online at GitHub.com. Git GUIs are best for pushing local commits and tracking changes and the history that other users have made. Common Git GUIs include:
+The __terminal__ is the defacto interface with Git and all Git commands start with 'git'. Typing 'git' into terminal will yield a list of common commands. Much of the functionality for Git command line is replicated in __Git GUIs__ or is available online at GitHub.com. 
 
-	* ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows allows for visually friendly handling of pull requests, merges, commits, branches, and diffs, but lack some advanced features (e.g., management of sub-modules).
-	*['Sourcetree'](https://www.sourcetreeapp.com/), provides similar functionality to 'Github Desktop', but covers most of the advanced features that it lacks.
+Git GUIs are best for pushing commits and _tracking changes and the history that other users have made_, but lack some advanced features (e.g., management of sub-modules). Tracking file by file and line by line changes allows for the developer to avoid careless mistakes (i.e. did you really want to add that blank line there?), to double check their work and changes across files, and to be aware of changes made by other developers. The Dryland Ecology organizations prefers ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows and ['GitKraken'](https://www.gitkraken.com/download) for Linux machines. The functionality of these two GUIS are very similar.
 
-GitHub.com is best for submitting pull requests and easy merging when there is _not_ conflicts. When there are merge conflicts between branches numerous __merge tools__ exist which allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differences.
-
-* `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
+GitHub.com is best for submitting pull requests and easy merging when there is _no_ conflicts, in regards to code development. We also use GitHub for its organizational and communication capacities (discussed below).
 
 #### Using Mergetool <a name="mergetool"/>
+
+When there are merge conflicts between branches numerous __merge tools__ exist which allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differences.
+
+* `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
 
 The git mergetool is useful when trying to merg changes into a branch and some files fail to merge due to conflicts. When this occurs a mergetool can be used to resolve the merge conflicts.
 a basic example of when this is needed follows:
@@ -148,7 +153,7 @@ Meld is a great mergetool for linux and windows. Meld is not built in with git s
 
 There are two types of text editors: (1) Those accessed via the command line and (2) editors with GUIs.
 
-__Command line editors__ are typically used for quick edits in the terminal. Options include nano, vim, and vi. Nano has the mist user-friendly interfect. Most all shortcuts are listed at the bottom of the window, there is autotomatic indentation, and many search functions.
+__Command line editors__ are typically used for quick edits in the terminal. Options include nano, vim, and vi. Nano has the most user-friendly interface. Most all shortcuts are listed at the bottom of the window, there is autotomatic indentation, and many search functions.
 
  * `git config --global core.editor <editor>`
 
@@ -156,27 +161,6 @@ __GUI text editors__ are typically more user-friendly, particuarly when approach
 
 __Integrated Development Environments__ or __IDEs__ are software suites that contain multiple tools needed to test and write software. Typically they not only include a GUI text editors, but also a compiler and debugger to test and clean code. IDEs are language dependent (i.e. you need an IDE that can compile C code for SOILWAT2 and one for R code to compile rSFSW2). RStudio can act an an IDE for R code, while NetBeans is a popular choice for C development.
 
-## Git Basics <a name="basics"/>
-
-* The 4 levels of the git organization
-    * __Working directory__ (on local computer): work in text editor and/or an IDE (RStudio, Visual Studio, etc.)
-    * __Staging area__: include/save changes to the next commit
-    * __Local repository__: commit to project history
-    * __Remote repository__ on github.com: share code with collaborators and backup local branches
-
-* __Inspecting__ a repository
-    * State of working directory and staging area: git status
-    * History of commits: `git log --graph --full-history --oneline --decorate`
-    * List of branches (* indicates the active branch):
-    * Local branches: `git branch`
-    * Remote branches: `git branch -r`
-    * List of remote connections: `git remote -v`
-
-* __Finding stuff__ in a repository
-    * Find all commits which have affected a file: `git log -- *<part_of_file_name>*`
-    * Find the SHA of the last commit that affected a file `git rev-list -n 1 HEAD -- <file_path>`
-    * Find all commits which have deleted files and list the deleted files:
-      `git log --diff-filter=D --summary`
 
 ## GitHub Features and Functionality <a name="useGitFeatures"/>
 
@@ -448,7 +432,27 @@ Each and every function should have a test. Our goal is 100% code coverage. As y
 #### An Example
 
 
+## Git Basics <a name="basics"/>
 
+* The 4 levels of the git organization
+    * __Working directory__ (on local computer): work in text editor and/or an IDE (RStudio, Visual Studio, etc.)
+    * __Staging area__: include/save changes to the next commit
+    * __Local repository__: commit to project history
+    * __Remote repository__ on github.com: share code with collaborators and backup local branches
+
+* __Inspecting__ a repository
+    * State of working directory and staging area: git status
+    * History of commits: `git log --graph --full-history --oneline --decorate`
+    * List of branches (* indicates the active branch):
+    * Local branches: `git branch`
+    * Remote branches: `git branch -r`
+    * List of remote connections: `git remote -v`
+
+* __Finding stuff__ in a repository
+    * Find all commits which have affected a file: `git log -- *<part_of_file_name>*`
+    * Find the SHA of the last commit that affected a file `git rev-list -n 1 HEAD -- <file_path>`
+    * Find all commits which have deleted files and list the deleted files:
+      `git log --diff-filter=D --summary`
 
 ## Links <a name="links"/>
 
