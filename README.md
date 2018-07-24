@@ -1,12 +1,11 @@
 # Structure, Workflow, and Standards for the Dryland Ecology Laboratory GitHub Organization
 ------
 
-* Version: July 2018
 * Authors:  Caitlin Andrews, Alexander Reeder, Daniel Schlaepfer & Zachary Kramer
 
-This is a general guide to the structure, workflow, and standards of the Dryland Ecology Laboratory GitHub Organization. The Dryland Ecology Laboratory GitHub Organization consists of many different repositories, each with a different code base and utility aimed at promoting out ability to model ecohydrology.
+This is the Dryland Ecology Laboratory's protocol and guide to the structure, workflow, and standards of the Dryland Ecology Laboratory GitHub Organization. The Dryland Ecology Laboratory GitHub Organization consists of many different repositories, each with a different code base and utility aimed at promoting out ability to model ecohydrology.
 
-This document is provided to orient developers to the purpose and relationships between our repositories as well as clearly explain our expectation in communicating via GitHub and developing code, including unit testing and documentation. These are our broad standards that apply to all of our repositories and the languages we develop in (C, C++, R, make). We rely on many other styles guides, software, etc. to assist in our workflow. This document provides expectation on what tools to use, but not specifics, as that is covered thoroughly by the creators of these tools.
+This document is provided to orient developers to the purpose and relationships between our repositories as well as clearly explain our expectations in (A) using Git and GitHub and (B) developing code, including unit testing and documentation. These are our broad standards that apply to all of our repositories and the languages we develop in (C, C++, R, make). We rely on many other styles guides, software, etc. to assist in our workflow. This document provides expectation on what tools to use, but not specifics, as that is covered thoroughly by the creators of these tools.
 
 More information on repository specific code development, testing (both informal and formal), and installation can be found in the README.md document found in _each_ repository. Per GitHub's functionality, the README document can be viewed by scrolling towards the bottom of each repository's homepage.
 
@@ -27,20 +26,21 @@ More information on repository specific code development, testing (both informal
 
 [Git and GitHub](#gits)
   * [Interacting with Git](#interacting)
-  * [Using Mergetool](#mergetool)
-  * [Writing and Managing Code](#codes)
+  * [Developing Code with Git](#developing)
   * [GitHub Communication Features](#gitcomm)
   * [GitHub Code Quality Features](#gitqual)
 
-[Heirarchy of Testing](#testheir)
+[Developing Code](#develop)
 
-[R Code Standards](#rinfo)
+  *[Heirarchy of Testing](#testheir)
+
+  *[R Code Standards](#rinfo)
   * [Style Guide](#rstyle)
   * [Code Development](#rdevel)
   * [Documentation](#rdoc)
   * [Unit Testing](#rtest)
 
-[C Code Standards](#cinfo)
+  *[C Code Standards](#cinfo)
   * [Style Guide](#cstyle)
   * [Code Development](#cdevel)
   * [Documentation](#cdoc)
@@ -104,65 +104,79 @@ rSFSW2 is designed to gather user's options and information about sites. All sit
 
 ## Git and GitHub  <a name="gits"/>
 
-We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects.
+As you may have guessed by being here, Git and GitHub are at the heart of our workflow. GitHub, and alternatives such as BitBucket and GitLab, are web-based hosting services for the use of Git. Git is a free and open source version control system (VCS) that is responsible for all version control programming that happens locally on your computer. Git may need to be installed on your computer. Downloads available here: https://git-scm.com/downloads.
 
-
-As you may have guessed by being here, Git and GitHub are at the heart of our workflow. GitHub, and alternatives such as BitBucket, are web-based hosting services for the use of Git. Git is a free and open source version control system (VCS) that is responsible for all version control programming that happens locally on your computer. Git may need to be installed on your computer. Downloads available here: https://git-scm.com/downloads.
-
-More explanation of git and github here
+Git and GitHub are important to our group because it provides a way to track changes to our code, and to communicate code purpose, as well as our plans and concerns to one another. While Git provides the platform for communication, there are still stringent rules we abide by to ensure clarity and control.
 
 ### Interacting with Git <a name="interacting"/>
 
-The __terminal__ is the defacto interface with Git and all Git commands start with 'git'. Typing 'git' into terminal will yield a list of common commands. Much of the functionality for Git command line is replicated in __Git GUIs__ or is available online at GitHub.com.
+The __terminal__ is the defacto interface with Git and all Git commands start with 'git'. Typing 'git' into terminal will yield a list of common commands. Much of the functionality for git command line is replicated in __Git GUIs__ or is available online at GitHub.com.
 
-Git GUIs are best for pushing commits and _tracking changes and the history that other users have made_, but lack some advanced features (e.g., management of sub-modules). Tracking file by file and line by line changes allows for the developer to avoid careless mistakes (i.e. did you really want to add that blank line there?), to double check their work and changes across files, and to be aware of changes made by other developers. The Dryland Ecology organizations prefers ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows and ['GitKraken'](https://www.gitkraken.com/download) for Linux machines. The functionality of these two GUIS are very similar.
+Git GUIs are best for pushing commits and _tracking changes and the history that other users have made_, but lack some advanced features (e.g., management of sub-modules). Tracking file by file and line by line changes allows for the developer to avoid careless mistakes (i.e. did you really want to add that blank line there?), to double check their work and changes across files, and to be aware of changes made by other developers. The Dryland Ecology organizations prefers a combination of ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows (and ['GitKraken'](https://www.gitkraken.com/download) for Linux machines) _and_ [Atom](https://atom.io/). Atom is a git embedded text editor. From atom, you can switch branches, stage and commit changes, and resolve merge conflicts.
 
-GitHub.com is best for submitting pull requests and easy merging when there is _no_ conflicts, in regards to code development. We also use GitHub for its organizational and communication capacities (discussed below).
+In regards to code development, GitHub.com is best for submitting pull requests and easy merging when there is _no_ conflicts. We also use GitHub for its organizational and communication capacities (discussed below).
 
-### Using Mergetool <a name="mergetool"/>
+### Developing with Git <a name ="developing"/>
 
-When there are merge conflicts between branches numerous __merge tools__ exist which allow ease of access when integrating pull requests and merges into other branches. Options include Kdiff3, meld, and vimdiff. Kdiff3 is completely free to use, and very user-friendly. Conflicts are show line by line, character by character, and provides an automated way to merge differences.
+We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects. Code is never developed on the master to keep the master branch clean and functional within our tested expectations.
 
-* `git config --global merge.conflictstyle diff3` # conflict resolution with three sections: HEAD (code between `<<<<<<<` and `|||||||`), feature-branch  (code between `=======` and `>>>>>>>`), and (3rd) merged (=last) common ancestor (code between `|||||||` and `=======`)
+Our essential workflow has 10 basic steps: (1) Clone repository to a local folder -> (2) Create Issue -> (3) Create a feature branch to work on this issue -> (4) Develop code locally -> (5) Commit and push changes with __useful__ commit messages (!!!) to the global -> (6) Merge master into feature branch -> (7) Open a pull request -> (8) Ensure that branch passes continuous integration tests -> (9) Merge development branch into master and close PR -> (10) Update version number on master.
 
-The git mergetool is useful when trying to merg changes into a branch and some files fail to merge due to conflicts. When this occurs a mergetool can be used to resolve the merge conflicts.
-a basic example of when this is needed follows:
-* `git merge master`
-* `Automatic merge failed; fix conflicts and then commit the results`
-* `git mergetool`
-
-The first step with using a mergetool with git is to set the default tool desired. To accomplish this simply open the terminal and type
-`git config --global merge.tool $` where $ is replaced with desired tool.
-* `git config --global merge.tool meld`
-
-If the tool is not one of the defaults with git, a path needs to be added so git can find and run the desired program. Follow the previous command with
-`git config --global mergetool.$.path 'path/to/executable/'` where $ is replaced with desired tool.
-* `git config --global mergetool.meld.path c:\program Files (x86)\Meld\meld\meld.exe'`
-
-To use the desired mergetool on merge conflicts just type `git mergetool` after an unsuccseful merge. The git mergetool will show all files that need to have conflicts resolved and will allow the user to
-go through each conflict one by one using the desired tool.
+This workflow is outlined below. More specific can be found in our workflow guidelines.
 
 
-Meld:
+#### (1) Clone Repo
 
+Repositories hosted on GitHub should be cloned into a local 'Git' folder on your desktop with the git clone command. Link your Git Desktop and text editor (i.e. Atom) to these folders. 
 
-Meld is a great mergetool for linux and windows. Meld is not built in with git so it needs to be downloaded seperately and set up as show above. When using Meld there are three windows shown. The leftmost window is the users local files, the middle window is what the resolved and used file will be, and the right window is the remote file that is being merged into the local files. When going through the conflicts the user chooses the changes they desire.
+#### (2) Issues <a name="issues"/>
 
+Issues are the smallest unit of reporting and are repository specific. Issues can pertain to tasks, questions, proposed enhancements, and bugs. For bug fixes, the issue should revolve around a containable unit of code. Additionally, for each bug, a __bugfix__Issue#BugDescription__ branch should be created.
 
-### Writing and Managing Code  <a name="codes"/>
-Always clone all repos to one place
-Create branches on local and work in this branch
-GOOD COMMITS - Should this go here?
-Merge with master everday -> more about merging below.
-Reference to code git materials and git cheat sheet.
-Maybe this is all in the workflow guidelines?.....
+##### Creating Issues
+If you create an issue, decide to work on one, or you are assigned to one, then:
+* Assign it to a team member and/or yourself, if applicable
+* Add an __in progress__ label, if you are currently working on it
+* Add a __priority__ label, if it has a low priority or a high priority
+* Add a __category__ label, such as 'bug' or 'enhancement' or 'question'
+* Assign it to a milestone
+    * Master branch bug: the _master_ milestone
+    * Feature branch bug/enhancement: the respective milestone
 
+* __Error reporting__:
+    * Ideally, you provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example. Some resources that may help:
+        * [How to create a Minimal, Complete, and Verifiable example](http://stackoverflow.com/help/mcve)
+        * [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html)
+        * [How to make a great R reproducible example?](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example#5963610)
+        * [How to write a reproducible example](https://gist.github.com/hadley/270442)
+    * Assign the issue to the __master__ milestone
+    * Create a __bugfix branch__
+    * [Close the issue with a reference](#closing-issues)
+    * Create a pull request to the master branch, with appropriate reviewers
 
-### GitHub Communication Features <a name="gitcomm"/>
+##### Closing Issues
+* When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body).
+  * For example, including 'Fixes #45' or 'Closes #45' in the commit message will close issue #45 in the repository you are working in.
+  * Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
 
-#### Communication basics (commit messages, comments on issues, etc.) <a name="communication"/>
+#### (3) Creating a Branch
 
-Follow our code of conduct in all communications, e.g., [Contributor Code of Conduct of the rSFSW2 repository](https://github.com/Burke-Lauenroth-Lab/rSFSW2/blob/master/CONDUCT.md).
+ We have __three types of branches__:
+  * __Master branch__: Any commit on the master branch aims to be deployable. Such commits are usually the result of merging/rebasing with a feature or bugfix branch. Once deployable a unique version number is released. Deployable for us means that commits are tested.
+  * __Bugfix branches__: When a bug is discovered on the master branch, a bugfix branch and an issue should be created. The issue should be assigned to the _master_ milestone. A bugfix branch should be named after the respective issue. An example of a bugfix branch would be bugfix_16, which represents issue #16.
+  * __Feature branches__: Everything else should be a feature branch, which is where code development is done before it is merged back to master. Each feature branch needs its own __milestone__. Any bugfixes needed on a feature branch should be directly committed to the feature branch. Feature branches should have descriptive but concise names in upper camel case, such as feature_BetterErrorMessages.
+
+#### (4) Developing Code
+
+See section below about develop code(#develop).
+
+#### (5) Committing and Pushing Code
+
+"A commit should be a wrapper for related changes." Read these [GitHub best commit practices](https://github.com/trein/dev-best-practices/wiki/Git-Commit-Best-Practices) that we follow.
+
+In general, you can stage multiple changes to save and track your work, but a commit should only be pushed to GitHub when you are done working on a logical chunk of code. This is so the code can easily be rolled back. This doesn't mean your changes are huge, but rather that you commit based on the completion of a fix or enhancement into logical chunks. For example, if your mission is to write unit tests for all functions in one .R file, you could have a commit after you complete tests for one or two functions.
+
+##### Good Commit Messages
 
 Why good messages are important:
 [Erlang: Writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages): "Good commit messages serve at least three important purposes:
@@ -176,17 +190,81 @@ How to write good messages:
 - How does it address the issue? For short obvious patches this part can be omitted, but it should be a high level description of what the approach was.
 - What effects does the patch have? (In addition to the obvious ones, this may include benchmarks, side effects, etc.)"
 
-* __Error reporting__:
-    * All _master branch_ bugs require you to create an __issue__ in GitHub. Please think carefully whether the issue is due to code by SOILWAT2, rSOILWAT2, or rather by rSFSW2. Ideally, you provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example. Some resources that may help:
-        * [How to create a Minimal, Complete, and Verifiable example](http://stackoverflow.com/help/mcve)
-        * [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html)
-        * [How to make a great R reproducible example?](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example#5963610)
-        * [How to write a reproducible example](https://gist.github.com/hadley/270442)
-    * Assign the issue to the __master__ milestone
-    * Create a __bugfix branch__
-    * [Close the issue with a reference](#closing-issues)
-    * Create a pull request to the master branch, with appropriate reviewers
+Rules for commit messages:
+- Begin message with a short summary (< 50 character)
+- Press enter
+- Have bullet points that outline specifics including reasoning for specific changes
 
+An example of a good commit message:
+
+
+#### (6) Merge Master into Development Branch 
+
+Merging is the act of integrating the changes of one branch into another. Typically, you are merging changes on the _master_ branch into your development branch, though any branch can be be merged into another. Incorrect merging is the most frequent source of error and can have serious consequences, so make sure to be conscientious about the merge decisions you are making. 
+
+##### Merge Tips
+
+The most effective way to correctly merge is to be __proactive and conscientious__ before the merging occurs. Use a Git GUI to inspect (1) what changes have occurred on the master branch and (2) what changes have occured on your development branch. If seperate files have been worked on and there is no overlap in file development, your merge will have no conflicts and be straightforward. In fact, when you open a pull request on GitHub, it will automatically detect whether your development branch has conflicts or not. If there is none, there is an option to automaticlly merge.
+
+However, if there are merge conflicts (i.e. there has been development on the same file & lines on both branches), you will need inspect these conflicts, one by one, and decide which version is to be included in the final merged version of your branch. Make sure to read the commit messages from the recent changes in the master to understand why and where there has been changes in code. In general, you should aim to retain the specific functionality (whether it was an enhancement or bugfix) on your branch, but make sure it integrates well with the, potentially new, overall workflow of the master. There are many situations where you may need to go back and re-write functionality in your feature branch based on new changes in the master, after the merge.
+
+##### Merge Tools
+
+We use Atom or meld.
+
+In Atom:
+
+- In terminal or on GitHub, merge master into the development branch
+  * On terminal: `git merge master` while checked out to development branch
+- A message will appear indicating whether the master was successfuly merged (no conflicts) or if there were conflicts
+  * On terminal: `Automatic merge failed; fix conflicts and then commit the results`
+- Open Atom and fix conflicts 
+  * Watch this [tutorial](https://atom.io/packages/merge-conflicts) on using Atom to resolve merge conflicts
+  * Manually choose, conflict by conflict, whether you want the Master version, your development version ("Head"), or a combination of both
+- Test that your development branch still works and passes all tests
+- Commit changes that took place during merge
+
+In Meld:
+
+- Download [meld](http://meldmerge.org/)
+- Set meld as your merge tool
+  * On terminal `git config --global merge.tool meld`
+- In terminal or on GitHub, merge master into the development branch
+  * On terminal: `git merge master` while checked out to development branch
+- A message will appear indicating whether the master was successfuly merged (no conflicts) or if there were conflicts
+  * On terminal:  `Automatic merge failed; fix conflicts and then commit the results`
+- Open meld
+  * On terminal: `git mergetool`
+- Three windows will be shown
+  * The leftmost window is the users local files, the middle window is what the resolved and used file will be, and the right window is the remote file that is being merged into the local files. 
+
+Note: If the tool is not one of the defaults with git, a path needs to be added so git can find and run the desired program. For example, `git config --global mergetool.meld.path c:\program Files (x86)\Meld\meld\meld.exe'` 
+
+#### (7) Open a pull request
+
+On GitHub.com, in the relevant repository, navigate to the 'Pull Request' tab. Choose which branch you would like to open a pull request (PR) for. Write a summary of the feature or fixes of your branch, and reference the issue #, so that the issues will be closed when your PR is closed.
+
+Tag your supervisor for code review.
+
+#### (8) Ensure that Pull Request Passes Continuous Integration Tests
+
+When you open a pull request, your branch will be automatically tested to see if it passes our continuous integration (CI) tests. Your branch cannot be merged into master until these tests are passed. 
+
+(CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict are more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted. Our CI GitHub checks currently consist of coverage checks and platform build checks.
+  * Coverage checks look to see that the percentage of line of code covered by unit tests has _increased_. If it hasn't the test will not pass.
+  * Platform build checks are tested on a Unix and Windows Servers using Travis and Appveyor, respectively. Travis and Appveyor are servers with these OSs where the program is compiled, installed, and all unit tests are run. This is useful because if, for example, SOILWAT2 is not building on an individual's Linux computer, but is building on Travis, we know the user's computer is not configured correctly, as opposed to a software design issue.
+
+#### (9) Merge development into master
+
+Follow the steps above for (6). Should be straightforward and with minimal conflicts at this point. 
+
+#### (10) Update Version
+
+
+
+### GitHub Organization Features <a name="gitcomm"/>
+
+Follow our code of conduct in all communications, e.g., [Contributor Code of Conduct of the rSFSW2 repository](https://github.com/Burke-Lauenroth-Lab/rSFSW2/blob/master/CONDUCT.md).
 
 * We use __issues__ and __milestones__ to communicate code enhancements, bugs, priorities, and current progress.
 
@@ -194,25 +272,6 @@ How to write good messages:
     * __Master branch__: Any commit on the master branch aims to be deployable. Such commits are usually the result of merging/rebasing with a feature or bugfix branch. Once deployable a unique version number is released. Deployable for us means that commits are tested.
     * __Bugfix branches__: When a bug is discovered on the master branch, a bugfix branch and an issue should be created. The issue should be assigned to the _master_ milestone. A bugfix branch should be named after the respective issue. An example of a bugfix branch would be bugfix_16, which represents issue #16.
     * __Feature branches__: Everything else should be a feature branch, which is where code development is done before it is merged back to master. Each feature branch needs its own __milestone__. Any bugfixes needed on a feature branch should be directly committed to the feature branch. Feature branches should have descriptive but concise names in upper camel case, such as feature_BetterErrorMessages.
-
-#### Issues <a name="issues"/>
-
-Issues are the smallest unit of reporting and are repository specific. Issues can pertain to tasks, questions, proposed enhancements, and bugs. For bug fixes, the issue should revolve around a containable unit of code. Additionally, for each bug, a __bugfix__Issue#BugDescription__ branch should be created.
-
-##### Creating issues
-If you create an issue, decide to work on one, or you are assigned to one, then:
-* Assign it to a team member and/or yourself, if applicable
-* Add an __in progress__ label, if you are currently working on it
-* Add a __priority__ label, if it has a low priority or a high priority
-* Add a __category__ label, such as 'bug' or 'enhancement' or 'question'
-* Assign it to a milestone
-    * Master branch bug: the _master_ milestone
-    * Feature branch bug/enhancement: the respective milestone
-
-##### Closing issues
-* When the issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body).
-	* For example, including 'Fixes #45' or 'Closes #45' in the commit message will close issue #45 in the repository you are working in.
-	* Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
 
 #### Milestones <a name="milestone"/>
 Milestones map to branches within a repository, and hold issues relating to that branch. Whenever you create a _feature_ branch, you should also create a respective milestone.
@@ -231,6 +290,7 @@ Projects at the organizational level are similar to those at the repository leve
 * CI
 * codecov
 * versioning
+
 
 ## Heirarchy of Testing <a name="testheir"/>
 We execute a series of tests at different levels to detect bugs and to validate and verify that our code is acting as expected.
