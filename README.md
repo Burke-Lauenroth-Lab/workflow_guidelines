@@ -13,6 +13,7 @@ More information on repository specific code development, testing (both informal
 ## Table of Contents
 
 [Repositories of the Dryland Ecology GitHub Organization](#theRepos)
+  * [Relationships between Repositories](#repoRelations)
   * [SOILWAT2](#soilwat)
   * [rSOILWAT2](#rsoilwat)
   * [rSFSW2](#rsfsw)
@@ -22,12 +23,10 @@ More information on repository specific code development, testing (both informal
   * [STEPWAT_R_Wrapper](#stepr)
   * [Additional Repositories](#addrepos)
 
-[Relationships between Repositories](#repoRelations)
-
 [Git and GitHub](#gits)
   * [Interacting with Git](#interacting)
   * [Developing Code with Git](#developing)
-  * [GitHub Communication Features](#gitcomm)
+  * [GitHub Organization Features](#gitcomm)
   * [GitHub Code Quality Features](#gitqual)
 
 [Developing Code](#develop)
@@ -47,9 +46,18 @@ More information on repository specific code development, testing (both informal
     * [Unit Testing](#ctest)
 
 [Downloads](#dls)
+
 [Useful Links](#links)
 
 ## Repositories of the Dryland Ecology GitHub Organization <a name="theRepos"/>
+
+### Relationships between Repositories <a name="repoRelations"/>
+
+SOILWAT2 runs on a site by site basis. While the simulations of water balance are fast, running SOILWAT2 stand-alone is inefficient, as it needs to read and write information from disk about each site individually. Furthermore, running simulations for many sites is cumbersome from the user perspective, as a series of site-specific input files (.in) need to be formatted for each site. Because of these issues, the R Soilwat Wrapper (rSFSW2) and the R Soilwat Package (rSOILWAT2) were developed. These repositories allow users to set-up information for multiple sites simultaneously and for the efficient handling of these sites' information in R.
+
+rSOILWAT2 is an R package with a series of functions that passes information as a S4 class object between R and C. rSOILWAT2 knows nothing about your site or water-balance; It is simply a package with functions designed to interface between the two programs. rSOILWAT2 avoids disk operations and most things happen in memory. Information, read-in, or calculated, and formatted by rSFSW2, is passed via rSOILWAT2 to SOILWAT2. Most importantly, it allows for the execution of SOILWAT2 to happen completely in memory.
+
+rSFSW2 is designed to gather user's options and information about sites. All site-specific inputs and treatments in a project are read in at once via a series of _.csvs_. The information within these .csvs is then parsed up on a site by site basis, processed, and then sent to SOILWAT2 via the functions in rSOILWAT2. Outputs from the SOILWAT2 model are then sent back to rSFSW2 via rSOILWAT2 and either saved on a site by site basis, or aggregating and stored in a SQLite outputs databased.
 
 ### SOILWAT2 <a name="soilwat">
 
@@ -94,14 +102,6 @@ Specifics about running or updating the projects in rSFSW2_tools can be found in
 
 There are additional "legacy" repositories with old code and information, that are not currently active. These include *STEPWAT2.testingfolders*, *SoilWatExplorer*, *JsoilWat*, *JStepWat*, and *stepwat_spinup_test*.
 
-## Relationships between Repositories <a name="repoRelations"/>
-
-SOILWAT2 runs on a site by site basis. While the simulations of water balance are fast, running SOILWAT2 stand-alone is inefficient, as it needs to read and write information from disk about each site individually. Furthermore, running simulations for many sites is cumbersome from the user perspective, as a series of site-specific input files (.in) need to be formatted for each site. Because of these issues, the R Soilwat Wrapper (rSFSW2) and the R Soilwat Package (rSOILWAT2) were developed. These repositories allow users to set-up information for multiple sites simultaneously and for the efficient handling of these sites' information in R.
-
-rSOILWAT2 is an R package with a series of functions that passes information as a S4 class object between R and C. rSOILWAT2 knows nothing about your site or water-balance; It is simply a package with functions designed to interface between the two programs. rSOILWAT2 avoids disk operations and most things happen in memory. Information, read-in, or calculated, and formatted by rSFSW2, is passed via rSOILWAT2 to SOILWAT2. Most importantly, it allows for the execution of SOILWAT2 to happen completely in memory.
-
-rSFSW2 is designed to gather user's options and information about sites. All site-specific inputs and treatments in a project are read in at once via a series of _.csvs_. The information within these .csvs is then parsed up on a site by site basis, processed, and then sent to SOILWAT2 via the functions in rSOILWAT2. Outputs from the SOILWAT2 model are then sent back to rSFSW2 via rSOILWAT2 and either saved on a site by site basis, or aggregating and stored in a SQLite outputs databased.
-
 ## Git and GitHub  <a name="gits"/>
 
 As you may have guessed by being here, Git and GitHub are at the heart of our workflow. GitHub, and alternatives such as BitBucket and GitLab, are web-based hosting services for the use of Git. Git is a free and open source version control system (VCS) that is responsible for all version control programming that happens locally on your computer. Git may need to be installed on your computer. Downloads available here: https://git-scm.com/downloads.
@@ -112,7 +112,7 @@ Git and GitHub are important to our group because it provides a way to track cha
 
 The __terminal__ is the defacto interface with Git and all Git commands start with 'git'. Typing 'git' into terminal will yield a list of common commands. Much of the functionality for git command line is replicated in __Git GUIs__ or is available online at GitHub.com.
 
-Git GUIs are best for pushing commits and _tracking changes and the history that other users have made_, but lack some advanced features (e.g., management of sub-modules). Tracking file by file and line by line changes allows for the developer to avoid careless mistakes (i.e. did you really want to add that blank line there?), to double check their work and changes across files, and to be aware of changes made by other developers. The Dryland Ecology organizations prefers a combination of ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows (and ['GitKraken'](https://www.gitkraken.com/download) for Linux machines) _and_ [Atom](https://atom.io/). Atom is a git embedded text editor. From atom, you can switch branches, stage and commit changes, and resolve merge conflicts.
+Git GUIs are best for pushing commits and _tracking changes and the history that other users have made_, but lack some advanced features (e.g., management of sub-modules). The Dryland Ecology organizations prefers a combination of ['GitHub Desktop'](https://desktop.github.com/) for Mac OSX and Microsoft Windows (and ['GitKraken'](https://www.gitkraken.com/download) for Linux machines) _and_ [Atom](https://atom.io/). Tracking file by file and line by line changes allows for the developer to avoid careless mistakes (i.e. did you really want to add that blank line there?), to double check their work and changes across files, and to be aware of changes made by other developers.
 
 In regards to code development, GitHub.com is best for submitting pull requests and easy merging when there is _no_ conflicts. We also use GitHub for its organizational and communication capacities (discussed below).
 
@@ -120,9 +120,9 @@ In regards to code development, GitHub.com is best for submitting pull requests 
 
 We use the ['Github flow'](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects. Code is never developed on the master to keep the master branch clean and functional within our tested expectations.
 
-Our essential workflow has 11 steps: (1) Set user configurations (2) Clone repository to a local folder -> (3) Create Issue -> (4) Create a feature branch to work on this issue -> (5) Develop code locally -> (6) Commit and push changes with __useful__ commit messages from the local to the global -> (7) Merge master into feature branch -> (8) Open a pull request -> (9) Ensure that branch passes continuous integration tests -> (10) Merge development branch into master & close PR -> (11) Update version on master.
+Our essential workflow has 11 steps: (1) Set user configurations (2) Clone repository to a local folder -> (3) Create Issue -> (4) Create a branch to work on this issue -> (5) Develop code locally -> (6) Commit and push changes with __useful__ commit messages from the local to the global -> (7) Merge master into feature branch -> (8) Open a pull request -> (9) Ensure that branch passes continuous integration tests -> (10) Merge development branch into master & close PR -> (11) Update version number on master.
 
-More information about each of these steps can be found [here](git_workflow.md).
+These steps are covered in more detail in our [git workflow documentation](git_workflow.md).
 
 ### GitHub Organization Features <a name="gitcomm"/>
 
@@ -154,7 +154,9 @@ Projects at the organizational level are similar to those at the repository leve
 * versioning
 
 
-## Hierarchy of Testing <a name="testheir"/>
+## Developing Code <a name="develop"/>
+
+### Hierarchy of Testing <a name="testheir"/>
 We execute a series of tests at different levels to detect bugs and to validate and verify that our code is acting as expected.
 We test at a series of different _levels_. From lowest to highest, these are:
 
@@ -168,16 +170,17 @@ We test at a series of different _levels_. From lowest to highest, these are:
 
 * __Test Projects:__ Testing at the comprehensive level to test that new code or feature is still producing the same or sensible output. Additionally, test projects provide an example of how the user should set up a project for it to function properly. Checks are made on speed and against reference databases.
 
-## R Code Standards <a name="rinfo"/>
+### R Code Standards <a name="rinfo"/>
 
-  ### Style Guide <a name="rstyle"/>
+  #### Style Guide <a name="rstyle"/>
+  
   * __Style guide__: In development. For R coding style, DRS suggests to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html). There are many other R style guides including: [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml), [Bioconductor's Coding Style](https://www.bioconductor.org/developers/how-to/coding-style/), [rDatSci/rOpenSci's R Style Guide](https://github.com/rdatsci/PackagesInfo/wiki/R-Style-Guide), [R Coding Conventions by H. Bengtsson](https://docs.google.com/document/d/1esDVxyWvH8AsX-VJa-8oqWaHLs4stGlIbk8kLc5VlII/edit), [4D R code style guide](https://4dpiecharts.com/r-code-style-guide/)
 
-  ### Code Development <a name="rdevel"/>
+  #### Code Development <a name="rdevel"/>
 
-  ### Documentation <a name="rdoc"/>
+  #### Documentation <a name="rdoc"/>
 
-  ### Unit Testing <a name="rtest"/>
+  #### Unit Testing <a name="rtest"/>
 
   We use the 'testthat' framework for unit testing in R. Within each of our R package repositories there is a _tests/testthat_ directory. Within the _tests_ folder there is testthat.R, which guides R to to test all files in the _testthat_ folder during the R CMD check. Each file within the _/testthat_ folder should begin with __test__ and each of these files contains multiple related tests. We typically have _at least_ a test file for each corresponding file in the /R folder, but it is possible that there might need to be many test files for each /R file.
 
@@ -187,65 +190,40 @@ We test at a series of different _levels_. From lowest to highest, these are:
 
   #### An Example
 
+### C Code Standards <a name="cinfo"/>
 
-## C Code Standards <a name="cinfo"/>
+  #### Style Guide <a name="style"/>
 
-  ### Style Guide <a name="style"/>
+  #### Code Development <a name="cdevel"/>
 
-  ### Code Development <a name="cdevel"/>
+  #### Documentation  <a name="cdoc"/>
 
-  ### Documentation  <a name="cdoc"/>
+  We use Doxygen to write documentation in C. The style guide and rules for Doxygen can be found [here](http://www.stack.nl/~dimitri/doxygen/).
 
-  We use Doxygen to write documentation in C. The style guide and rules for Doxygen can be found [here](http://www.stack.nl/~dimitri/doxygen/)
+  To create a document from your Doxygen code, navigate to the desired directory (i.e. 'Git/SOILWAT2'), and then simply execute the 'Doxygen' command in the terminal along with the configuration file: `Doxygen Doxyfile`
+  This will create a index.html file in /doc folder that you can open in any web browser.
 
-  To create a document from your Doxygen code, navigate to the desired directory (i.e. 'Git/SOILWAT2'), and then simply execute the 'Doxygen' command in the terminal. This should create a .html file in /doc folder that you can open in any web browser.
-
-  Refer to our C documentation checklist each time you are plan to commit changes with alterations to C documentation.
+  Refer to our [C documentation checklist](CDocChecklist.md) each time you are plan to commit changes with alterations to C documentation.
 
   ### Unit Testing <a name="ctest"/>
+  
+  We use [googletest](https://github.com/google/googletest/blob/master/googletest/docs/primer.md) for unit testing in C. Within our C respoistories there is a /test folder and a /googletest folder. The /googletest folder is a submodule link to the googletest functionality and should not be editted. In the /test folder, for each .c file there is a corresponding test_.cc file which contains the unit tests for the functions found in the .c file. For example, for the SOILWAT2/SW_Site.c file there is a SOILWAT2/test/test_SW_Site.cc file for unit tests.
+  
+  Each and every function should have a test. Our goal is 100% code coverage. As you write tests, check that they are working by running `make test_clean test test_run` in the terminal.
 
-  #### Formatting
+If your unit tests fail, begin to question whether your unit test is wrong, or whether the code is wrong. Both are possible. In C, through adding unit tests we have found many instances of failing unit tests due to memory leaks and misappropriated indices. 
 
-  * Be consistent with indentation!! Typically you indent in once every time a curly bracket is opened and out when the bracket is closed. Program like atom will do this automatically for you.
-  * Notation, notation, notation!
-  * On the line preceding each main test (TEST{}), please write a not describing what function this test is testing.
-  * Within the TEST({}) brackets the format for naming the  test is (NameofDoc, NameOfFunction). For example, (SWFlowTest, potSoilEvapBS)..
-  * Inputs should be declared first in the TEST. You should try and minimize the number of lines input declaration consumes. For example, you can declare all double that are a length of 1 on one line.
-  * There should be only one definition of a variable before each unit test. Avoid declaring it in the inputs and then defining it again before a unit test, without the variable ever being called.
-  * Break your TEST code into blocks based on assertions (EXPECT_). Write text (i.e. “Testing when biolive is greater than shade”) and then put everything (defining or re-declaring inputs, running the function, assertions) below this text. For example:
-  ```
-       // Inputs
-       double biolive, shade;
+  #### Formatting of unit tests
 
-       // Test when biolive is greater than shade
-       biolive = 400;
-       shade = 300;
+Please refer to our guidelines for [unit test formatting](CUnitTestFormat.md). The key here is consistency and neatness.
 
-       bioliveFunc(biolive, shade);
-       EXPECT_GT(0, biolive);//We expect the results to be X when biolive is X
-   ```
-  * Use a sensible and consistent amount of line spaces: i.e. one space between inputs and functions, etc.
+Make sure your unit tests are formatted correctly before you request code review.
 
   #### Conditions and assertions
 
   * For functions that calculate related vales across layers (nlyrs) or simulation (nRgr) you should always test when these each each one (i.e. nlyr = 1) and under the maximum conditions (n_lyr = MAX_N_LYR) if possible. All unit tests should be run twice under each of these conditions.
   * An if or if else statement should typically be tested, if possible.
   * Never calculate an expected answer within the TEST and test an output against it.
-
-
-
-## Text Editors  
-
-  There are two types of text editors: (1) Those accessed via the command line and (2) editors with GUIs.
-
-  __Command line editors__ are typically used for quick edits in the terminal. Options include nano, vim, and vi. Nano has the most user-friendly interface. Most all shortcuts are listed at the bottom of the window, there is autotomatic indentation, and many search functions.
-
-   * `git config --global core.editor <editor>`
-
-  __GUI text editors__ are typically more user-friendly, particuarly when approaching projects with multiple interacting repositories. Multiple "projects" (i.e. repositories) can be opened and stored. Atom and Sublime text are two of the most popular. Atom is developed by GitHub and tracks the git status of files (i.e. highlights files in the file tree if they have been changed, shows which lines have been added, deleted, or editted on the left pane of the file folders, basic merge conflict resolution).
-
-  __Integrated Development Environments__ or __IDEs__ are software suites that contain multiple tools needed to test and write software. Typically they not only include a GUI text editors, but also a compiler and debugger to test and clean code. IDEs are language dependent (i.e. you need an IDE that can compile C code for SOILWAT2 and one for R code to compile rSFSW2). RStudio can act an an IDE for R code, while NetBeans is a popular choice for C development.
-
 
 ## Links <a name="links"/>
 
@@ -260,3 +238,6 @@ We test at a series of different _levels_. From lowest to highest, these are:
 * https://www.atlassian.com/git/tutorials
     * https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
     * https://www.atlassian.com/git/tutorials/merging-vs-rebasing/workflow-walkthrough
+    
+## Downloads <a name="dls"/>
+
