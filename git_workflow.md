@@ -1,5 +1,4 @@
-# Workflow Guidelines
-
+# Git and GitHub Workflow Guidelines
 
 Our workflow consists of 11 basic steps:
 
