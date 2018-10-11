@@ -126,7 +126,7 @@ We use the [Github flow](https://guides.github.com/introduction/flow/) (a 'featu
 Our essential workflow has 11 steps:
   (1) Set user configurations.
   (2) Clone repository to a local folder.
-  (3) Create issue or milestone for code development.
+  (3) Create issue and/or milestone for code development.
   (4) Create a branch to work on this issue or milestone.
   (5) Develop code locally.
   (6) Commit and push changes with __useful__ commit messages from the local to the global.
@@ -150,7 +150,7 @@ We use __issues__ to communicate questions, code enhancements, bugs, priorities,
 
 #### Milestones
 
-Milestones are used to organize and track progress on a group of issues. Milestones are meant to assist in the organization, communication, and prioritization of code enhancements. For each feature or enhancement branch there should be a corresponding milestone to track progress. See our [github workflow](git_workflow.md) for more information on our practices for opening milestones.
+Milestones are used to organize and track progress on a group of issues. Milestones are meant to assist in the organization, communication, and prioritization of code enhancements. For each feature or enhancement branch there should be a corresponding milestone to track progress. For bugfixes, or issues that will be worked in the future, use the __ToDo__ milestone. See our [github workflow](git_workflow.md) for more information on our practices for opening milestones.
 
 #### Projects - Organization Level
 
@@ -193,9 +193,9 @@ These levels are:
 
 * __R Package Tests:__ As the name suggests, these tests are for R packages only (i.e. rSFSW2 and rSOILWAT2). R package tests execute all unit tests for that package, as well as a series of other checks aimed at detecting common problems. [More information here.](http://r-pkgs.had.co.nz/check.html)
 
-* __Continuous Integration & GitHub Checks:__ GitHub checks are automated so that feature or bugfix branches cannot be merged / a pull request cannot be approved until these checks are passed. Continous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict are more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted. Our CI GitHub checks currently consist of coverage checks and platform build checks.
+* __Continuous Integration & GitHub Checks:__ GitHub checks are automated so that branches cannot be merged into master / a pull request cannot be approved until these checks are passed. Continuous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict are more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted. Our CI GitHub checks currently consist of coverage checks and platform build checks.
   * Coverage checks look to see that the percentage of line of code covered by unit tests has _increased_. If it hasn't the test will not pass.
-  * Platform build checks are tested on a Unix and Windows Servers using Travis and Appveyor, respectively. Travis and Appveyor are servers with these OSs where the program is built and checked. This is useful because if, for example, SOILWAT2 is not building on an individual's Linux computer, but is building on Travis, we know the user's computer is not configured correctly, as opposed to a software design issue.
+  * Platform build checks are tested on a Unix and Windows Servers using Travis and Appveyor, respectively. Travis and Appveyor are servers with these OSs where the program is built and checked. Tests should always be run locally to check that they build and pass, before committing to the CI. This is useful because if, for example, SOILWAT2 is not building on an individual's Linux computer, but is building on Travis, we know the user's computer is not configured correctly, as opposed to a software design issue.
 
 * __Integration Tests:__ Integration tests, test at the comprehensive level to check that new code or feature is still producing the same or sensible output. Checks are made on speed and against reference databases.
 
@@ -205,45 +205,47 @@ These levels are:
 
 We aim to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html). This is a work in progress.
 
-To enforce certain elements of this style guide our R repositories now use the [lintr package.](https://github.com/jimhester/lintr) Specifically, we are enforcing *** *** with lintR (these can be found in the .lintr file). Tutorials on how to understand lintr markers or warnings in RStudio and Atom is available in the lintr README.
+To adhere and enforce certain elements of this style guide our rSFSW2 repository now runs unit tests for style (see test_rSFSW2_StyleSpelllingPractices.R). Primarily, these tests use the [lintr package.](https://github.com/jimhester/lintr) We are aiming for 100% compliance in all of our R code, and new code should be written to the style guide specifications. Tutorials on how to understand lintr markers or warnings in RStudio and Atom is available in the lintr README.
 
 #### Code Development <a name="rdevel"/>
 
-Code development in our R repositories is complex. To navigate this complexity we use a combination of software tools ([RStudio](https://www.rstudio.com/products/rstudio/download/) and [Atom]()) and testing. This complexity is rooted in our software architecture where many times changes to R code has an effect on another R package and/or the C code. Our R packages revolve around increasing user functionality of our SOILWAT2 C model, so even if code changes only occur in R, you must be conscientious of potential downstream effects.
+Code development in our R repositories is complex. To navigate this complexity we use a combination of software tools ([RStudio](https://www.rstudio.com/products/rstudio/download/) and [Atom](https://atom.io/)) and testing. This complexity is rooted in our software architecture where many times changes to R code has an effect on another R package and/or the C code. Our R packages revolve around increasing user functionality of our SOILWAT2 C model, so even if code changes only occur in R, you must be conscientious of potential downstream effects.
 
 For example, changes in rSOILWAT2 will almost always require changes to SOILWAT2 (i.e. so that SOILWAT2 can receive a new variable that is being passed from rSOILWAT2) and rSFSW2 (i.e. rSFSW2 would format site-specific information and then use a rSOILWAT2 function to format this information for passage to C).
 
-Here are some guidelines to assist in R code development:
+See the README.mds ([rSFSW2](https://github.com/DrylandEcology/rSFSW2/blob/master/README.md), [rSOILWAT2](https://github.com/DrylandEcology/rSOILWAT2/blob/master/README.md)) in our R based repositories for additional protocols and advice on development.
 
-* If your code is a feature, open up a new project on GitHub and sketch out a plan (specific functions) for how you will implement new functionality. Ask for review from your supervisor.
-* Take advantage of [RStudio's debugger](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio) to walk through functions with similar functionality.
-  - Note: Ironically, sometimes the debugger can be buggy. With patience, you can still walk through functions.
+Here are some guidelines to assist in code development:
+
+* If your code is a feature, open up a new milestone on GitHub and sketch out a plan (i.e. new and discrete issues for each function you plan to update or create) for how you will implement new functionality. Ask for review from your supervisor.
+* Walk through functions with similar functionality to get a sense for workflow. You can either use:
+  - [RStudio's debugger](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio), which ironically, sometimes the debugger can be buggy. Additionally, the debugger will not work when programs are not being run interactively / in parallel.
+  - Work through functions at the top-level, by making the function and its inputs available in the global environment. To do this you can either write a `save()` statement temporarily into the function or using a _.rds_ created when `debug.dump.objects = TRUE`.
 * Test your new code within an integration project.  
-  - Copy the test project from within the _/Git_ folder to your _/Desktop_ so that changes to input files aren't integrated onto Git.
-  - Ensure you can run the test project in RStudio prior to any code development. See User Manual (todo) for running a test project.
-  - Change or set options in the descriptions.R file so that your new functionality is triggered (pertains to rSFSW2).
-  - Switching on and off of certain options should NOT be added into _GIT_. If a _new_ option is added though, this should be permanently integrated into the code base (i.e. for rSFSW2 in the _/demo_ folder and the _test project_ folder).
-* Develop code in Atom. To test code, re-install the R package and then re-run the test project within RStudio.
+* Develop code in Atom. To test code, re-load the R package and then re-run the test project within R.
+    - Tip: Use `devtools::load_all()` or `Ctrl-Shift-L` in RStudio to load changes from code into the package.
 * Document your code both formally (see [R documentation](#rdoc)) and informally (in-line with code explaining reasoning using #).
-* Run the test project again with your new functionality. Because of the labyrinthian nature of the code base you may have missed something you need to change and will receive an error message. Decipher and fix error message, re-install, and try again. shift + Ctrl + F is your friend.
-* Ensure your new code adheres to our style guide. Take advantage of lintr.
-* Ensure your package passes all pre-existing unit tests.
-  - Note: Never turn off a unit test and push this to GitHub. If a unit test is failing seek to understand whether your code is unintentionally changing outcomes (__likely__) or whether a unit test needs updating (this is __unlikely__ but would occur if you explicitly changed the function _with_ the now failing unit test).
+* Run the test project again with your new functionality. Because of the labyrinthian nature of the code base you may have missed something you need to change and will receive an error message. Decipher and fix error message, load up changes to the code, and try again. `shift + Ctrl + F` is your friend.
+* Ensure your new code adheres to our style guide. Take advantage of the lintr unit tests.
+* Ensure your package passes all pre-existing unit tests locally.
+  - Speed Tip: If your code fails to pass a unit test, you can make fixes and then re-check that specific unit test or file with `testthat::test_file()`. Running unit tests over and over can be time consuming.
 * Write your own unit tests for your new functionality.
 * Clean up code before committing (i.e. deleting print statements, double check with lintr, mistaken .Rproj files).
+* Ensure your package pass all unit tests on CI.
+  - Note: Never turn off a unit test and push this to GitHub. If a unit test is failing seek to understand whether your code is unintentionally changing outcomes (__likely__) or whether a unit test needs updating (this is __unlikely__ but would occur if you explicitly changed the function _with_ the now failing unit test).
 * Once your code is functional, refer to the [github_workflow](#github_workflow.md) for next steps on committing and continuous integration checks.
 
 #### Documentation <a name="rdoc"/>
 
-We use the Roxygen2 package to write documentation in R. A manual and examples can be found [here](http://kbroman.org/pkg_primer/pages/docs.html).
+We use the [Roxygen2](https://cran.r-project.org/web/packages/roxygen2/index.html) package to write documentation in R. A manual and examples can be found [here](http://kbroman.org/pkg_primer/pages/docs.html) [here](https://cran.r-project.org/web/packages/roxygen2/vignettes/formatting.html).
 
-Roxygen2 is a package you will need to install in R. Roxygen2 will create .Rd files for every function you document in the _/man_ folder, as well as a DESCRIPTION and NAMESPACE files.
+Roxygen2 is a package you will need to install in R. Roxygen2 will create .Rd files for every function you document in the _/man_ folder, as well as a NAMESPACE file.
 
 Refer to our [R documentation checklist](RDocChecklist.md) each time you are plan to commit changes with alterations to R documentation.
 
 #### Unit Testing <a name="rtest"/>
 
-We use the [testthat](https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf) package for unit testing in R. Within each of our R package repositories there is a _tests/testthat_ directory. Within the _tests_ folder there is testthat.R, which guides R to to test all files in the _testthat_ folder during the R CMD check. Each file within the _/testthat_ folder should begin with __test__ and each of these files contains multiple related tests. Typically, we have at least a test file for each corresponding file in the _/R_ folder, but it is possible that there might need to be many test files for each file in the _/R_ folder.
+We use the [testthat](https://cran.r-project.org/web/packages/testthat/index.html) package for unit testing in R. Within each of our R package repositories there is a _tests/testthat_ directory. Within the _tests_ folder there is testthat.R, which guides R to to test all files in the _testthat_ folder during the R CMD check. Each file within the _/testthat_ folder should begin with __test__ and each of these files contains multiple related tests. Typically, we have at least a test file for each corresponding file in the _/R_ folder, but it is possible that there might need to be many test files for each file in the _/R_ folder.
 
 Each test should be designed to test the expectation or multiple expectations of a function. Is the output the right value or the right class? Are the values equal to a reference value? Is there an error message, warning, or message when we want there to be? There is more information on the variety of available test functions and how to use theme [here.](http://r-pkgs.had.co.nz/tests.html#test-tests)
 
@@ -254,6 +256,25 @@ Each and every function should have a test. Our goal is 100% code coverage. As y
 #### Style Guide <a name="cstyle"/>
 
 #### Code Development <a name="cdevel"/>
+
+See the README.mds ([SOILWAT2](https://github.com/DrylandEcology/SOILWAT2/blob/master/README.md)) in our C based repositories for additional protocols and advice on code development.
+
+Here are some general guidelines to assist in code development:
+
+* If your code is a feature, open up a new milestone on GitHub and sketch out a plan (i.e. new and discrete issues for each function you plan to update or create) for how you will implement new functionality. Ask for review from your supervisor.
+* Walk through functions with similar functionality to get a sense for workflow.
+* Use print statements or [compile SOILWAT2 in debug mode and debug using a debugger such a gdb](https://www.thegeekstuff.com/2010/03/debug-c-program-using-gdb).
+    - Note: We use __make__ to manage and organize our C code. Look within the makefile for targets that include debug flags.
+* Test your new code within an integration project.
+* Develop code in Atom. To test code, re-compile the C code, and the check the results of model against the test projects.
+* Document your code both formally (see [C documentation](#cdoc)) and informally (in-line with code explaining reasoning using #).
+* Ensure your new code adheres to our style guide.
+* Ensure your package passes all pre-existing unit tests locally.
+* Ensure your package pass all unit tests on CI.
+* Write your own unit tests for your new functionality.
+* Clean up code before committing (i.e. deleting print statements, double check with lintr, mistaken .Rproj files).
+  - Note: Never turn off a unit test and push this to GitHub. If a unit test is failing seek to understand whether your code is unintentionally changing outcomes (__likely__) or whether a unit test needs updating (this is __unlikely__ but would occur if you explicitly changed the function _with_ the now failing unit test).
+* Once your code is functional, refer to the [github_workflow](#github_workflow.md) for next steps on committing and continuous integration checks.
 
 #### Documentation  <a name="cdoc"/>
 
@@ -268,13 +289,19 @@ Refer to our [C documentation checklist](CDocChecklist.md) each time you are pla
 
 We use [googletest](https://github.com/google/googletest/blob/master/googletest/docs/primer.md) for unit testing in C. Within our C repositories there is a /test folder and a _/googletest_ folder. The _/googletest_ folder is a submodule link to the googletest functionality and should not be edited. In the _/test_ folder, for each .c file there is a corresponding _test_.cc_ file which contains the unit tests for the functions found in the .c file. For example, for the _SOILWAT2/SW_Site.c_ file there is a _SOILWAT2/test/test_SW_Site.cc_ file for unit tests.
 
+Additionally, googletest is written in and for C++, while our code is in C. Be aware of some quirks including:
+  - We need a separate compiler for these unit tests.
+  - We cannot currently include SW_Output.c but instead have SW_Output_mock.c for the unit tests.
+  - We need to pay attention to the global states and reset them with a call to  `Reset_SOILWAT2_after_UnitTest();`.
+  - We cannot use several aspects of the googletest framework.
+
 Each and every function should have a test. Our goal is 100% code coverage. As you write tests, check that they are working by running `make test_clean test test_run` in the terminal.
 
 If your unit tests fail, begin to question whether your unit test is wrong, or whether the code is wrong. Both are possible. In C, through adding unit tests we have found many instances of failing unit tests due to memory leaks and misappropriated indices.
 
 #### Formatting of Unit Tests
 
-Please refer to our style guide for [unit test formatting](CUnitTestFormat.md). The key here is consistency and neatness.
+Please refer to our style guide for [unit test formatting](CUnitTestFormat.md). The key here is speed,  consistency, and neatness.
 
 Make sure your unit tests are formatted correctly before you request code review.
 
@@ -283,6 +310,7 @@ Make sure your unit tests are formatted correctly before you request code review
 * For functions that calculate related vales across layers (nlyrs) or simulation (nRgr) you should always test when these each each one (i.e. nlyr = 1) and under the maximum conditions (n_lyr = MAX_N_LYR) if possible. All unit tests should be run twice under each of these conditions.
 * An if or if else statement should typically be tested, if possible.
 * Never calculate an expected answer within the TEST and test an output against it.
+* Avoid random number generators for the initiation on input values, as it often creates unexpected and unrealistic expectations.
 
 ## Links <a name="links"/>
 

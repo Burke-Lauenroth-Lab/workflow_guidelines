@@ -4,7 +4,7 @@ Our workflow consists of 11 basic steps:
 
 - [ ] 1. [Set Configurations](#1)
 - [ ] 2. [Clone Repository](#2)
-- [ ] 3. [Create Issue](#3)
+- [ ] 3. [Create Issue and/or Milestone](#3)
 - [ ] 4. [Create Branch](#4)
 - [ ] 5. [Develop Code](#5)
 - [ ] 6. [Commit Code](#6)
@@ -33,25 +33,25 @@ For first time users:
   * Command line tools will require a [personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) instead of your regular password.
   * Instead of repeatedly entering the token, you could enable 'git credential caching' with `git config --global credential.helper cache` (on Linux) or `git config --global credential.helper osxkeychain` (on macOS).
 
-## 2. Clone repository <a name="2"/>
+## 2. Clone Repository <a name="2"/>
 
 Repositories hosted on our GitHub organization should be cloned into a local 'Git' folder on your desktop with the git clone command. Link your Git Desktop and text editor (i.e. Atom) to these folders.
     * `git clone https://github.com/DrylandEcology/SOILWAT2`
 
-## 3. Create Issue <a name="3"/>
+## 3. Create Issue and/or Milestone <a name="3"/>
 
-Issues are created via GitHub.com. Issues are the smallest unit of reporting and are repository specific. Issues can pertain to tasks, questions, proposed enhancements, and bugs. For bug fixes, the issue should revolve around a containable unit of code.
+Issues are created via GitHub.com. Issues are the smallest unit of reporting and are repository specific. Issues can pertain to tasks, questions, proposed enhancements, and bugs. For bug fixes, the issue should revolve around a containable unit of code. Each issue should be assigned to a milestone.
 
 ### Creating Issues
 
 If you create an issue, decide to work on one, or you are assigned to one, then:
 * Assign it to a team member and/or yourself, if applicable
+* Assign it to a milestone
+    * _ToDo_ milestone: A rolling, catch-all milestone for bugfixes or issues that will not be immediately addressed.
+    * _Enhancement_ milestones: Pertains to the specific development of a feature or enhancement and most relates a specific branch.
 * Add an __in progress__ label, if you are currently working on it
 * Add a __priority__ label, if it has a low priority or a high priority
 * Add a __category__ label, such as 'bug' or 'enhancement' or 'question'
-* Assign it to a milestone
-    * Master branch bug: the _master_ milestone
-    * Feature branch bug/enhancement: the respective milestone
 
 #### Bugs and Error Reporting
 
@@ -61,18 +61,18 @@ If your issue is a bug then:
       * [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html)
       * [How to make a great R reproducible example?](http://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example#5963610)
       * [How to write a reproducible example](https://gist.github.com/hadley/270442)
-  * Assign the issue to the __master__ milestone
+  * Assign the issue to the __ToDO__ milestone
 
 ### Closing Issues
 
 When a issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body).
   * For example, including 'Fixes #45' or 'Closes #45' in the commit message will close issue #45 in the repository you are working in.
-  * Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
+  * Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documentation, but you should also manually close the issue afterwards.
 
 
 ## 4. Create Branch <a name="4"/>
 
-Create a branch to work on an issue.
+Create a branch to work on a bugfix or feature.
   * Make a new branch and check it out: `git checkout -b <branch>`
   * Push/export local <branch> to remote/upstream: `git push origin <branch>`
 
@@ -125,6 +125,7 @@ An example of a good commit message [commit 0d6577](https://github.com/DrylandEc
 ### Stage and Commit Workflow:
 
 * __Stage__ your changes in a snapshot: `git add <file>` or `git add <directory>` or `git add -p`
+  * Note: Several GUIs allow staging per line(s) instead of per file. Good for organizing different aspects of development into logical commit units.
 * __Commit__ to your development branch regularly and use explanatory commit messages in order to create a transparent work history (e.g., to help with debugging; to find specific changes at a later time).
    * Check state of staging area: `git status`
    * Commit/save to project history
@@ -142,19 +143,20 @@ Merging is the act of integrating the changes of one branch into another. Typica
 
 ### Merge Tips
 
-The most effective way to correctly merge is to be __proactive and conscientious__ before the merging occurs. Use a Git GUI to inspect (1) what changes have occurred on the master branch and (2) what changes have occured on your development branch. If seperate files have been worked on and there is no overlap in file development, your merge will have no conflicts and be straightforward. In fact, when you open a pull request on GitHub, it will automatically detect whether your development branch has conflicts or not. If there is none, there is an option to automaticlly merge.
+The most effective way to correctly merge is to be __proactive and conscientious__ before the merging occurs. Use a Git GUI to inspect (1) what changes have occurred on the master branch and (2) what changes have occurred on your development branch. If separate files have been worked on and there is no overlap in file development, your merge will have no conflicts and be straightforward. In fact, when you open a pull request on GitHub, it will automatically detect whether your development branch has conflicts or not. If there is none, there is an option to automatically merge.
 
 However, if there are merge conflicts (i.e. there has been development on the same file & lines on both branches), you will need inspect these conflicts, one by one, and decide which version is to be included in the final merged version of your branch. Make sure to read the commit messages from the recent changes in the master to understand why and where there has been changes in code. In general, you should aim to retain the specific functionality (whether it was an enhancement or bugfix) on your branch, but make sure it integrates well with the, potentially new, overall workflow of the master. There are many situations where you may need to go back and re-write functionality in your feature branch based on new changes in the master, after the merge.
 
 ### Merge Tools
 
-We use Atom or meld.
+We require that our developers use either Atom or kdiff3 software to assist with clean and accurate merging. We also require that the merge conflict style is [diff3](https://stackoverflow.com/questions/27417656/should-diff3-be-default-conflictstyle-on-git), which can be set with:
+`git config --global merge.conflictstyle diff3`
 
 In Atom:
 
 - In terminal or on GitHub, merge master into the development branch
   * On terminal: `git merge master` while checked out to development branch
-- A message will appear indicating whether the master was successfuly merged (no conflicts) or if there were conflicts
+- A message will appear indicating whether the master was successfully merged (no conflicts) or if there were conflicts
   * On terminal: `Automatic merge failed; fix conflicts and then commit the results`
 - Open Atom and fix conflicts
   * Watch this [tutorial](https://atom.io/packages/merge-conflicts) on using Atom to resolve merge conflicts
@@ -163,19 +165,21 @@ In Atom:
 - Commit changes that took place during merge
   * `git commit -am "<message>"`
 
-In Meld:
+In [kdiff3](http://kdiff3.sourceforge.net/):
 
-- Download [meld](http://meldmerge.org/)
-- Set meld as your merge tool
-  * `git config --global merge.tool meld`
+Kdiff3 is a 3-way, 4-view merge tool, allowing the user to explicitly see the base, development, master, and merged differences.
+
+- Download [kdiff3](http://kdiff3.sourceforge.net)
+- Set kdiff3 as your merge tool
+  * `git config --global merge.tool kdiff3`
 - In terminal or on GitHub, merge master into the development branch
   *  `git merge master` while checked out to development branch
-- A message will appear indicating whether the master was successfuly merged (no conflicts) or if there were conflicts
+- A message will appear indicating whether the master was successfully merged (no conflicts) or if there were conflicts
   * `Automatic merge failed; fix conflicts and then commit the results`
-- Open meld
+- Open kdiff3
   * `git mergetool`
-- Three windows will be shown
-  * The leftmost window is the users local files, the middle window is what the resolved and used file will be, and the right window is the remote file that is being merged into the local files.
+- Four windows will be shown
+  * The top left window is the base (original), the top middle window is the development branch, the top right is the master, and the bottom pane is the end result of merging.
 - Commit changes that took place during merge
   * `git commit -am "<message>"`
 
@@ -184,7 +188,7 @@ Note: If the tool is not one of the defaults with git, a path needs to be added 
 
 Useful links:
   * [git-merge](https://git-scm.com/docs/git-merge)
-  * [here](https://githowto.com/resolving_conflicts)
+  * [git how to](https://githowto.com/resolving_conflicts)
 
 ## 8. Open Pull Request <a name="8"/>
 
