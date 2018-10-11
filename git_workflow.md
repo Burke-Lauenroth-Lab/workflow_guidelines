@@ -4,19 +4,19 @@ Our workflow consists of 11 basic steps:
 
 - [ ] 1. [Set Configurations](#1)
 - [ ] 2. [Clone Repository](#2)
-3. [Create Issue](#3)
-4. [Create Branch](#4)
-5. [Develop Code](#5)
-6. [Commit Code](#6)
-7. [Merge Master](#7)
-8. [Open Pull Request](#8)
-9. [Pass Continuous Integration](#9)
-10. [Merge Development Into Master](#10)
-11. [Update Version](#11)
+- [ ] 3. [Create Issue](#3)
+- [ ] 4. [Create Branch](#4)
+- [ ] 5. [Develop Code](#5)
+- [ ] 6. [Commit Code](#6)
+- [ ] 7. [Merge Master](#7)
+- [ ] 8. [Open Pull Request](#8)
+- [ ] 9. [Pass Continuous Integration](#9)
+- [ ] 10. [Merge Development Into Master](#10)
+- [ ] 11. [Update Version](#11)
 
 Note: All code presented in this document are git commands from terminal. Many alternatives exist with Git GUIs or on GitHub.com.
 
-1.	Set Configurations <a name="1"/>
+## 1.	Set Configurations <a name="1"/>
 
 For first time users:
 - Download necessary programs
@@ -33,16 +33,16 @@ For first time users:
   * Command line tools will require a [personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) instead of your regular password.
   * Instead of repeatedly entering the token, you could enable 'git credential caching' with `git config --global credential.helper cache` (on Linux) or `git config --global credential.helper osxkeychain` (on macOS).
 
-2. Clone repository <a name="2"/>
+## 2. Clone repository <a name="2"/>
 
 Repositories hosted on our GitHub organization should be cloned into a local 'Git' folder on your desktop with the git clone command. Link your Git Desktop and text editor (i.e. Atom) to these folders.
     * `git clone https://github.com/DrylandEcology/SOILWAT2`
 
-3. Create Issue <a name="3"/>
+## 3. Create Issue <a name="3"/>
 
 Issues are created via GitHub.com. Issues are the smallest unit of reporting and are repository specific. Issues can pertain to tasks, questions, proposed enhancements, and bugs. For bug fixes, the issue should revolve around a containable unit of code.
 
-## Creating Issues
+### Creating Issues
 
 If you create an issue, decide to work on one, or you are assigned to one, then:
 * Assign it to a team member and/or yourself, if applicable
@@ -53,7 +53,7 @@ If you create an issue, decide to work on one, or you are assigned to one, then:
     * Master branch bug: the _master_ milestone
     * Feature branch bug/enhancement: the respective milestone
 
-### Bugs and Error Reporting
+#### Bugs and Error Reporting
 
 If your issue is a bug then:
   * Provide a unit tests which demonstrates the failing code. This unit test serves also as a benchmark to identify the solution of the issue. If it is not possible to write a unit test, please provide a minimal reproducible example and a screenshot of the error message you are receiving. Some resources that may help:
@@ -63,14 +63,14 @@ If your issue is a bug then:
       * [How to write a reproducible example](https://gist.github.com/hadley/270442)
   * Assign the issue to the __master__ milestone
 
-## Closing Issues
+### Closing Issues
 
 When a issue is resolved, [reference it](https://help.github.com/articles/closing-issues-using-keywords/) in the final commit that solves it (which can be done in the title or body).
   * For example, including 'Fixes #45' or 'Closes #45' in the commit message will close issue #45 in the repository you are working in.
   * Note: Issues will not be closed via reference until the branch is merged to master. If you are resolving an issue on a feature branch, please still use a reference, as it provides beneficial documention, but you should also manually close the issue afterwards.
 
 
-4. Create Branch <a name="4"/>
+## 4. Create Branch <a name="4"/>
 
 Create a branch to work on an issue.
   * Make a new branch and check it out: `git checkout -b <branch>`
@@ -81,19 +81,19 @@ Create a branch to work on an issue.
   * __Bugfix branches__: When a bug is discovered on the master branch, a bugfix branch and an issue should be created. The issue should be assigned to the _master_ milestone. A bugfix branch should be named after the respective issue. An example of a bugfix branch would be bugfix_16, which represents issue #16.
   * __Feature branches__: Everything else should be a feature branch, which is where code development is done before it is merged back to master. Each feature branch needs its own __milestone__. Any bugfixes needed on a feature branch should be directly committed to the feature branch. Feature branches should have descriptive but concise names in upper camel case, such as feature_BetterErrorMessages.
 
-5. Develop and Document Code <a name="5"/>
+## 5. Develop and Document Code <a name="5"/>
 
 See [pertinent developing code](README.md) protocols to maintain code integrity.
 
 A good rule of thumb is that other group members should know what you are working on at any given point in time. You should aim to document every significant change that will need to be done before the branch can be merged to master. Documentation should occur both within the code (both formal and notes), as well as within a Project if your code is a enhancement.
 
-6. Stage and Commit Code <a name="6"/>
+## 6. Stage and Commit Code <a name="6"/>
 
 "A commit should be a wrapper for related changes." Read these [GitHub best commit practices](https://github.com/trein/dev-best-practices/wiki/Git-Commit-Best-Practices) that we follow.
 
 In general, you can stage multiple changes to save and track your work, but a commit should only be pushed to GitHub when you are done working on a logical chunk of code. This is so the code can easily be rolled back. This doesn't mean your changes are huge, but rather that you commit based on the completion of a fix or enhancement into logical chunks. For example, if your mission is to write unit tests for all functions in one .R file, you could have a commit after you complete tests for one or two functions.
 
-## Good Commit Messages
+### Good Commit Messages
 
 Why good messages are important:
 [Erlang: Writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages): "Good commit messages serve at least three important purposes:
@@ -122,7 +122,7 @@ An example of a good commit message [commit 0d6577](https://github.com/DrylandEc
 - function `move_output_to_dbOutput` gained a new argument
 `use_dbTempOut` that is by default set to true`
 
-## Stage and Commit Workflow:
+### Stage and Commit Workflow:
 
 * __Stage__ your changes in a snapshot: `git add <file>` or `git add <directory>` or `git add -p`
 * __Commit__ to your development branch regularly and use explanatory commit messages in order to create a transparent work history (e.g., to help with debugging; to find specific changes at a later time).
@@ -136,17 +136,17 @@ An example of a good commit message [commit 0d6577](https://github.com/DrylandEc
 * Push/export local project history to remote/upstream: `git push origin <branch>`
 
 
-7. Merge Master <a name="7"/>
+## 7. Merge Master <a name="7"/>
 
 Merging is the act of integrating the changes of one branch into another. Typically, you are merging changes on the _master_ branch into your development branch, though any branch can be be merged into another. Incorrect merging is the most frequent source of error and can have serious consequences, so make sure to be conscientious about the merge decisions you are making.
 
-##### Merge Tips
+### Merge Tips
 
 The most effective way to correctly merge is to be __proactive and conscientious__ before the merging occurs. Use a Git GUI to inspect (1) what changes have occurred on the master branch and (2) what changes have occured on your development branch. If seperate files have been worked on and there is no overlap in file development, your merge will have no conflicts and be straightforward. In fact, when you open a pull request on GitHub, it will automatically detect whether your development branch has conflicts or not. If there is none, there is an option to automaticlly merge.
 
 However, if there are merge conflicts (i.e. there has been development on the same file & lines on both branches), you will need inspect these conflicts, one by one, and decide which version is to be included in the final merged version of your branch. Make sure to read the commit messages from the recent changes in the master to understand why and where there has been changes in code. In general, you should aim to retain the specific functionality (whether it was an enhancement or bugfix) on your branch, but make sure it integrates well with the, potentially new, overall workflow of the master. There are many situations where you may need to go back and re-write functionality in your feature branch based on new changes in the master, after the merge.
 
-##### Merge Tools
+### Merge Tools
 
 We use Atom or meld.
 
@@ -186,7 +186,7 @@ Useful links:
   * [git-merge](https://git-scm.com/docs/git-merge)
   * [here](https://githowto.com/resolving_conflicts)
 
-8. Open Pull Request <a name="8"/>
+## 8. Open Pull Request <a name="8"/>
 
 On GitHub.com, in the relevant repository, navigate to the 'Pull Request' tab. Open a [pull request](https://help.github.com/articles/creating-a-pull-request/) for your branch. Write a summary of the feature or fixes of your branch, and reference the issue #, so that the issues will be closed when your PR is closed.
 
@@ -194,7 +194,7 @@ Tag your supervisor for code review.
 
 If necessary, repeat steps 5-7 to complete review of the pull request, e.g. to deal with issues and fix bugs.
 
-9. Pass Continuous Integration <a name="9"/>
+## 9. Pass Continuous Integration Checks <a name="9"/>
 
 When you open a pull request, your branch will be automatically tested to see if it passes our continuous integration (CI) tests. Your branch cannot be merged into master until these tests are passed.
 
@@ -202,7 +202,7 @@ When you open a pull request, your branch will be automatically tested to see if
   * Coverage checks look to see that the percentage of line of code covered by unit tests has _increased_. If it hasn't the test will not pass.
   * Platform build checks are tested on a Unix and Windows Servers using Travis and Appveyor, respectively. Travis and Appveyor are servers with these OSs where the program is compiled, installed, and all unit tests are run. This is useful because if, for example, SOILWAT2 is not building on an individual's Linux computer, but is building on Travis, we know the user's computer is not configured correctly, as opposed to a software design issue.
 
-10. Merge Development Into Master <a name="10"/>
+## 10. Merge Development Into Master <a name="10"/>
 
 Follow the steps above for (6). Should be straightforward and with minimal conflicts at this point.
 
@@ -211,7 +211,7 @@ You can now delete the development branch.
 * Delete the remote branch: `git push origin --delete <branch>`
 * Remove 'obsolete tracking branches', i.e., branches on local machine that no longer exist on remote/github: `git fetch --all --prune`
 
-11. Update Version <a name="11"/>
+## 11. Update Version <a name="11"/>
 
 To update the version and draft a new release navigate to the 'release' tab in the repository. Click 'Draft a new release'
 and update the version number and document the changes to the code with this release
