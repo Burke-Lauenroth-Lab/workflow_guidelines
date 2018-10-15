@@ -255,7 +255,7 @@ Each and every function should have a test. Our goal is 100% code coverage. As y
 
 #### Style Guide <a name="cstyle"/>
 
-We have generated our own C style guide and coding standard for C available [here.](https://github.com/DrylandEcology/DrylandEcologyProtocols/blob/master/C_Coding_Style.md) Particularly important take-away from this documents are _entity naming_ and _indentation and spacing_, particularly our bracing style. 
+We have generated our own C style guide and coding standard for using [this generator] (http://www.rosvall.ie/cgi-bin/genCodeStd.pl). It is available [here.](https://github.com/DrylandEcology/DrylandEcologyProtocols/blob/master/C_Coding_Style.md)  Important take-aways from this documents are _entity naming_ and _indentation and spacing_, particularly our bracing style. 
 
 #### Code Development <a name="cdevel"/>
 
