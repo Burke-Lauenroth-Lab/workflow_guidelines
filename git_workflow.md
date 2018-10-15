@@ -2,27 +2,27 @@
 
 Our workflow consists of 11 basic steps:
 
-- [ ] 1. [Set Configurations](#1)
-- [ ] 2. [Clone Repository](#2)
-- [ ] 3. [Create Issue and/or Milestone](#3)
-- [ ] 4. [Create Branch](#4)
-- [ ] 5. [Develop Code](#5)
-- [ ] 6. [Commit Code](#6)
-- [ ] 7. [Merge Master](#7)
-- [ ] 8. [Open Pull Request](#8)
-- [ ] 9. [Pass Continuous Integration](#9)
-- [ ] 10. [Merge Development Into Master](#10)
-- [ ] 11. [Update Version](#11)
+- 1. [Set Configurations](#1)
+- 2. [Clone Repository](#2)
+- 3. [Create Issue and/or Milestone](#3)
+- 4. [Create Branch](#4)
+- 5. [Develop Code](#5)
+- 6. [Commit Code](#6)
+- 7. [Merge Master](#7)
+- 8. [Open Pull Request](#8)
+- 9. [Pass Continuous Integration](#9)
+- 10. [Merge Development Into Master](#10)
+- 11. [Update Version](#11)
 
 Note: All code presented in this document are git commands from terminal. Many alternatives exist with Git GUIs or on GitHub.com.
 
 ## 1.	Set Configurations <a name="1"/>
 
 For first time users:
-- Download necessary programs
+* Download necessary programs
   * [Downloads](#README.md dls)
 
-- Set __global user options__ to identify your commits
+* Set __global user options__ to identify your commits
   * `git config --global user.name <name>`
   * `git config --global user.email <email>`
   * `git config --global core.editor <editor>` # e.g., vi, emacs, nano, TextWrangler (Microsoft Windows user refer to [First-Time-Git-Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup))
