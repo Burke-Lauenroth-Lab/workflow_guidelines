@@ -7,7 +7,7 @@ This is the Dryland Ecology Laboratory's guide to the structure, workflow, and s
 
 This document is provided to orient developers to the purpose and relationships between our repositories as well as clearly explain our expectations in (A) using Git and GitHub and (B) developing code, including unit testing and documentation. These are our broad standards that apply to all of our repositories and the languages we develop in (C, C++, R, make). We rely on many other styles guides, software, etc. to assist in our workflow. This document provides expectation on what tools to use, but not specifics, as that is covered thoroughly by the creators of these tools.
 
-More information on repository specific code development, testing (both informal and formal), and installation can be found in the README.md document found in each repository.
+More information on repository specific code development, testing (both informal and formal), and installation can be found in the README.md document of each repository.
 
 ## Table of Contents
 
@@ -53,9 +53,9 @@ More information on repository specific code development, testing (both informal
 
 SOILWAT2 runs on a site by site basis. While the simulations of water balance are fast, running SOILWAT2 stand-alone is inefficient, as it needs to read and write information from disk about each site individually. Furthermore, running simulations for many sites is cumbersome from the user perspective, as a series of site-specific input files (.in) need to be formatted for each site. Because of these issues, the R Soilwat Wrapper (rSFSW2) and the R Soilwat Package (rSOILWAT2) were developed. These repositories allow users to set-up information for multiple sites simultaneously and for the efficient handling of these sites' information in R.
 
-rSOILWAT2 is an R package with a set of functions whose primary purposes are to translate information from R to C and to execute a SOILWAT2 simulation with this information. Data about a site is first formatted into a S4 object in R and then translated to C classes. rSFSW2 relies on rSOILWAT2 functionality to pass information, site-by-site, to SOILWAT2. Additionally, rSOILWAT2 avoids disk operations and most things happen in memory, reducing run time.
+rSOILWAT2 is a R package with a set of functions whose primary purposes are to translate information from R to C and to execute a SOILWAT2 simulation with this information. Data about a site is first formatted into a S4 object and then translated to C classes. rSFSW2 relies on rSOILWAT2 functionality to pass information, site by site, to SOILWAT2. Additionally, rSOILWAT2 avoids disk operations and most things happen in memory, reducing run time.
 
-rSFSW2 is designed to gather user's options and information about sites. All site-specific inputs and treatments in a project are read in at once via a series of _.csvs_. The information within these .csvs is then parsed up on a site by site basis, processed, and then sent to SOILWAT2 via the functions in rSOILWAT2. Outputs from the SOILWAT2 model are then sent back to rSFSW2 via rSOILWAT2 and either saved on a site by site basis, or aggregating and stored in a SQLite outputs database.
+rSFSW2 is designed to gather user's options and information about sites. All site-specific inputs and treatments in a project are read in at once via a series of _.csvs_. The information within these .csvs is then parsed up on a site by-site basis, processed, and then sent to SOILWAT2 via the functions in rSOILWAT2. Outputs from the SOILWAT2 model are then sent back to rSFSW2 via rSOILWAT2 and either saved for each site, and/or aggregated and stored in a SQLite output database.
 
 ![Soilwat Architecture](arch.png)
 
@@ -63,7 +63,7 @@ rSFSW2 is designed to gather user's options and information about sites. All sit
 
 The SOILWAT2 repository contains the __C__ code, as well as the testing and documentation, pertaining to the SOILWAT2 model. SOILWAT2 is a site-specific, daily ecohydrology model that tracks water as it moves through the environment. Within the C code you will find the series of equations that translates our knowledge of ecohydrology to a simulation framework. This model is the foundation of our research activities and most other repositories within this organization connect or interact with this model in some way.
 
-SOILWAT2 code is reserved to handle the ecological assumptions of how water moves through environment, based on a series of inputs. Inputs include daily weather, soils and vegetation information. Vegetation patterns are reflected seasonly, but are assumed stable for every year a simulation period, unless the CO2 functionality is turned on. The SOILWAT2 model is designed to function 'stand-alone', using files.in as inputs, to work with information passed via rSOILWAT2, or to work with information passed to or from STEPWAT2.
+SOILWAT2 code is reserved to handle the ecological assumptions of how water moves through environment, based on a series of inputs. Inputs include daily weather, soils and vegetation information. Vegetation patterns are reflected seasonly, and are assumed stable for every year a simulation period, unless the CO2 functionality is turned on. The SOILWAT2 model is designed to function 'stand-alone', using files.in as inputs, to work with information passed via rSOILWAT2, or to work with information passed to or from STEPWAT2.
 
 Specifics about downloading, installing, and using SOILWAT2 can be found in the [SOILWAT2 README](https://github.com/DrylandEcology/SOILWAT2/blob/master/README.md).
 
@@ -115,7 +115,7 @@ Git and GitHub are important to our group because it provides a way to track cha
 
 The __terminal__ is the defacto interface with Git and all Git commands start with `git`. Typing `git` into terminal will yield a list of common commands. Much of the functionality for git command line is replicated in Git GUIs or is available online at GitHub.com.
 
-The Dryland Ecology Lab is flexible in terms of software used for interacting with Git and GitHub. We currently recommend a mix of desktop GUIs including [GitHub Desktop](https://desktop.github.com/) or [Sourcetree](https://www.sourcetreeapp.com/) for Mac OSX and Microsoft Windows (and [GitKraken](https://www.gitkraken.com/download) for Linux machines) _and_ [Atom](https://atom.io/). Git GUIs are best for pushing commits and _tracking changes and the history that other users have made_, but lack some advanced features (e.g., management of sub-modules). Tracking file by file and line by line changes allows for the developer to avoid careless mistakes (i.e. did you really want to add that blank line there?), to double check their work and changes across files, and to be aware of changes made by other developers.
+The Dryland Ecology Lab is flexible in terms of software used for interacting with Git and GitHub. We currently recommend a mix of desktop GUIs including [GitHub Desktop](https://desktop.github.com/) or [Sourcetree](https://www.sourcetreeapp.com/) for Mac OSX and Microsoft Windows (and [GitKraken](https://www.gitkraken.com/download) for Linux machines) _and_ [Atom](https://atom.io/), a git developed text editor. Git GUIs are best for pushing commits and _tracking changes and the history that other users have made_, but lack some advanced features (e.g., management of sub-modules). Tracking file by file and line by line changes allows for the developer to avoid careless mistakes (i.e. did you really want to add that blank line there?), to double check their work and changes across files, and to be aware of changes made by other developers.
 
 In regards to code development, GitHub.com is best for submitting pull requests and easy merging when there is _no_ conflicts. We also use GitHub for its organizational and communication capacities (discussed below).
 
@@ -124,17 +124,17 @@ In regards to code development, GitHub.com is best for submitting pull requests 
 We use the [Github flow](https://guides.github.com/introduction/flow/) (a 'feature branch workflow') as the basis for our projects. Code is never developed on the master to keep the master branch clean and functional within our tested expectations.
 
 Our essential workflow has 11 steps:
-  (1) Set user configurations.
-  (2) Clone repository to a local folder.
-  (3) Create issue and/or milestone for code development.
-  (4) Create a branch to work on this issue or milestone.
-  (5) Develop code locally.
-  (6) Commit and push changes with __useful__ commit messages from the local to the global.
-  (7) Merge master into feature branch.
-  (8) Open a pull request.
-  (9) Ensure that branch passes continuous integration tests.
-  (10) Merge development branch into master & close pull request.
-  (11) Update version number on master.
+  1. Set user configurations.
+  2. Clone repository to a local folder.
+  3. Create issue and/or milestone for code development.
+  4. Create a branch to work on this issue or milestone.
+  5. Develop code locally.
+  6. Commit and push changes with __useful__ commit messages from the local to the global.
+  7. Merge master into feature branch.
+  8. Open a pull request.
+  9. Ensure that branch passes continuous integration tests.
+  10. Merge development branch into master & close pull request.
+  11. Update version number on master.
 
 These steps are covered in more detail in our [git workflow documentation](git_workflow.md).
 
@@ -175,11 +175,11 @@ We use the GitHub code review feature to review code when a pull request is open
 
 #### Submodules
 
-A [submodule](https://gist.github.com/gitaarik/8735255) is a repository embedded within your repository. Essentially, when using a submodule, your are making your code dependent upon another set of code. Submodules all your repository to use the code from another repository, without including the code base itself. Instead, the submodule simply contains information that points to a specific commit in the other repository. _Never_ develop code within the submodule.
+A [submodule](https://gist.github.com/gitaarik/8735255) is a repository embedded within your repository. Essentially, when using a submodule, your are making your code dependent upon another set of code. Submodules let your repository use code from another repository, without including the code base itself. Instead, the submodule simply contains information that points to a specific commit in the other repository. _Never_ develop code within the submodule.
 
 Currently, the SOILWAT2 repository is pulled into the repositories of rSOILWAT2 and STEPWAT2 as a submodule. Additionally, we use [googletest](https://github.com/google/googletest) as a submodule for unit testing in SOILWAT2.
 
-Submodules can be tricky, so be conscientious about initializing, updating, and pointing the submodule to the correct commit or branch. More information about submodules can be found (here.)[https://blog.github.com/2016-02-01-working-with-submodules/] You can check where your submodule is pointing by opening the _.gitmodules_ file. This is a hidden file.
+Submodules can be tricky, so be conscientious about initializing, updating, and pointing the submodule to the correct commit or branch. More information about submodules can be found [here.](https://blog.github.com/2016-02-01-working-with-submodules/) You can check where your submodule is pointing by opening the _.gitmodules_ file, a hidden file.
 
 ## Developing Code <a name="develop"/>
 
@@ -219,8 +219,8 @@ Here are some guidelines to assist in code development:
 
 * If your code is a feature, open up a new milestone on GitHub and sketch out a plan (i.e. new and discrete issues for each function you plan to update or create) for how you will implement new functionality. Ask for review from your supervisor.
 * Walk through functions with similar functionality to get a sense for workflow. You can either use:
-  - [RStudio's debugger](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio), which ironically, sometimes the debugger can be buggy. Additionally, the debugger will not work when programs are not being run interactively / in parallel.
-  - Work through functions at the top-level, by making the function and its inputs available in the global environment. To do this you can either write a `save()` statement temporarily into the function or using a _.rds_ created when `debug.dump.objects = TRUE`.
+  - [RStudio's debugger](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio). Ironically, sometimes the debugger can be buggy. Additionally, the debugger will not work when programs are not being run interactively / in parallel.
+  - Work through functions at the top-level, by making the function and its inputs available in the global environment. To do this you can either write a `save()` statement temporarily into the function or opening a _.rds_ created when `debug.dump.objects = TRUE`.
 * Test your new code within an integration project.  
 * Develop code in Atom. To test code, re-load the R package and then re-run the test project within R.
     - Tip: Use `devtools::load_all()` or `Ctrl-Shift-L` in RStudio to load changes from code into the package.
@@ -231,7 +231,7 @@ Here are some guidelines to assist in code development:
   - Speed Tip: If your code fails to pass a unit test, you can make fixes and then re-check that specific unit test or file with `testthat::test_file()`. Running unit tests over and over can be time consuming.
 * Write your own unit tests for your new functionality.
 * Clean up code before committing (i.e. deleting print statements, double check with lintr, mistaken .Rproj files).
-* Ensure your package pass all unit tests on CI.
+* Ensure your package passes all unit tests on CI.
   - Note: Never turn off a unit test and push this to GitHub. If a unit test is failing seek to understand whether your code is unintentionally changing outcomes (__likely__) or whether a unit test needs updating (this is __unlikely__ but would occur if you explicitly changed the function _with_ the now failing unit test).
 * Once your code is functional, refer to the [github_workflow](#github_workflow.md) for next steps on committing and continuous integration checks.
 
@@ -270,10 +270,10 @@ Here are some general guidelines to assist in code development:
 * Document your code both formally (see [C documentation](#cdoc)) and informally (in-line with code explaining reasoning using #).
 * Ensure your new code adheres to our style guide.
 * Ensure your package passes all pre-existing unit tests locally.
-* Ensure your package pass all unit tests on CI.
 * Write your own unit tests for your new functionality.
 * Clean up code before committing (i.e. deleting print statements, double check with lintr, mistaken .Rproj files).
   - Note: Never turn off a unit test and push this to GitHub. If a unit test is failing seek to understand whether your code is unintentionally changing outcomes (__likely__) or whether a unit test needs updating (this is __unlikely__ but would occur if you explicitly changed the function _with_ the now failing unit test).
+* Ensure your package pass all unit tests on CI.
 * Once your code is functional, refer to the [github_workflow](#github_workflow.md) for next steps on committing and continuous integration checks.
 
 #### Documentation  <a name="cdoc"/>
@@ -283,13 +283,13 @@ We use Doxygen to write documentation in C. The style guide and rules for Doxyge
 To create a document from your Doxygen code, navigate to the desired directory (i.e. 'Git/SOILWAT2'), and then simply execute the 'Doxygen' command in the terminal along with the configuration file: `Doxygen Doxyfile`
 This will create a index.html file in /doc folder that you can open in any web browser.
 
-Refer to our [C documentation checklist](CDocChecklist.md) each time you are plan to commit changes with alterations to C documentation.
+Refer to our [C documentation checklist](CDocChecklist.md) each time you are plan to commit changes with edits to C documentation.
 
-### Unit Testing <a name="ctest"/>
+#### Unit Testing <a name="ctest"/>
 
 We use [googletest](https://github.com/google/googletest/blob/master/googletest/docs/primer.md) for unit testing in C. Within our C repositories there is a /test folder and a _/googletest_ folder. The _/googletest_ folder is a submodule link to the googletest functionality and should not be edited. In the _/test_ folder, for each .c file there is a corresponding _test_.cc_ file which contains the unit tests for the functions found in the .c file. For example, for the _SOILWAT2/SW_Site.c_ file there is a _SOILWAT2/test/test_SW_Site.cc_ file for unit tests.
 
-Additionally, googletest is written in and for C++, while our code is in C. Be aware of some quirks including:
+Keep in mind that googletest is written in and for C++, while our code is in C. Be aware of some quirks including:
   - We need a separate compiler for these unit tests.
   - We cannot currently include SW_Output.c but instead have SW_Output_mock.c for the unit tests.
   - We need to pay attention to the global states and reset them with a call to  `Reset_SOILWAT2_after_UnitTest();`.
@@ -299,13 +299,13 @@ Each and every function should have a test. Our goal is 100% code coverage. As y
 
 If your unit tests fail, begin to question whether your unit test is wrong, or whether the code is wrong. Both are possible. In C, through adding unit tests we have found many instances of failing unit tests due to memory leaks and misappropriated indices.
 
-#### Formatting of Unit Tests
+##### Formatting of Unit Tests
 
 Please refer to our style guide for [unit test formatting](CUnitTestFormat.md). The key here is speed,  consistency, and neatness.
 
 Make sure your unit tests are formatted correctly before you request code review.
 
-#### Conditions and Assertions
+##### Conditions and Assertions
 
 * For functions that calculate related vales across layers (nlyrs) or simulation (nRgr) you should always test when these each each one (i.e. nlyr = 1) and under the maximum conditions (n_lyr = MAX_N_LYR) if possible. All unit tests should be run twice under each of these conditions.
 * An if or if else statement should typically be tested, if possible.
