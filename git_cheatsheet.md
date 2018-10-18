@@ -27,13 +27,63 @@
 * __Remove commits__ from current published branch (by creating a new commit, i.e., it does not re-write history): `git revert HEAD~1`
 
 * __Restore file__ from a previous commit: `git checkout <deleting_commit>~1 -- <file_path>`
-* __Amending the most recent commit message__ (see [SO](http://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits) for alternative scenarios)
-    * Completely rewrite message from scratch: `git commit --amend`
-    * Amend by starting from old message: `git commit --amend -c HEAD`
-* __Interruptions__ to coding: 'stashing' saves uncommitted changes and resets/cleans the working directory, e.g., to switch branches, to pull into a dirty tree, to interrupt the workflow in general. Stashes are handled in the same way as commits by git commands, but they are not linked to a specific branch. Stashes are named <stash@{X}> where X is the number on the stack. For more details see [here](https://git-scm.com/docs/git-stash) and [here](https://git-scm.com/book/tr/v2/Git-Tools-Stashing-and-Cleaning)
-    * Push a new stash onto stack: `git stash` (this will only stash files that are already tracked); to stash also untracked (i.e., new files): `git stash --include-untracked`
+
+* __Amending commits__
+  * Amending the most recent commit message:
+    (see [SO](http://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits) for alternative scenarios)
+      * Completely rewrite message from scratch: `git commit --amend`
+      * Amend by starting from old message: `git commit --amend -c HEAD`
+
+  * Tag an old commit retroactively:
+    So that the tag's date/time corresponds to the commit's date/time by
+    temporarily setting the tag's clock:
+    fill in appropriate values for `<branch>`, `<commit SHA1>`, `<version>`, and
+    `<message>`
+      ```{bash}
+      git checkout <branch>
+      git reset --hard <commit SHA1>
+      GIT_COMMITTER_DATE="$(git show --format=%aD  | head -1)" git tag -a <version> -m "<message>"
+      git push --tags
+      git pull
+      ```
+
+  * Moving commits from one branch to another:
+    (see [SO](https://stackoverflow.com/questions/1670970/how-to-cherry-pick-multiple-commits))
+    example scenario:
+    ```{bash}
+    <SHA1> -> <SHA2> -> <SHA3> = branch <A>
+                    '-> <SHA4> -> <SHA5> -> <SHA6> -> <SHA7> = branch <B>
+    ```
+
+    * Apply commits `<SHA6>` to `<SHA7>` to head of branch `<A>`
+      ```{bash}
+      git checkout <A>
+      git reset --hard <SHA7>
+      git rebase --onto <SHA3> <SHA5>
+      # resolve conflicts
+      git rebase --continue # respectively, --skip; repeat until done
+      ```
+
+
+* __Interruptions__ to coding
+
+  'Stashing' saves uncommitted changes and resets/cleans the working directory,
+  e.g., to switch branches, to pull into a dirty tree, to interrupt the workflow
+  in general. Stashes are handled in the same way as commits by git commands,
+  but they are not linked to a specific branch. Stashes are named <stash@{X}>
+  where X is the number on the stack. For more details see
+  [here](https://git-scm.com/docs/git-stash) and
+  [here](https://git-scm.com/book/tr/v2/Git-Tools-Stashing-and-Cleaning)
+
+    * Push a new stash onto stack: `git stash` (this will only stash files that
+      are already tracked); to stash also untracked (i.e., new files):
+      `git stash --include-untracked`
     * List stored stashes on stack: `git stash list`
-    * Apply a stored stash: `git stash apply` will apply <stash@{0}>; apply stash with number X: `git stash apply stash@{X}`. Git gives merge conflict messages if a stash does not apply cleanly. Apply a stash and stage files as before: `git stash apply --index`
+    * Apply a stored stash: `git stash apply` will apply <stash@{0}>;
+      apply stash with number X: `git stash apply stash@{X}`. Git gives merge
+      conflict messages if a stash does not apply cleanly. Apply a stash and
+      stage files as before: `git stash apply --index`
     * Remove a stash from the stack: `git stash drop stash@{X}`
     * Apply and remove a stash: `git stash pop`
-    * Show what applying a stash would add/remove to <branch>: `git diff <branch> stash@{X}`
+    * Show what applying a stash would add/remove to <branch>:
+      `git diff <branch> stash@{X}`
