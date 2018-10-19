@@ -48,7 +48,7 @@ If you create an issue, decide to work on one, or you are assigned to one, then:
   * Assign it to a team member and/or yourself, if applicable
   * Assign it to a milestone
       * _ToDo_ milestone: A rolling, catch-all milestone for bugfixes or issues that will not be immediately addressed.
-      * _Enhancement_ milestones: Pertains to the specific development of a feature or enhancement and most relates a specific branch.
+      * _Enhancement_ milestones: Pertains to the specific development of a feature or enhancement and most relate to a specific branch.
   * Add an __in progress__ label, if you are currently working on it
   * Add a __priority__ label, if it has a low priority or a high priority
   * Add a __category__ label, such as 'bug' or 'enhancement' or 'question'
@@ -85,7 +85,7 @@ Create a branch to work on a bugfix or feature.
 
 See [pertinent developing code](README.md) protocols to maintain code integrity.
 
-A good rule of thumb is that other group members should know what you are working on at any given point in time. You should aim to document every significant change that will need to be done before the branch can be merged to master. Documentation should occur both within the code (both formal and notes), as well as within a Project if your code is a enhancement.
+A good rule of thumb is that other group members should know what you are working on at any given point in time. You should aim to document every significant change that will need to be done before the branch can be merged to master. Documentation should occur both within the code (both formal and notes), as well as within a Project if your code is an enhancement.
 
 ## 6. Stage and Commit Code <a name="6"/>
 
@@ -136,7 +136,7 @@ Merging is the act of integrating the changes of one branch into another. Typica
 
 The most effective way to correctly merge is to be __proactive and conscientious__ before the merging occurs. Use a Git GUI to inspect (1) what changes have occurred on the master branch and (2) what changes have occurred on your development branch. If separate files have been worked on and there is no overlap in file development, your merge will have no conflicts and be straightforward. In fact, when you open a pull request on GitHub, it will automatically detect whether your development branch has conflicts or not. If there is none, there is an option to automatically merge.
 
-However, if there are merge conflicts (i.e. there has been development on the same file & lines on both branches), you will need inspect these conflicts, one by one, and decide which version is to be included in the final merged version of your branch. Make sure to read the commit messages from the recent changes in the master to understand why and where there has been changes in code. In general, you should aim to retain the specific functionality (whether it was an enhancement or bugfix) on your branch, but make sure it integrates well with the, potentially new, overall workflow of the master. There are many situations where you may need to go back and re-write functionality in your feature branch based on new changes in the master, after the merge.
+However, if there are merge conflicts (i.e. there has been development on the same file & lines on both branches), you will need to inspect these conflicts, one by one, and decide which version is to be included in the final merged version of your branch. Make sure to read the commit messages from the recent changes in the master to understand why and where there has been changes in code. In general, you should aim to retain the specific functionality (whether it was an enhancement or bugfix) on your branch, but make sure it integrates well with the, potentially new, overall workflow of the master. There are many situations where you may need to go back and re-write functionality in your feature branch based on new changes in the master, after the merge.
 
 ### Merge Tools
 

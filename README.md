@@ -55,7 +55,7 @@ SOILWAT2 runs on a site by site basis. While the simulations of water balance ar
 
 rSOILWAT2 is a R package with a set of functions whose primary purposes are to translate information from R to C and to execute a SOILWAT2 simulation with this information. Data about a site is first formatted into a S4 object and then translated to C classes. rSFSW2 relies on rSOILWAT2 functionality to pass information, site by site, to SOILWAT2. Additionally, rSOILWAT2 avoids disk operations and most things happen in memory, reducing run time.
 
-rSFSW2 is designed to gather user's options and information about sites. All site-specific inputs and treatments in a project are read in at once via a series of _.csvs_. The information within these .csvs is then parsed up on a site by-site basis, processed, and then sent to SOILWAT2 via the functions in rSOILWAT2. Outputs from the SOILWAT2 model are then sent back to rSFSW2 via rSOILWAT2 and either saved for each site, and/or aggregated and stored in a SQLite output database.
+rSFSW2 is designed to gather user's options and information about sites. All site-specific inputs and treatments in a project are read in at once via a series of _.csv_ files. The information within these .csvs is then parsed up on a site by-site basis, processed, and then sent to SOILWAT2 via the functions in rSOILWAT2. Outputs from the SOILWAT2 model are then sent back to rSFSW2 via rSOILWAT2 and either saved for each site, and/or aggregated and stored in a SQLite output database.
 
 ![Soilwat Architecture](arch.png)
 
@@ -96,7 +96,7 @@ Specifics about downloading, installing, and using rSFSTEP2 can be found in the 
 
 ### rSFSW2_tools <a name="sfsw_tools">
 
-The rSFSW2 tools repository contains test projects that assists in examples of use and formal and informal testing for the rSFSW2 package. These test projects rely on the master branch of rSFSW2.
+The rSFSW2 tools repository contains test projects that can be used for integration testing of the rSFSW2 package. These test projects rely on the master branch of rSFSW2.
 
 Specifics about running or updating the projects in rSFSW2_tools can be found in the [rSFSW2_tools README](https://github.com/DrylandEcology/rSFSW2_tools/blob/master/README.md).
 
@@ -117,7 +117,7 @@ The __terminal__ is the defacto interface with Git and all Git commands start wi
 
 The Dryland Ecology Lab is flexible in terms of software used for interacting with Git and GitHub. We currently recommend a mix of desktop GUIs including [GitHub Desktop](https://desktop.github.com/) or [Sourcetree](https://www.sourcetreeapp.com/) for Mac OSX and Microsoft Windows (and [GitKraken](https://www.gitkraken.com/download) for Linux machines) _and_ [Atom](https://atom.io/), a git developed text editor. Git GUIs are best for pushing commits and _tracking changes and the history that other users have made_, but lack some advanced features (e.g., management of sub-modules). Tracking file by file and line by line changes allows for the developer to avoid careless mistakes (i.e. did you really want to add that blank line there?), to double check their work and changes across files, and to be aware of changes made by other developers.
 
-In regards to code development, GitHub.com is best for submitting pull requests and easy merging when there is _no_ conflicts. We also use GitHub for its organizational and communication capacities (discussed below).
+In regards to code development, GitHub.com is best for submitting pull requests and easy merging when there are _no_ conflicts. We also use GitHub for its organizational and communication capacities (discussed below).
 
 ### Developing with Git <a name ="gitdevelop"/>
 
@@ -160,7 +160,7 @@ We use projects on GitHub to assist in the organization and communication of cod
 
 #### Continuous Integration
 
-Continuous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict are more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted on GitHub. Our CI GitHub checks currently consist of coverage checks and platform build checks.
+Continuous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict is more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted on GitHub. Our CI GitHub checks currently consist of coverage checks and platform build checks.
   * Platform build checks are tested on a Unix and Windows Servers using Travis and Appveyor, respectively. Travis and Appveyor are servers with these OSs where the program is built and checked. This is useful because if, for example, SOILWAT2 is not building on an individual's Linux computer, but is building on Travis, we know the user's computer is not configured correctly, as opposed to a software design issue.
   * Code coverage is checked via the [code coverage bot](codecov.io). Code coverage refers to the percent of code that is checked via unit tests. The website offers visualization of code coverage for each file and each line of code.
   * CI is controlled through .yml scripts that send information to their respective servers. More information about adding checks [here.](https://help.github.com/articles/enabling-required-status-checks/)
@@ -193,11 +193,11 @@ These levels are:
 
 * __R Package Tests:__ As the name suggests, these tests are for R packages only (i.e. rSFSW2 and rSOILWAT2). R package tests execute all unit tests for that package, as well as a series of other checks aimed at detecting common problems. [More information here.](http://r-pkgs.had.co.nz/check.html)
 
-* __Continuous Integration & GitHub Checks:__ GitHub checks are automated so that branches cannot be merged into master / a pull request cannot be approved until these checks are passed. Continuous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict are more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted. Our CI GitHub checks currently consist of coverage checks and platform build checks.
+* __Continuous Integration & GitHub Checks:__ GitHub checks are automated so that branches cannot be merged into master / a pull request cannot be approved until these checks are passed. Continuous integration (CI) is the automation of building, testing, and validating code as new commits are made, across platforms. CI, as the name implies, occurs continually so that the source of error or conflict is more easily tracked. The master branch is always kept clean, and CI checks are tested as pull requests are submitted. Our CI GitHub checks currently consist of coverage checks and platform build checks.
   * Coverage checks look to see that the percentage of line of code covered by unit tests has _increased_. If it hasn't the test will not pass.
   * Platform build checks are tested on a Unix and Windows Servers using Travis and Appveyor, respectively. Travis and Appveyor are servers with these OSs where the program is built and checked. Tests should always be run locally to check that they build and pass, before committing to the CI. This is useful because if, for example, SOILWAT2 is not building on an individual's Linux computer, but is building on Travis, we know the user's computer is not configured correctly, as opposed to a software design issue.
 
-* __Integration Tests:__ Integration tests, test at the comprehensive level to check that new code or feature is still producing the same or sensible output. Checks are made on speed and against reference databases.
+* __Integration Tests:__ Integration tests test at the comprehensive level to check that new code or feature is still producing the same or sensible output. Checks are made on speed and against reference databases.
 
 ### R Code Standards <a name="rinfo"/>
 
@@ -205,7 +205,7 @@ These levels are:
 
 We aim to follow [Hadley Wickham's style guide for R](http://adv-r.had.co.nz/Style.html). This is a work in progress.
 
-To adhere and enforce certain elements of this style guide our rSFSW2 repository now runs unit tests for style (see test_rSFSW2_StyleSpelllingPractices.R). Primarily, these tests use the [lintr package.](https://github.com/jimhester/lintr) We are aiming for 100% compliance in all of our R code, and new code should be written to the style guide specifications. Tutorials on how to understand lintr markers or warnings in RStudio and Atom is available in the lintr README.
+To adhere and enforce certain elements of this style guide, our rSFSW2 repository now runs unit tests for style (see test_rSFSW2_StyleSpelllingPractices.R). Primarily, these tests use the [lintr package.](https://github.com/jimhester/lintr) We are aiming for 100% compliance in all of our R code, and new code should be written to the style guide specifications. Tutorials on how to understand lintr markers or warnings in RStudio and Atom is available in the lintr README.
 
 #### Code Development <a name="rdevel"/>
 
@@ -217,7 +217,7 @@ See the README.mds ([rSFSW2](https://github.com/DrylandEcology/rSFSW2/blob/maste
 
 Here are some guidelines to assist in code development:
 
-* If your code is a feature, open up a new milestone on GitHub and sketch out a plan (i.e. new and discrete issues for each function you plan to update or create) for how you will implement new functionality. Ask for review from your supervisor.
+* If your code is a feature, open up a new milestone on GitHub and sketch out a plan (i.e. new and discrete issues for each function you plan to update or create) for how you will implement new functionality. Ask for a review from your supervisor.
 * Walk through functions with similar functionality to get a sense for workflow. You can either use:
   - [RStudio's debugger](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio). Ironically, sometimes the debugger can be buggy. Additionally, the debugger will not work when programs are not being run interactively / in parallel.
   - Work through functions at the top-level, by making the function and its inputs available in the global environment. To do this you can either write a `save()` statement temporarily into the function or opening a _.rds_ created when `debug.dump.objects = TRUE`.
@@ -245,7 +245,7 @@ Refer to our [R documentation checklist](RDocChecklist.md) each time you are pla
 
 #### Unit Testing <a name="rtest"/>
 
-We use the [testthat](https://cran.r-project.org/web/packages/testthat/index.html) package for unit testing in R. Within each of our R package repositories there is a _tests/testthat_ directory. Within the _tests_ folder there is testthat.R, which guides R to to test all files in the _testthat_ folder during the R CMD check. Each file within the _/testthat_ folder should begin with __test__ and each of these files contains multiple related tests. Typically, we have at least a test file for each corresponding file in the _/R_ folder, but it is possible that there might need to be many test files for each file in the _/R_ folder.
+We use the [testthat](https://cran.r-project.org/web/packages/testthat/index.html) package for unit testing in R. Within each of our R package repositories there is a _tests/testthat_ directory. Within the _tests_ folder there is testthat.R, which guides R to test all files in the _testthat_ folder during the R CMD check. Each file within the _/testthat_ folder should begin with __test__ and each of these files contains multiple related tests. Typically, we have at least a test file for each corresponding file in the _/R_ folder, but it is possible that there might need to be many test files for each file in the _/R_ folder.
 
 Each test should be designed to test the expectation or multiple expectations of a function. Is the output the right value or the right class? Are the values equal to a reference value? Is there an error message, warning, or message when we want there to be? There is more information on the variety of available test functions and how to use theme [here.](http://r-pkgs.had.co.nz/tests.html#test-tests)
 
@@ -255,7 +255,7 @@ Each and every function should have a test. Our goal is 100% code coverage. As y
 
 #### Style Guide <a name="cstyle"/>
 
-We have generated our own C style guide and coding standard for using [this generator] (http://www.rosvall.ie/cgi-bin/genCodeStd.pl). It is available [here.](https://github.com/DrylandEcology/DrylandEcologyProtocols/blob/master/C_Coding_Style.md)  Important take-aways from this documents are _entity naming_ and _indentation and spacing_, particularly our bracing style. 
+We have generated our own C style guide and coding standard for using [this generator] (http://www.rosvall.ie/cgi-bin/genCodeStd.pl). It is available [here.](https://github.com/DrylandEcology/DrylandEcologyProtocols/blob/master/C_Coding_Style.md)  Important take-aways from this document are the sections _entity naming_ and _indentation and spacing_, as well as our bracing style.
 
 #### Code Development <a name="cdevel"/>
 
@@ -263,9 +263,9 @@ See the README.mds ([SOILWAT2](https://github.com/DrylandEcology/SOILWAT2/blob/m
 
 Here are some general guidelines to assist in code development:
 
-* If your code is a feature, open up a new milestone on GitHub and sketch out a plan (i.e. new and discrete issues for each function you plan to update or create) for how you will implement new functionality. Ask for review from your supervisor.
+* If your code is a feature, open up a new milestone on GitHub and sketch out a plan (i.e. new and discrete issues for each function you plan to update or create) for how you will implement new functionality. Ask for a review from your supervisor.
 * Walk through functions with similar functionality to get a sense for workflow.
-* Use print statements or [compile SOILWAT2 in debug mode and debug using a debugger such a gdb](https://www.thegeekstuff.com/2010/03/debug-c-program-using-gdb).
+* To help debug code, use print statements or [compile and run SOILWAT2 in debug mode](https://www.thegeekstuff.com/2010/03/debug-c-program-using-gdb)
     - Note: We use __make__ to manage and organize our C code. Look within the makefile for targets that include debug flags.
 * Test your new code within an integration project.
 * Develop code in Atom. To test code, re-compile the C code, and the check the results of model against the test projects.
@@ -275,7 +275,7 @@ Here are some general guidelines to assist in code development:
 * Write your own unit tests for your new functionality.
 * Clean up code before committing (i.e. deleting print statements, double check with lintr, mistaken .Rproj files).
   - Note: Never turn off a unit test and push this to GitHub. If a unit test is failing seek to understand whether your code is unintentionally changing outcomes (__likely__) or whether a unit test needs updating (this is __unlikely__ but would occur if you explicitly changed the function _with_ the now failing unit test).
-* Ensure your package pass all unit tests on CI.
+* Ensure your code passes all unit tests on CI.
 * Once your code is functional, refer to the [github_workflow](#github_workflow.md) for next steps on committing and continuous integration checks.
 
 #### Documentation  <a name="cdoc"/>
@@ -293,9 +293,10 @@ We use [googletest](https://github.com/google/googletest/blob/master/googletest/
 
 Keep in mind that googletest is written in and for C++, while our code is in C. Be aware of some quirks including:
   - We need a separate compiler for these unit tests.
-  - We cannot currently include SW_Output.c but instead have SW_Output_mock.c for the unit tests.
-  - We need to pay attention to the global states and reset them with a call to  `Reset_SOILWAT2_after_UnitTest();`.
   - We cannot use several aspects of the googletest framework.
+  - In SOILWAT2 specifically:
+    - We cannot currently include SW_Output.c but instead have SW_Output_mock.c for the unit tests.
+    - We need to pay attention to the global states and reset them with a call to     `Reset_SOILWAT2_after_UnitTest();`.
 
 Each and every function should have a test. Our goal is 100% code coverage. As you write tests, check that they are working by running `make test_clean test test_run` in the terminal.
 
